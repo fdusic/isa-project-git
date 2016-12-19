@@ -1,0 +1,106 @@
+.dad {
+  background: url("http://www.hotelparadies.com/fileadmin/_processed_/csm_restaurant-gourmet-paradies6_a06d67c35c.jpg");
+}
+
+.grow {
+  padding: 5px 5px 5px 5px;
+  height: 100vh;
+  width: 20vh;
+  float: left;
+  position: relative;
+  transition: width 0.5s;
+  -webkit-transition: width 0.5s;
+  text-align: left;
+  overflow: hidden;
+}
+.grow:hover {
+  height: 100vh;
+  width: 50vh;
+  text-align: left;
+}
+
+.tab-title {
+  font-size: 2.5em;
+  color: #fcfcfc;
+  text-transform: uppercase;
+  font-family: 'Josefin Sans', sans-serif;
+  font-weight: 400;
+}
+
+.vertical-tab-1 {
+  background: url("https://bufiles.blob.core.windows.net/co3613/vertical_menu/7.jpg") center center no-repeat;
+}
+.vertical-tab-1:hover{
+  cursor: pointer;
+}
+
+.vertical-tab-2 {
+  background: url("https://bufiles.blob.core.windows.net/co3613/vertical_menu/8.jpg") center center;
+}
+.vertical-tab-2:hover{
+  cursor: pointer;
+}
+
+.vertical-tab-3 {
+  background: url("https://bufiles.blob.core.windows.net/co3613/vertical_menu/4.jpg") center center;
+}
+.vertical-tab-3:hover{
+  cursor: pointer;
+}
+
+.vertical-tab-4 {
+  background: url("https://bufiles.blob.core.windows.net/co3613/vertical_menu/9.jpg") center center;
+}
+.vertical-tab-4:hover{
+  cursor: pointer;
+}
+
+.rotate {
+  transform: rotate(-90deg);
+  -webkit-transform: rotate(-90deg);
+  margin-top: 50vh;
+  font-family: 'Josefin Sans', sans-serif;
+  font-weight: 400;
+  color: #fff;
+  font-size: 2.25em;
+  text-transform: uppercase;
+}
+
+@media screen and (max-width: 970px) {
+  .rotate {
+    font-size: 1.5em;
+  }
+}
+
+
+@media screen and (max-width: 970px) {
+  .tab-title {
+    font-size: 1.6em;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .rotate {
+    font-size: 1.125em;
+  }
+}
+
+
+@media screen and (max-width: 767px) {
+  .tab-title {
+    font-size: 1.25em;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .rotate {
+    font-size: 0.6em;
+  }
+}
+
+
+@media screen and (max-width: 500px) {
+  .tab-title {
+    font-size: 0.75em;
+  }
+}
