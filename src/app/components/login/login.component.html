@@ -1,0 +1,43 @@
+<div class="container" style="margin-top: 100px">
+  <h1 align="center">Login</h1>
+  <hr>
+  <form (ngSubmit)="onSubmit(f)" #f="ngForm">
+    <div class="form-group">
+      <label for="username">Username</label>
+      <input type="text"
+             class="form-control"
+             id="username"
+             name="username"
+             ngModel
+             required>
+    </div>
+
+    <div class="form-group">
+      <label for="password">Password</label>
+      <input type="password"
+             class="form-control"
+             id="password"
+             name="password"
+             ngModel
+             required>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+    <a class="btn btn-info" [routerLink]="['/home']">Register</a>
+  </form>
+
+</div>
+
+
+<div class="container"  style="margin-top: 40px">
+  <div class="row" style="display: none">
+    <div class="alert alert-warning alert-dismissible" role="alert">
+      <button type="button" onclick="this.parentNode.parentNode.removeChild(this.parentNode);" class="close" data-dismiss="alert"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+      <strong><i class="fa fa-warning"></i> Incorrect username or password!!</strong> <marquee><p style="font-family: Impact; font-size: 18pt">Please make sure you type username and password correctly.</p></marquee>
+    </div>
+  </div>
+</div>
+
+
+
+
