@@ -4,16 +4,17 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
 import { AppComponent } from './app.component';
-import { LoginComponent } from './components/login/login.component';
+import { LoginRegisterComponent } from './components/login/login-register.component';
 import { HomeComponent } from './components/home/home.component';
 import {routing} from "./router/routing";
 import { UserProfileComponent } from './components/user-profile/user-profile.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
+import {LoginRegisterService} from "./services/login-register.service";
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent,
+    LoginRegisterComponent,
     HomeComponent,
     UserProfileComponent,
     NavbarComponent
@@ -24,7 +25,7 @@ import { NavbarComponent } from './components/navbar/navbar.component';
     HttpModule,
     routing
   ],
-  providers: [],
+  providers: [LoginRegisterService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
