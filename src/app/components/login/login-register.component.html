@@ -18,10 +18,7 @@
               </div>
             </div>
           </div>
-
-
         </div>
-
         <div class="tab-content">
           <div id="register" class="tab-pane">
             <div class="login-inner">
@@ -32,16 +29,17 @@
                 <form (ngSubmit)="onSubmitRegister(f.value)" #f="ngForm">
                   <div class="form-details">
                     <label class="mail">
-                      <input ngModel type="email" name="email" placeholder="Email address" id="registrationEmail">
+                      <input ngModel type="email" name="email" placeholder="Email address" id="registrationEmail" (change)="checkEmail(f.controls['email'].value)">
+                      <br> <span style="color: red" id="err_span"></span>
                     </label>
                     <label class="pass">
-                      <input ngModel type="password" name="password" placeholder="Password" id="registrationPassword">
+                      <input ngModel type="password" name="password" placeholder="Password" id="registrationPassword" required minlength="5">
                     </label>
                     <label class="user">
-                      <input ngModel type="text" name="name" placeholder="Name" id="name">
+                      <input ngModel type="text" name="name" placeholder="Name" id="name" required minlength="3">
                     </label>
                     <label class="user">
-                      <input ngModel type="text" name="surname" placeholder="Surname" id="surname">
+                      <input ngModel type="text" name="surname" placeholder="Surname" id="surname" required minlength="3">
                     </label>
                   </div>
                   <button type="submit" class="form-btn">Send</button>
@@ -61,7 +59,8 @@
                       <input ngModel type="text" name="email" id="email" placeholder="Email">
                     </label>
                     <label class="pass">
-                      <input ngModel type="password" name="passsword" placeholder="Password" id="password">
+                      <input ngModel type="password" name="password" placeholder="Password" id="password"> <br>
+                      <span style="color: red" id="err_login"></span>
                     </label>
                   </div>
                   <button type="submit" class="form-btn">Send</button>

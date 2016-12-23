@@ -8,6 +8,5 @@ export class User{
   public friendRequests:User[]=[];
 
   constructor(){
-
   }
 }

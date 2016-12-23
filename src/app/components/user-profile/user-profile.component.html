@@ -2,10 +2,11 @@
   <div class="col-lg-5">
     <div class="container">
       <div class="fb-profile">
-        <img align="left" class="fb-image-profile thumbnail" src="../../../images/user-default.png" alt="Profile image example"/>
+        <img align="left" class="fb-image-profile thumbnail" src="../../../images/user-default.png"
+             alt="Profile image example"/>
         <div class="fb-profile-text">
-          <h1>Username</h1>
-          <p> User description.</p>
+          <h1>{{user.name + ' ' + user.surname}}</h1>
+          <p> {{user.email}} </p>
         </div>
       </div>
     </div>
@@ -46,9 +47,10 @@
         <div class="tab-content col-md-10">
           <div class="tab-pane active" id="friendsDiv">
             <div class="row">
-              <div class="col-lg-5 col-lg-offset-2">
+              <div class="col-lg-5 col-lg-offset-3">
                 <div class="input-group">
-                  <input type="text" class="form-control" placeholder="Search for friend..." style="height: 41px">
+                  <input #inp type="text" class="form-control" placeholder="Search for friend..." style="height: 41px"
+                         (keyup)="search(inp.value)">
                   <span class="input-group-btn">
               <button class="btn btn-primary" type="button" style="height: 41px">
               <span class="glyphicon glyphicon-search"></span>
@@ -57,33 +59,132 @@
                 </div>
               </div>
             </div>
+            <br><br>
+            <div class="col-md-7 col-md-offset-2">
+              <div class="row" *ngFor="let friend of user.friends">
+                <div class="list-group-item">
+                  <div class="thumbnail">
+                    <div class="row">
+                      <div class="col-sm-4">
+                        <img style="height:140px;width:140px;" class="group list-group-image"
+                             src="../../../images/user-default.png" alt=""/>
+                      </div>
+                      <div class="col-sm-8">
+                        <div>
+                          <div class="panel panel-default">
+                            <div class="panel-heading">Name: {{friend.name}}</div>
+                            <div class="panel-body">Surname: {{friend.surname}}</div>
+                            <div class="panel-footer">Email: {{friend.email}}</div>
+                            <br>
+                            <div align="center" style="padding-bottom: 20px">
+                              <button type="button" class="btn btn-primary"> Friends <span
+                                class="glyphicon glyphicon-ok"> </span></button>
+                              &nbsp;&nbsp;&nbsp;
+                              <button class="btn btn-danger" (click)="deleteFriend(friend)"> Delete <span
+                                class="glyphicon glyphicon-trash"> </span></button>
+                              &nbsp;&nbsp;&nbsp;
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
           <div class="tab-pane" id="friendRequestsDiv">
-            <h4>Pane B</h4>
-            <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.</p>
+            <div class="row">
+              <div class="col-md-7 col-md-offset-2">
+                <div class="row" *ngFor="let friend of user.friendRequests">
+                  <div class="list-group-item">
+                    <div class="thumbnail">
+                      <div class="row">
+                        <div class="col-sm-4">
+                          <img style="height:140px;width:140px;" class="group list-group-image"
+                               src="../../../images/user-default.png" alt=""/>
+                        </div>
+                        <div class="col-sm-8">
+                          <div>
+                            <div class="panel panel-default">
+                              <div class="panel-heading">Name: {{friend.name}}</div>
+                              <div class="panel-body">Surname: {{friend.surname}}</div>
+                              <div class="panel-footer">Email: {{friend.email}}</div>
+                              <br>
+                              <div align="center" style="padding-bottom: 20px">
+                                <button type="button" class="btn btn-primary" (click)="acceptFriendRequest(friend)"> Accept &nbsp;
+                                  <span class="glyphicon glyphicon-ok"> </span>
+                                </button>
+                                <button type="button" class="btn btn-danger" (click)="declineRequest(friend)"> Decline &nbsp;
+                                  <span class="glyphicon glyphicon-trash"> </span>
+                                </button>
+                                &nbsp;&nbsp;&nbsp;
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
     <div class="tab-pane" id="tab_default_2">
-      <p>
-        Howdy, I'm in Tab 2.
-      </p>
-      <p>
-        Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat. Ut wisi enim ad minim veniam, quis nostrud exerci tation.
-      </p>
-      <p>
-        <a class="btn btn-warning" href="http://j.mp/metronictheme" target="_blank">
-          Click for more features...
-        </a>
-      </p>
+      <div class="row">
+        <div class="col-lg-5 col-lg-offset-3">
+          <div class="input-group">
+            <input #inp type="text" class="form-control" placeholder="Search for people..." style="height: 41px"
+                   (keyup)="search(inp.value)">
+            <span class="input-group-btn">
+              <button class="btn btn-primary" type="button" style="height: 41px">
+              <span class="glyphicon glyphicon-search"></span>
+             </button>
+             </span>
+          </div>
+        </div>
+      </div>
+      <br><br>
+      <div class="col-md-7 col-md-offset-2">
+        <div class="row" *ngFor="let friend of people">
+          <div class="list-group-item" *ngIf="friend.email != user.email">
+            <div class="thumbnail">
+              <div class="row">
+                <div class="col-sm-4">
+                  <img style="height:140px;width:140px;" class="group list-group-image"
+                       src="../../../images/user-default.png" alt=""/>
+                </div>
+                <div class="col-sm-8">
+                  <div>
+                    <div class="panel panel-default">
+                      <div class="panel-heading">Name: {{friend.name}}</div>
+                      <div class="panel-body">Surname: {{friend.surname}}</div>
+                      <div class="panel-footer">Email: {{friend.email}}</div>
+                      <br>
+                      <div align="center" style="padding-bottom: 20px">
+                        <button type="button" class="btn btn-primary" (click)="sendRequest(friend)"> Add friend &nbsp; <span class="glyphicon glyphicon-plus"> </span></button>
+                        &nbsp;&nbsp;&nbsp;
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
     <div class="tab-pane" id="tab_default_3">
       <p>
         Howdy, I'm in Tab 3.
       </p>
       <p>
-        Duis autem vel eum iriure dolor in hendrerit in vulputate. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat
+        Duis autem vel eum iriure dolor in hendrerit in vulputate. Ut wisi enim ad minim veniam, quis nostrud exerci
+        tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in
+        hendrerit in vulputate velit esse molestie consequat
       </p>
       <p>
         <a class="btn btn-info" href="http://j.mp/metronictheme" target="_blank">
