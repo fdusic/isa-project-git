@@ -12,24 +12,24 @@
             <div class="col-md-6 col-sm-6 col-xs-12">
               <div class="login-details">
                 <ul class="nav nav-tabs navbar-right">
-                  <li><a data-toggle="tab" href="#register">Register</a></li>
-                  <li class="active"><a data-toggle="tab" href="#login">Login</a></li>
+                  <li #reg_li><a data-toggle="tab" href="#register">Register</a></li>
+                  <li class="active" #log_li><a data-toggle="tab" href="#login">Login</a></li>
                 </ul>
               </div>
             </div>
           </div>
         </div>
         <div class="tab-content">
-          <div id="register" class="tab-pane">
+          <div id="register" class="tab-pane" #reg_div>
             <div class="login-inner">
               <div class="title">
 
               </div>
               <div class="login-form">
-                <form (ngSubmit)="onSubmitRegister(f.value)" #f="ngForm">
+                <form (ngSubmit)="onSubmitRegister(f.value)" #f="ngForm" id="regForm">
                   <div class="form-details">
                     <label class="mail">
-                      <input ngModel type="email" name="email" placeholder="Email address" id="registrationEmail" (change)="checkEmail(f.controls['email'].value)">
+                      <input #email ngModel type="email" name="email" required placeholder="Email address" id="registrationEmail" (change)="checkEmail(f.controls['email'].value)">
                       <br> <span style="color: red" id="err_span"></span>
                     </label>
                     <label class="pass">
@@ -47,7 +47,7 @@
               </div>
             </div>
           </div>
-          <div id="login" class="tab-pane fade in active">
+          <div id="login" class="tab-pane fade in active" #log_div>
             <div class="login-inner">
               <div class="title">
                 <h1>Welcome <span>back!</span></h1>

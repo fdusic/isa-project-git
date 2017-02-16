@@ -10,30 +10,41 @@ import {User} from "../../beans/user";
 export class UserProfileComponent implements OnInit {
 
   private user : User = new User();
-  private people : User[] = [];
+  private notFriends : User[] = [];
+  private requestsSent : User[] = [];
 
   constructor(private httpService : LoginRegisterService) { }
 
   ngOnInit() {
     this.httpService.getUser().subscribe(
       data => {
+        console.log(data);
         this.user = JSON.parse(data['_body']);
         console.log(this.user);
       }
     );
-    this.httpService.getPeople().subscribe(
+    this.httpService.getNotFriends().subscribe(
       data => {
-        this.people = JSON.parse(data['_body']);
+        this.notFriends = JSON.parse(data['_body']);
+        console.log(this.notFriends);
       }
     );
+    this.httpService.getRequestsSent().subscribe(
+      data => {
+        this.requestsSent = JSON.parse(data['_body']);
+        console.log('rs');
+        console.log(this.requestsSent);
+      }
+    );
+
   }
 
   deleteFriend(user : User){
-    this.httpService.deleteFriend(user.email).subscribe(
+    /*this.httpService.deleteFriend(user.email).subscribe(
       () => {
         this.user.friends.splice(this.user.friends.indexOf(user),1);
       }
-    );
+    );*/
   }
 
   sendRequest(user : User){
@@ -57,6 +68,17 @@ export class UserProfileComponent implements OnInit {
     this.httpService.deleteFriend(user.email).subscribe(
       () => {}
     );
+  }
+
+  getStatus(email : string){
+
+    for(var i=0; i < this.user.friends.length; i++){
+      if(this.user.friends[i].usernameRequest.email == email){
+        return this.user.friends[i].status;
+      }
+    }
+    return 0;
+
   }
 
 }

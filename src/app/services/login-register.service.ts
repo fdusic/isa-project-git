@@ -33,8 +33,12 @@ export class LoginRegisterService {
     return this.http.post(this.path + 'deleteFriend', email ,{withCredentials : true});
   }
 
-  getPeople(){
-    return this.http.get(this.path + 'getPeople', { withCredentials : true} );
+  getNotFriends(){
+    return this.http.get(this.path + 'getNotFriends', { withCredentials : true} );
+  }
+
+  getRequestsSent(){
+    return this.http.get(this.path + 'getRequestsSent', {withCredentials : true});
   }
 
   sendRequest(email : string){
@@ -47,6 +51,10 @@ export class LoginRegisterService {
 
   declineRequest(email : string){
     return this.http.post(this.path + 'declineRequest', email, {withCredentials : true});
+  }
+
+  logout(){
+    return this.http.get(this.path + 'logout', { withCredentials : true} );
   }
 
 }
