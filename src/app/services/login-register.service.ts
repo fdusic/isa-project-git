@@ -57,4 +57,12 @@ export class LoginRegisterService {
     return this.http.get(this.path + 'logout', { withCredentials : true} );
   }
 
+  getFriends(){
+    return this.http.get(this.path + 'getFriends', {withCredentials : true});
+  }
+
+  getFriendRequests(){
+    return this.http.get(this.path + 'getFriendRequests', {withCredentials : true});
+  }
+
 }

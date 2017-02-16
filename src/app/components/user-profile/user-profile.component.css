@@ -111,4 +111,7 @@
   padding-bottom: 15px;
 }
 
+.norMouse:hover{
+  cursor: default;
+}
 

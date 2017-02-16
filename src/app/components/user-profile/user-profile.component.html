@@ -19,7 +19,7 @@
             <a href="#tab_default_1" data-toggle="tab">
               <span class="glyphicon glyphicon-user" style="font-size: 40px"></span> </a>
           </li>
-          <li>
+          <li (click)="getNotFriends()">
             <a href="#tab_default_2" data-toggle="tab">
               <span class="glyphicon glyphicon-heart" style="font-size: 40px"></span> </a>
           </li>
@@ -42,7 +42,7 @@
       <div class="container-fluid" style="margin-left: 28px">
         <ul class="nav nav-pills nav-stacked col-md-2">
           <li class="active"><a href="#friendsDiv" data-toggle="pill">Friends</a></li>
-          <li><a href="#friendRequestsDiv" data-toggle="pill">Friend requests</a></li>
+          <li (click)="getFriendRequests()"><a href="#friendRequestsDiv" data-toggle="pill">Friend requests</a></li>
         </ul>
         <div class="tab-content col-md-10">
           <div class="tab-pane active" id="friendsDiv">
@@ -61,7 +61,7 @@
             </div>
             <br><br>
             <div class="col-md-7 col-md-offset-2">
-              <div class="row" *ngFor="let friend of user.friends">
+              <div class="row" *ngFor="let friend of friends">
                 <div class="list-group-item">
                   <div class="thumbnail">
                     <div class="row">
@@ -77,7 +77,7 @@
                             <div class="panel-footer">Email: {{friend.email}}</div>
                             <br>
                             <div align="center" style="padding-bottom: 20px">
-                              <button type="button" class="btn btn-primary"> Friends <span
+                              <button type="button" class="btn btn-success norMouse" disabled> Friends <span
                                 class="glyphicon glyphicon-ok"> </span></button>
                               &nbsp;&nbsp;&nbsp;
                               <button class="btn btn-danger" (click)="deleteFriend(friend)"> Delete <span
@@ -96,7 +96,7 @@
           <div class="tab-pane" id="friendRequestsDiv">
             <div class="row">
               <div class="col-md-7 col-md-offset-2">
-                <div class="row" *ngFor="let friend of user.friendRequests">
+                <div class="row" *ngFor="let friend of friendRequests">
                   <div class="list-group-item">
                     <div class="thumbnail">
                       <div class="row">
@@ -134,39 +134,90 @@
       </div>
     </div>
     <div class="tab-pane" id="tab_default_2">
-      <div class="row">
-        <div class="col-lg-5 col-lg-offset-3">
-          <div class="input-group">
-            <input #inp type="text" class="form-control" placeholder="Search for people..." style="height: 41px"
-                   (keyup)="search(inp.value)">
-            <span class="input-group-btn">
+      <div class="container-fluid" style="margin-left: 28px">
+        <ul class="nav nav-pills nav-stacked col-md-2">
+          <li class="active"><a href="#notFriendsDiv" data-toggle="pill">New people</a></li>
+          <li (click)="getRequestsSent()"><a href="#notFriendRequestsDiv" data-toggle="pill">Sent requests</a></li>
+        </ul>
+        <div class="tab-content col-md-10">
+          <div class="tab-pane active" id="notFriendsDiv">
+            <div class="row">
+              <div class="col-lg-5 col-lg-offset-3">
+                <div class="input-group">
+                  <input #inp type="text" class="form-control" placeholder="Search for friend..." style="height: 41px"
+                         (keyup)="search(inp.value)">
+                  <span class="input-group-btn">
               <button class="btn btn-primary" type="button" style="height: 41px">
               <span class="glyphicon glyphicon-search"></span>
              </button>
              </span>
-          </div>
-        </div>
-      </div>
-      <br><br>
-      <div class="col-md-7 col-md-offset-2">
-        <div class="row" *ngFor="let friend of people">
-          <div class="list-group-item" *ngIf="friend.email != user.email">
-            <div class="thumbnail">
-              <div class="row">
-                <div class="col-sm-4">
-                  <img style="height:140px;width:140px;" class="group list-group-image"
-                       src="../../../images/user-default.png" alt=""/>
                 </div>
-                <div class="col-sm-8">
-                  <div>
-                    <div class="panel panel-default">
-                      <div class="panel-heading">Name: {{friend.name}}</div>
-                      <div class="panel-body">Surname: {{friend.surname}}</div>
-                      <div class="panel-footer">Email: {{friend.email}}</div>
-                      <br>
-                      <div align="center" style="padding-bottom: 20px">
-                        <button type="button" class="btn btn-primary" (click)="sendRequest(friend)"> Add friend &nbsp; <span class="glyphicon glyphicon-plus"> </span></button>
-                        &nbsp;&nbsp;&nbsp;
+              </div>
+            </div>
+            <br><br>
+            <div class="col-md-7 col-md-offset-2">
+              <div class="row" *ngFor="let friend of notFriends">
+                <div class="list-group-item">
+                  <div class="thumbnail">
+                    <div class="row">
+                      <div class="col-sm-4">
+                        <img style="height:140px;width:140px;" class="group list-group-image"
+                             src="../../../images/user-default.png" alt=""/>
+                      </div>
+                      <div class="col-sm-8">
+                        <div>
+                          <div class="panel panel-default">
+                            <div class="panel-heading">Name: {{friend.name}}</div>
+                            <div class="panel-body">Surname: {{friend.surname}}</div>
+                            <div class="panel-footer">Email: {{friend.email}}</div>
+                            <br>
+                            <div align="center" style="padding-bottom: 20px">
+                              <button type="button" class="btn btn-success"> Friends <span
+                                class="glyphicon glyphicon-ok"> </span></button>
+                              &nbsp;&nbsp;&nbsp;
+                              <button class="btn btn-danger" (click)="deleteFriend(friend)"> Delete <span
+                                class="glyphicon glyphicon-trash"> </span></button>
+                              &nbsp;&nbsp;&nbsp;
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="tab-pane" id="notFriendRequestsDiv">
+            <div class="row">
+              <div class="col-md-7 col-md-offset-2">
+                <div class="row" *ngFor="let friend of requestsSent">
+                  <div class="list-group-item">
+                    <div class="thumbnail">
+                      <div class="row">
+                        <div class="col-sm-4">
+                          <img style="height:140px;width:140px;" class="group list-group-image"
+                               src="../../../images/user-default.png" alt=""/>
+                        </div>
+                        <div class="col-sm-8">
+                          <div>
+                            <div class="panel panel-default">
+                              <div class="panel-heading">Name: {{friend.name}}</div>
+                              <div class="panel-body">Surname: {{friend.surname}}</div>
+                              <div class="panel-footer">Email: {{friend.email}}</div>
+                              <br>
+                              <div align="center" style="padding-bottom: 20px">
+                                <button type="button" class="btn btn-primary" (click)="acceptFriendRequest(friend)"> Accept &nbsp;
+                                  <span class="glyphicon glyphicon-ok"> </span>
+                                </button>
+                                <button type="button" class="btn btn-danger" (click)="declineRequest(friend)"> Decline &nbsp;
+                                  <span class="glyphicon glyphicon-trash"> </span>
+                                </button>
+                                &nbsp;&nbsp;&nbsp;
+                              </div>
+                            </div>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
