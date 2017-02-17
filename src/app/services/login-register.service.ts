@@ -3,11 +3,13 @@ import {Http, Headers} from "@angular/http";
 import {User} from "../beans/user";
 
 @Injectable()
-export class LoginRegisterService {
+export class LoginRegisterService{
 
   private path = 'http://localhost:8080/user/';
 
   constructor(private http:Http) { }
+
+
 
   register(user:User){
     let h = new Headers();
