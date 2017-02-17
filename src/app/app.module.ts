@@ -10,6 +10,9 @@ import {routing} from "./router/routing";
 import { UserProfileComponent } from './components/user-profile/user-profile.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import {LoginRegisterService} from "./services/login-register.service";
+import { AddRestaurantComponent } from './components/add-restaurant/add-restaurant.component';
+import { ManagerProfileComponent } from './components/manager-profile/manager-profile.component';
+import {ManagerService} from "./services/manager.service";
 
 @NgModule({
   declarations: [
@@ -17,7 +20,9 @@ import {LoginRegisterService} from "./services/login-register.service";
     LoginRegisterComponent,
     HomeComponent,
     UserProfileComponent,
-    NavbarComponent
+    NavbarComponent,
+    AddRestaurantComponent,
+    ManagerProfileComponent,
   ],
   imports: [
     BrowserModule,
@@ -25,7 +30,7 @@ import {LoginRegisterService} from "./services/login-register.service";
     HttpModule,
     routing
   ],
-  providers: [LoginRegisterService],
+  providers: [LoginRegisterService,ManagerService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -46,8 +46,10 @@ export class LoginRegisterComponent implements OnInit {
     this.httpService.login(user).subscribe(
       data => {
         console.log(data['_body']);
-        if(data['_body'] != 'false'){
+        if(data['_body'] == 'user'){
           this.router.navigateByUrl('/home');
+        }else if(data['_body']=='manager'){
+
         } else{
           document.getElementById('err_login').innerHTML = 'Incorrect email or password.';
         }
