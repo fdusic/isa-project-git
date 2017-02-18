@@ -14,7 +14,7 @@ export class EmailComponent implements OnInit {
   ngOnInit() {
     this.httpService.deleteFromEmailHelper(this.activatedRoute.snapshot.params['email']).subscribe(
       (data) => {
-          this.router.navigateByUrl('/home/');
+          this.router.navigateByUrl('/');
       }
     );
   }

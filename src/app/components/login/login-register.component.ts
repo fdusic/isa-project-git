@@ -3,6 +3,7 @@ import {User} from "../../beans/user";
 import {LoginRegisterService} from "../../services/login-register.service";
 import {Router} from "@angular/router";
 import {document} from "@angular/platform-browser/src/facade/browser";
+declare let sweetAlert : any;
 
 @Component({
   selector: 'app-login',
@@ -56,6 +57,8 @@ export class LoginRegisterComponent implements OnInit {
           this.router.navigateByUrl('/home');
         }else if(data['_body']=='manager'){
 
+        }else if(data['_body']=='check_email'){
+          sweetAlert("Check your email!", "Please click on the link on your email to procced login.", "error");
         } else{
           document.getElementById('err_login').innerHTML = 'Incorrect email or password.';
         }
