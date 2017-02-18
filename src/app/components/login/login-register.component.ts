@@ -40,6 +40,12 @@ export class LoginRegisterComponent implements OnInit {
         resetForm.reset();
       }
     );
+  this.httpService.sendEmail(user.email).subscribe(
+    () => {
+
+    }
+  );
+
   }
 
   onSubmitLogin(user : User){

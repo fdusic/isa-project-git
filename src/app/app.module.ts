@@ -13,6 +13,7 @@ import {LoginRegisterService} from "./services/login-register.service";
 import { AddRestaurantComponent } from './components/add-restaurant/add-restaurant.component';
 import { ManagerProfileComponent } from './components/manager-profile/manager-profile.component';
 import {ManagerService} from "./services/manager.service";
+import { EmailComponent } from './components/email/email.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import {ManagerService} from "./services/manager.service";
     NavbarComponent,
     AddRestaurantComponent,
     ManagerProfileComponent,
+    EmailComponent,
   ],
   imports: [
     BrowserModule,

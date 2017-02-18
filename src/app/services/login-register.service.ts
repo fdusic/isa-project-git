@@ -67,4 +67,14 @@ export class LoginRegisterService{
     return this.http.get(this.path + 'getFriendRequests', {withCredentials : true});
   }
 
+  sendEmail(email : string){
+    return this.http.post(this.path + 'sendEmail/', email.trim());
+  }
+
+  deleteFromEmailHelper(email:string){
+    return this.http.post(this.path + 'deleteFromEmailHelper/', email.trim());
+  }
+
+
+
 }

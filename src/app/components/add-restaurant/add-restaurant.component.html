@@ -42,7 +42,7 @@
 
     <div class="form-group">
       <label for="manager">Manager</label>
-      <select ngModel name="manager" id="manager" class="form-control">
+      <select required ngModel name="manager" id="manager" class="form-control">
         <option disabled selected value> -- select manager -- </option>
         <option *ngFor="let manager of managers">{{'Username:'+manager.username+' Name:'+manager.name}}</option>
       </select>
