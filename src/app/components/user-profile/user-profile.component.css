@@ -115,3 +115,6 @@
   cursor: default;
 }
 
+.mouse:hover{
+  cursor: pointer;
+}

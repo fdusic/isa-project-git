@@ -9,8 +9,6 @@ export class LoginRegisterService{
 
   constructor(private http:Http) { }
 
-
-
   register(user:User){
     let h = new Headers();
     h.append('Content-type','application/json');
@@ -48,7 +46,7 @@ export class LoginRegisterService{
   }
 
   acceptRequest(email : string){
-    return this.http.post(this.path + "acceptRequest", email, {withCredentials : true});
+    return this.http.post(this.path + "acceptFriendRequest", email, {withCredentials : true});
   }
 
   declineRequest(email : string){
@@ -75,6 +73,18 @@ export class LoginRegisterService{
     return this.http.post(this.path + 'deleteFromEmailHelper/', email.trim());
   }
 
+  addFriendRequest(receiver : string){
+    return this.http.post(this.path + 'addFriendRequest', receiver, {withCredentials : true});
+  }
 
+  declineFriendRequest(email : string){
+    return this.http.post(this.path + 'declineFriendRequest', email, {withCredentials : true});
+  }
+
+  modifyUser(user : User){
+    let h = new Headers();
+    h.append('Content-type','application/json');
+    return this.http.post(this.path + 'modifyUser/', JSON.stringify(user), { headers : h });
+  }
 
 }

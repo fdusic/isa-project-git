@@ -4,6 +4,7 @@ import {LoginRegisterService} from "../../services/login-register.service";
 import {Router} from "@angular/router";
 import {document} from "@angular/platform-browser/src/facade/browser";
 declare let sweetAlert : any;
+import {RoleService} from "../../services/role.service";
 
 @Component({
   selector: 'app-login',
@@ -20,7 +21,7 @@ export class LoginRegisterComponent implements OnInit {
   @ViewChild('f') form : any;
   private canSubmitRegister:boolean = false;
 
-  constructor(private httpService : LoginRegisterService, private router : Router) { }
+  constructor(private httpService : LoginRegisterService, private router : Router, private roleService : RoleService) { }
 
   ngOnInit() {
   }
@@ -56,6 +57,8 @@ export class LoginRegisterComponent implements OnInit {
         console.log(data['_body']);
         if(data['_body'] == 'user'){
           this.router.navigateByUrl('/home');
+          this.roleService.user = true;
+          this.roleService.getFriendRequests();
         }else if(data['_body']=='manager'){
 
         }else if(data['_body']=='check_email'){

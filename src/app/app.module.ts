@@ -16,6 +16,8 @@ import {ManagerService} from "./services/manager.service";
 import { EmailComponent } from './components/email/email.component';
 import {RestaurantService} from "./services/restaurant.service";
 import { RestaurantDetailComponent } from './components/restaurant-detail/restaurant-detail.component';
+import {RoleService} from "./services/role.service";
+import { ModifyUserComponent } from './components/modify-user/modify-user.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +30,7 @@ import { RestaurantDetailComponent } from './components/restaurant-detail/restau
     ManagerProfileComponent,
     EmailComponent,
     RestaurantDetailComponent,
+    ModifyUserComponent
   ],
   imports: [
     BrowserModule,
@@ -35,7 +38,7 @@ import { RestaurantDetailComponent } from './components/restaurant-detail/restau
     HttpModule,
     routing
   ],
-  providers: [LoginRegisterService,ManagerService,RestaurantService],
+  providers: [LoginRegisterService,ManagerService,RestaurantService, RoleService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

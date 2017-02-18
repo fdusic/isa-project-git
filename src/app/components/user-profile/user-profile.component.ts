@@ -29,6 +29,11 @@ export class UserProfileComponent implements OnInit {
         this.friends = JSON.parse(data['_body']);
       }
     );
+    this.httpService.getFriendRequests().subscribe(
+      data => {
+        this.friendRequests = JSON.parse(data['_body']);
+      }
+    );
   }
 
   getFriendRequests(){
@@ -67,6 +72,8 @@ export class UserProfileComponent implements OnInit {
         this.user.friends.splice(this.user.friends.indexOf(user),1);
       }
     );*/
+    let httpSer = this.httpService;
+    let friends = this.friends;
     swal({
         title: "Are you sure you want to remove " + user.name + " " + user.password + " as friend?",
         type: "warning",
@@ -76,9 +83,10 @@ export class UserProfileComponent implements OnInit {
         closeOnConfirm: false
       },
       function(){
-        this.httpService.deleteFriend(user.email).subscribe(
+        httpSer.deleteFriend(user.email).subscribe(
           () => {
-            this.friends.splice(this.friends.indexOf(user),1);
+            friends.splice(friends.indexOf(user),1);
+
             swal("Deleted!", user.name + " " + user.surname + " is no longer your friend.", "success");
           }
         );
@@ -97,14 +105,22 @@ export class UserProfileComponent implements OnInit {
   }
 
   acceptFriendRequest(user : User){
+    console.log('accept');
     this.httpService.acceptRequest(user.email).subscribe(
-      () => {}
+      () => {
+        this.friendRequests.splice(this.friendRequests.indexOf(user),1);
+        this.friends.push(user);
+        swal("Success!", "You and " + user.name + " " + user.surname + " are now friends!", "success");
+      }
     );
   }
 
   declineRequest(user : User){
-    this.httpService.deleteFriend(user.email).subscribe(
-      () => {}
+    this.httpService.declineFriendRequest(user.email).subscribe(
+      () => {
+        this.friendRequests.splice(this.friendRequests.indexOf(user),1);
+        swal("Success!", user.name + " " + user.surname + " has been declined!", "success");
+      }
     );
   }
 
@@ -116,6 +132,26 @@ export class UserProfileComponent implements OnInit {
       }
     }
     return 0;*/
+  }
+
+  addFriendRequest(receiver : User){
+    this.httpService.addFriendRequest(receiver.email).subscribe(
+      () => {
+        this.notFriends.splice(this.notFriends.indexOf(receiver),1);
+        this.requestsSent.push(receiver);
+        swal("Success!", "Your friend request has been sent!", "success");
+      }
+    );
+  }
+
+  removeRequestSent(user : User){
+    this.httpService.declineFriendRequest(user.email).subscribe(
+      () => {
+        this.requestsSent.splice(this.requestsSent.indexOf(user),1);
+        this.notFriends.push(user);
+        swal("Success!", "Request sent removed!", "success");
+      }
+    );
   }
 
 }

@@ -9,7 +9,11 @@
           <p> {{user.email}}</p>
         </div>
       </div>
+      <div class="pull-left">
+        <a [routerLink]="['/home/modifyUser']" style="color : black;" class="mouse"><span class="glyphicon glyphicon-pencil"></span></a>
+      </div>
     </div>
+
   </div>
   <div class="col-lg-7" style="padding-top: 96px">
     <div class="tabbable-panel">
@@ -172,12 +176,8 @@
                             <div class="panel-footer">Email: {{friend.email}}</div>
                             <br>
                             <div align="center" style="padding-bottom: 20px">
-                              <button type="button" class="btn btn-success"> Friends <span
-                                class="glyphicon glyphicon-ok"> </span></button>
-                              &nbsp;&nbsp;&nbsp;
-                              <button class="btn btn-danger" (click)="deleteFriend(friend)"> Delete <span
-                                class="glyphicon glyphicon-trash"> </span></button>
-                              &nbsp;&nbsp;&nbsp;
+                              <button type="button" class="btn btn-primary" (click)="addFriendRequest(friend)"> Add friend <span
+                                class="glyphicon glyphicon-user"> </span></button>
                             </div>
                           </div>
                         </div>
@@ -207,10 +207,7 @@
                               <div class="panel-footer">Email: {{friend.email}}</div>
                               <br>
                               <div align="center" style="padding-bottom: 20px">
-                                <button type="button" class="btn btn-primary" (click)="acceptFriendRequest(friend)"> Accept &nbsp;
-                                  <span class="glyphicon glyphicon-ok"> </span>
-                                </button>
-                                <button type="button" class="btn btn-danger" (click)="declineRequest(friend)"> Decline &nbsp;
+                                <button type="button" class="btn btn-danger" (click)="removeRequestSent(friend)"> Remove &nbsp;
                                   <span class="glyphicon glyphicon-trash"> </span>
                                 </button>
                                 &nbsp;&nbsp;&nbsp;
