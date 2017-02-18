@@ -18,6 +18,7 @@ export class LoginRegisterComponent implements OnInit {
   @ViewChild('reg_div') regDiv : any;
   @ViewChild('email') email : any;
   @ViewChild('f') form : any;
+  private canSubmitRegister:boolean = false;
 
   constructor(private httpService : LoginRegisterService, private router : Router) { }
 
@@ -72,9 +73,11 @@ export class LoginRegisterComponent implements OnInit {
         console.log(data['_body']);
         if(data['_body'] == 'true') {
           document.getElementById('err_span').innerHTML = 'Email \'' + email + '\' already exists.';
+          this.canSubmitRegister = false;
         }
         else {
           document.getElementById('err_span').innerHTML = '';
+          this.canSubmitRegister = true;
         }
       }
     );

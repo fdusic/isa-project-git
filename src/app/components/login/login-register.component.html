@@ -42,7 +42,7 @@
                       <input ngModel type="text" name="surname" placeholder="Surname" id="surname" required minlength="3">
                     </label>
                   </div>
-                  <button type="submit" class="form-btn">Send</button>
+                  <button type="submit" class="form-btn" [disabled] = "!f.valid || !canSubmitRegister">Send</button>
                 </form>
               </div>
             </div>

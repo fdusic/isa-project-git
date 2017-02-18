@@ -4,6 +4,7 @@ import {HomeComponent} from "../components/home/home.component";
 import {UserProfileComponent} from "../components/user-profile/user-profile.component";
 import {AddRestaurantComponent} from "../components/add-restaurant/add-restaurant.component";
 import {EmailComponent} from "../components/email/email.component";
+import {RestaurantDetailComponent} from "../components/restaurant-detail/restaurant-detail.component";
 
 const APP_ROUTES: Routes=[
     {path:'',component:LoginRegisterComponent},
@@ -11,7 +12,8 @@ const APP_ROUTES: Routes=[
      children:[
        {path:'',component:UserProfileComponent},
        {path:'addrestaurant',component: AddRestaurantComponent},
-       {path:'email/:email',component:EmailComponent}
+       {path:'email/:email',component:EmailComponent},
+       {path:'restaurant/:name',component:RestaurantDetailComponent}
      ]}
     ]
 

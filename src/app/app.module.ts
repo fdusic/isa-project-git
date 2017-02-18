@@ -14,6 +14,8 @@ import { AddRestaurantComponent } from './components/add-restaurant/add-restaura
 import { ManagerProfileComponent } from './components/manager-profile/manager-profile.component';
 import {ManagerService} from "./services/manager.service";
 import { EmailComponent } from './components/email/email.component';
+import {RestaurantService} from "./services/restaurant.service";
+import { RestaurantDetailComponent } from './components/restaurant-detail/restaurant-detail.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +27,7 @@ import { EmailComponent } from './components/email/email.component';
     AddRestaurantComponent,
     ManagerProfileComponent,
     EmailComponent,
+    RestaurantDetailComponent,
   ],
   imports: [
     BrowserModule,
@@ -32,7 +35,7 @@ import { EmailComponent } from './components/email/email.component';
     HttpModule,
     routing
   ],
-  providers: [LoginRegisterService,ManagerService],
+  providers: [LoginRegisterService,ManagerService,RestaurantService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
