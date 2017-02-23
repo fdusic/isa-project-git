@@ -19,6 +19,8 @@ import { RestaurantDetailComponent } from './components/restaurant-detail/restau
 import {RoleService} from "./services/role.service";
 import { ModifyUserComponent } from './components/modify-user/modify-user.component';
 import {Guardian} from "./guardian";
+import { RestaurantsComponent } from './components/restaurants/restaurants.component';
+import { AddMenuItemComponent } from './components/add-menu-item/add-menu-item.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +33,9 @@ import {Guardian} from "./guardian";
     ManagerProfileComponent,
     EmailComponent,
     RestaurantDetailComponent,
-    ModifyUserComponent
+    ModifyUserComponent,
+    RestaurantsComponent,
+    AddMenuItemComponent
   ],
   imports: [
     BrowserModule,

@@ -31,7 +31,7 @@ export class AddRestaurantComponent implements OnInit {
   onSubmit(rh:RestaurantHelp){
       this.restaurantService.addRestaurant(rh).subscribe(
         (data) => {
-          this.router.navigateByUrl('/home/restaurant/'+rh.name);
+          this.router.navigateByUrl('/home/restaurants/'+rh.name);
         }
       );
   }
