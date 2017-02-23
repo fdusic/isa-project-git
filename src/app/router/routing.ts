@@ -9,6 +9,13 @@ import {ModifyUserComponent} from "../components/modify-user/modify-user.compone
 import {Guardian} from "../guardian";
 import {RestaurantsComponent} from "../components/restaurants/restaurants.component";
 import {AddMenuItemComponent} from "../components/add-menu-item/add-menu-item.component";
+import {
+  EmployeeProfileComponent
+} from "../components/waiter-profile/employee-profile.component";
+import {
+  ModifyEmployeeComponent
+} from "../components/waiter-profile/modify-employee/modify-employee.component";
+
 
 const APP_ROUTES: Routes=[
     {path:'',component:LoginRegisterComponent},
@@ -22,7 +29,10 @@ const APP_ROUTES: Routes=[
        {path:'restaurants/addmenuitem/:name',component:AddMenuItemComponent},
        {path:'restaurants/:name',component:RestaurantDetailComponent},
        {path:'restaurants',component:RestaurantsComponent},
-       {path: 'modifyUser', component:ModifyUserComponent}
+       {path: 'modifyUser', component:ModifyUserComponent},
+       {path: 'modifyUser', component:ModifyUserComponent},
+       {path: 'employee-profile', component:EmployeeProfileComponent},
+       {path: 'modify-employee', component:ModifyEmployeeComponent}
      ]}
     ]
 

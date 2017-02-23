@@ -74,14 +74,16 @@ export class LoginRegisterComponent implements OnInit {
   onSubmitLogin(user : User){
     this.httpService.login(user).subscribe(
       data => {
-        console.log(data['_body']);
         if(data['_body'] == 'user'){
           this.router.navigateByUrl('/home');
           this.roleService.user = true;
           this.roleService.getFriendRequests();
         }else if(data['_body']=='manager'){
 
-        }else if(data['_body']=='check_email'){
+        }else if (data['_body'] == 'waiter'){
+          this.router.navigateByUrl('home/employee-profile');
+          this.roleService.waiter = true;
+        } else if(data['_body']=='check_email'){
           sweetAlert("Check your email!", "Please click on the link on your email to procced login.", "error");
         } else{
           document.getElementById('err_login').innerHTML = 'Incorrect email or password.';

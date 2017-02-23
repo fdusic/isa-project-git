@@ -21,6 +21,9 @@ import { ModifyUserComponent } from './components/modify-user/modify-user.compon
 import {Guardian} from "./guardian";
 import { RestaurantsComponent } from './components/restaurants/restaurants.component';
 import { AddMenuItemComponent } from './components/add-menu-item/add-menu-item.component';
+import { EmployeeProfileComponent} from './components/waiter-profile/employee-profile.component';
+import {EmployeeService} from "./services/employee.service";
+import { ModifyEmployeeComponent} from './components/waiter-profile/modify-employee/modify-employee.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +38,9 @@ import { AddMenuItemComponent } from './components/add-menu-item/add-menu-item.c
     RestaurantDetailComponent,
     ModifyUserComponent,
     RestaurantsComponent,
-    AddMenuItemComponent
+    AddMenuItemComponent,
+    EmployeeProfileComponent,
+    ModifyEmployeeComponent
   ],
   imports: [
     BrowserModule,
@@ -43,7 +48,8 @@ import { AddMenuItemComponent } from './components/add-menu-item/add-menu-item.c
     HttpModule,
     routing
   ],
-  providers: [LoginRegisterService,ManagerService,RestaurantService, RoleService, Guardian],
+  providers: [LoginRegisterService,ManagerService,RestaurantService, RoleService, Guardian,
+   EmployeeService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

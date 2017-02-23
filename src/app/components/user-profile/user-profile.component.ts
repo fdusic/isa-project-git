@@ -22,6 +22,7 @@ export class UserProfileComponent implements OnInit {
     this.httpService.getUser().subscribe(
       data => {
         this.user = JSON.parse(data['_body']);
+        console.log(this.user);
       }
     );
     this.httpService.getFriends().subscribe(
