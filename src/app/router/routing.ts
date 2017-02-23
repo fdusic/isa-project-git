@@ -6,6 +6,8 @@ import {AddRestaurantComponent} from "../components/add-restaurant/add-restauran
 import {EmailComponent} from "../components/email/email.component";
 import {RestaurantDetailComponent} from "../components/restaurant-detail/restaurant-detail.component";
 import {ModifyUserComponent} from "../components/modify-user/modify-user.component";
+import {RestaurantsComponent} from "../components/restaurants/restaurants.component";
+import {AddMenuItemComponent} from "../components/add-menu-item/add-menu-item.component";
 
 const APP_ROUTES: Routes=[
     {path:'',component:LoginRegisterComponent},
@@ -14,7 +16,9 @@ const APP_ROUTES: Routes=[
        {path:'',component:UserProfileComponent},
        {path:'addrestaurant',component: AddRestaurantComponent},
        {path:'email/:email',component:EmailComponent},
-       {path:'restaurant/:name',component:RestaurantDetailComponent},
+       {path:'restaurants/addmenuitem/:name',component:AddMenuItemComponent},
+       {path:'restaurants/:name',component:RestaurantDetailComponent},
+       {path:'restaurants',component:RestaurantsComponent},
        {path: 'modifyUser', component:ModifyUserComponent}
      ]}
     ]

@@ -1,0 +1,35 @@
+<div class="jumbotron">
+  <div class="container text-center">
+    <h1>Restaurants</h1>
+    <p>Look at our restaurants...</p>
+  </div>
+</div>
+
+
+<div class="container-fluid bg-3 text-center">
+  <table class="table table-hover table-inverse" id="storeTable">
+    <thead>
+    <tr>
+      <th>Name</th>
+      <th>Address</th>
+      <th>Description</th>
+      <th>Grade</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let restaurant of restaurants" [routerLink]="['/home/restaurants',restaurant.name]">
+      <td>{{restaurant.name}}</td>
+      <td>{{restaurant.address}}</td>
+      <td>{{restaurant.description}}</td>
+      <td *ngIf="restaurant.grade != 0">{{restaurant.grade}}</td>
+      <td *ngIf="restaurant.grade == 0">
+        <div class="progress">
+          <div class="progress-bar  progress-bar-warning progress-bar-striped" role="progressbar" style="width: 100%;">
+            Not rated
+          </div>
+        </div>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>

@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import {Http, Headers} from "@angular/http";
 import {RestaurantHelp} from "../beans/helps/restaurant-help";
+import {MenuItem} from "../beans/menu-item";
+import {Restaurant} from "../beans/app.restaurant";
 
 @Injectable()
 export class RestaurantService {
@@ -17,11 +19,28 @@ export class RestaurantService {
   }
 
   checkRestaurantName(name:string){
-    return this.http.post(this.path + 'checkRestaurantName/', name.trim());
+    return this.http.post(this.path + 'checkRestaurantName/', name.trim(), { withCredentials : true});
   }
 
   getRestaurantByName(name:string){
-    return this.http.post(this.path + 'getRestaurantByName/', name.trim());
+    return this.http.post(this.path + 'getRestaurantByName/', name.trim(), { withCredentials : true});
+  }
+
+  getAllRestaurants(){
+    return this.http.get(this.path + 'getAllRestaurants', { withCredentials : true} );
+  }
+
+
+  addMenuItem(mi:MenuItem){
+    let h = new Headers();
+    h.append('Content-type','application/json');
+    return this.http.post(this.path + 'addMenuItem/', JSON.stringify(mi), { headers : h, withCredentials : true });
+  }
+
+  getMenuItems(restaurant:Restaurant){
+    let h = new Headers();
+    h.append('Content-type','application/json');
+    return this.http.post(this.path + 'getMenuItems/', JSON.stringify(restaurant), { headers : h, withCredentials : true });
   }
 
 }

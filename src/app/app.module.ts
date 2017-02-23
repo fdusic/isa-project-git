@@ -18,6 +18,8 @@ import {RestaurantService} from "./services/restaurant.service";
 import { RestaurantDetailComponent } from './components/restaurant-detail/restaurant-detail.component';
 import {RoleService} from "./services/role.service";
 import { ModifyUserComponent } from './components/modify-user/modify-user.component';
+import { RestaurantsComponent } from './components/restaurants/restaurants.component';
+import { AddMenuItemComponent } from './components/add-menu-item/add-menu-item.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +32,9 @@ import { ModifyUserComponent } from './components/modify-user/modify-user.compon
     ManagerProfileComponent,
     EmailComponent,
     RestaurantDetailComponent,
-    ModifyUserComponent
+    ModifyUserComponent,
+    RestaurantsComponent,
+    AddMenuItemComponent
   ],
   imports: [
     BrowserModule,
