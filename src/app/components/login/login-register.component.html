@@ -12,8 +12,8 @@
             <div class="col-md-6 col-sm-6 col-xs-12">
               <div class="login-details">
                 <ul class="nav nav-tabs navbar-right">
-                  <li #reg_li><a data-toggle="tab" href="#register">Register</a></li>
-                  <li class="active" #log_li><a data-toggle="tab" href="#login">Login</a></li>
+                  <li #reg_li><a data-toggle="tab" href="#register" (click)="resetAndRedirect(1)">Register</a></li>
+                  <li class="active" #log_li><a data-toggle="tab" href="#login" (click)="resetAndRedirect(2)">Login</a></li>
                 </ul>
               </div>
             </div>
@@ -33,7 +33,11 @@
                       <br> <span style="color: red" id="err_span"></span>
                     </label>
                     <label class="pass">
-                      <input ngModel type="password" name="password" placeholder="Password" id="registrationPassword" required minlength="5">
+                      <input ngModel type="password" #pass name="password" placeholder="Password" id="registrationPassword" required minlength="5">
+                    </label>
+                    <label class="pass">
+                      <input ngModel type="password" #passRep name="password" placeholder="Repeat password" id="registrationPasswordRepeat" required minlength="5" (change)="samePassword()">
+                      <br> <span style="color: red" #passErr></span>
                     </label>
                     <label class="user">
                       <input ngModel type="text" name="name" placeholder="Name" id="name" required minlength="3">
@@ -53,7 +57,7 @@
                 <h1>Welcome <span>back!</span></h1>
               </div>
               <div class="login-form">
-                <form (ngSubmit)="onSubmitLogin(ff.value)" #ff="ngForm">
+                <form (ngSubmit)="onSubmitLogin(ff.value)" #ff="ngForm" id="logForm">
                   <div class="form-details">
                     <label class="user">
                       <input ngModel type="text" name="email" id="email" placeholder="Email">
@@ -73,7 +77,3 @@
     </div>
   </div>
 </div>
-
-
-
-

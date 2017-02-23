@@ -154,4 +154,24 @@ export class UserProfileComponent implements OnInit {
     );
   }
 
+  searchFriends(data : string){
+    if(data == "")
+      data = " ";
+    this.httpService.searchFriends(data).subscribe(
+      ret => {
+        this.friends = JSON.parse(ret['_body']);
+      }
+    );
+  }
+
+  searchPeople(data : string){
+    if(data == "")
+      data = " ";
+    this.httpService.searchPeople(data).subscribe(
+      ret => {
+        this.notFriends = JSON.parse(ret['_body']);
+      }
+    );
+  }
+
 }

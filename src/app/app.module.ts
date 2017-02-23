@@ -18,6 +18,7 @@ import {RestaurantService} from "./services/restaurant.service";
 import { RestaurantDetailComponent } from './components/restaurant-detail/restaurant-detail.component';
 import {RoleService} from "./services/role.service";
 import { ModifyUserComponent } from './components/modify-user/modify-user.component';
+import {Guardian} from "./guardian";
 
 @NgModule({
   declarations: [
@@ -38,7 +39,7 @@ import { ModifyUserComponent } from './components/modify-user/modify-user.compon
     HttpModule,
     routing
   ],
-  providers: [LoginRegisterService,ManagerService,RestaurantService, RoleService],
+  providers: [LoginRegisterService,ManagerService,RestaurantService, RoleService, Guardian],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

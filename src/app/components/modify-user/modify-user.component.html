@@ -2,7 +2,7 @@
   <h1 align="center" style="margin-top: 70px">Modify user</h1>
   <hr>
 
-  <form (ngSubmit)="onSubmit(f.value)" #f="ngForm">
+  <form (ngSubmit)="onSubmit(f)" #f="ngForm">
 
     <div class="row">
       <div class="col-md-offset-3 col-md-6">
@@ -55,6 +55,10 @@
                  [disabled]="passwordCorrect">
         </div>
       </div>
+    </div>
+
+    <div align="center">
+      <span #newPassErr style="color: red"></span>
     </div>
 
     <div class="row">

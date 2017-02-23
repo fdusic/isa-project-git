@@ -54,7 +54,7 @@
               <div class="col-lg-5 col-lg-offset-3">
                 <div class="input-group">
                   <input #inp type="text" class="form-control" placeholder="Search for friend..." style="height: 41px"
-                         (keyup)="search(inp.value)">
+                         (keyup)="searchFriends(inp.value)">
                   <span class="input-group-btn">
               <button class="btn btn-primary" type="button" style="height: 41px">
               <span class="glyphicon glyphicon-search"></span>
@@ -148,8 +148,8 @@
             <div class="row">
               <div class="col-lg-5 col-lg-offset-3">
                 <div class="input-group">
-                  <input #inp type="text" class="form-control" placeholder="Search for friend..." style="height: 41px"
-                         (keyup)="search(inp.value)">
+                  <input #inp1 type="text" class="form-control" placeholder="Search for friend..." style="height: 41px"
+                         (keyup)="searchPeople(inp1.value)">
                   <span class="input-group-btn">
               <button class="btn btn-primary" type="button" style="height: 41px">
               <span class="glyphicon glyphicon-search"></span>

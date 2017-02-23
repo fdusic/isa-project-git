@@ -1,8 +1,9 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {Http} from "@angular/http";
+import {Component, OnInit, ViewChild} from "@angular/core";
 import {User} from "../../beans/user";
 import {NgForm} from "@angular/forms";
-import {isNullOrUndefined} from "util";
+import {LoginRegisterService} from "../../services/login-register.service";
+import {Router} from "@angular/router";
+declare let swal : any;
 
 @Component({
   selector: 'app-modify-user',
@@ -15,12 +16,13 @@ export class ModifyUserComponent implements OnInit {
   private passwordCorrect = true;
 
   @ViewChild('invalidPassword') invalidPassword: any;
+  @ViewChild('newPassErr') newPassErr : any;
 
-  constructor(private http: Http) {
+  constructor(private httpService: LoginRegisterService, private router : Router) {
   }
 
   ngOnInit() {
-    this.http.get('http://localhost:8080/user/getUser', {withCredentials: true}).subscribe(
+    this.httpService.getUser().subscribe(
       data => {
         this.user = JSON.parse(data['_body']);
       }
@@ -28,7 +30,7 @@ export class ModifyUserComponent implements OnInit {
   }
 
   checkPassword(password: string) {
-    this.http.post('http://localhost:8080/user/checkPassword', password, {withCredentials: true}).subscribe(
+    this.httpService.checkPassword(password).subscribe(
       data => {
         if (data['_body'] == 'true') {
           this.invalidPassword.nativeElement.innerHTML = '';
@@ -42,20 +44,28 @@ export class ModifyUserComponent implements OnInit {
   }
 
   onSubmit(form: NgForm) {
-    if (form.hasOwnProperty('newPassword1')) {
-      if (!form.hasOwnProperty('newPassword2') || form.controls['newPassword1'].value != form.controls['newPassword2'].value) {
-        console.log('greska');
+    let user = new User();
+    user.email = this.user.email;
+    user.password = this.user.password;
+    if(form.controls['newPassword1'].value != "" || form.controls['newPassword2'].value != ""){
+      if(form.controls['newPassword1'].value != form.controls['newPassword2'].value){
+        this.newPassErr.nativeElement.innerHTML = "Passwords are different!";
         return;
-      } else {
-        form.controls['password'].value = form.controls['newPassword1'];
+      } else{
+        user.password = form.controls['newPassword1'].value;
+        this.newPassErr.nativeElement.innerHTML = "";
       }
-      /*console.log(form.controls['newPassword1'].value);
-       console.log(form.controls['newPassword2'].value);
-       if (form.controls['newPassword1'].value != form.controls['newPassword2'].value) {
-       console.log('greska');
-       return;
-       }*/
     }
+    user.name = form.controls['name'].value;
+    user.surname = form.controls['surname'].value;
+    let router = this.router;
+    this.httpService.modifyUser(user).subscribe(
+      () => {
+        swal({title : "Success!", text : "Your data has been modified!", type : "success"}, function(){
+          router.navigateByUrl('/home');
+        });
+      }
+    );
   }
 
 }

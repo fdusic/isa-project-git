@@ -6,16 +6,17 @@ import {AddRestaurantComponent} from "../components/add-restaurant/add-restauran
 import {EmailComponent} from "../components/email/email.component";
 import {RestaurantDetailComponent} from "../components/restaurant-detail/restaurant-detail.component";
 import {ModifyUserComponent} from "../components/modify-user/modify-user.component";
+import {Guardian} from "../guardian";
 
 const APP_ROUTES: Routes=[
     {path:'',component:LoginRegisterComponent},
     {path:'home',component:HomeComponent,
-     children:[
-       {path:'',component:UserProfileComponent},
+      children:[
+       {path:'',component:UserProfileComponent, canActivate : [Guardian]},
        {path:'addrestaurant',component: AddRestaurantComponent},
        {path:'email/:email',component:EmailComponent},
        {path:'restaurant/:name',component:RestaurantDetailComponent},
-       {path: 'modifyUser', component:ModifyUserComponent}
+       {path: 'modifyUser', component:ModifyUserComponent, canActivate : [Guardian]}
      ]}
     ]
 
