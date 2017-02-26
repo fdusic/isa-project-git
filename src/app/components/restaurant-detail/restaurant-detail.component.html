@@ -6,7 +6,6 @@
 </div>
 
 
-
     <nav class="navbar navbar-inverse sidebar" role="navigation" style="margin-top: -27px;position: fixed">
       <div class="container-fluid">
         <div class="navbar-header">
@@ -22,12 +21,12 @@
           <ul class="nav navbar-nav">
             <li #home_li class="active"><a>Home<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-home"></span></a></li>
             <li #menu_li><a (click)="onMenuClick()">Menu<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-indent-left"></span></a></li>
-            <li #segments_li><a href="#">Segments<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-globe"></span></a></li>
+            <li #segments_li><a (click)="onSegmentsClick()">Segments<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-globe"></span></a></li>
             <li #settings_li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">Settings <span class="caret"></span><span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-cog"></span></a>
               <ul class="dropdown-menu forAnimate" role="menu">
                 <li><a (click)="onAddMenuItem()">Add Menu Item</a></li>
-                <li><a href="#">Another action</a></li>
+                <li><a (click)="onCreateRestaurantConfiguration()">Create Configuration</a></li>
                 <li><a href="#">Something else here</a></li>
                 <li class="divider"></li>
                 <li><a href="#">Separated link</a></li>
@@ -143,6 +142,212 @@
         </tr>
         </tbody>
       </table>
+    </div>
+
+
+    <div class="container" *ngIf="createRestaurantConfiguarion" style="padding-left: 200px">
+
+      <div class="row">
+        <article class="col-sm-12 col-md-12 col-lg-12 sortable-grid ui-sortable">
+          <div id="wid-id-0">
+            <header role="heading">
+              <h2>Restaurant configuration </h2>
+            </header>
+
+            <div role="content">
+
+              <div class="widget-body">
+
+                <div class="row">
+                  <form id="wizard-1" novalidate="novalidate">
+                    <div id="bootstrap-wizard-1" class="col-sm-12">
+                      <div class="form-bootstrapWizard">
+                        <ul class="bootstrapWizard form-wizard">
+                          <li class="active" #segments_a>
+                            <a class="active"> <span class="step">1</span> <span class="title">Segments</span> </a>
+                          </li>
+                          <li class="" #segments_name_a>
+                            <a> <span class="step">2</span> <span class="title">Segments and Tables</span> </a>
+                          </li>
+                          <li class="" #schedule_a>
+                            <a> <span class="step">3</span> <span class="title">Schedule</span> </a>
+                          </li>
+                          <li #finish_a>
+                            <a> <span class="step">4</span> <span class="title">Finish</span> </a>
+                          </li>
+                        </ul>
+                        <div class="clearfix"></div>
+                      </div>
+                      <div class="tab-content">
+                        <div class="tab-pane active" id="tab1" #segments_div>
+                          <br>
+                          <h3><strong>Segments</strong> - Choose number of segments</h3>
+                          <div class="form-group">
+                            <label for="segments">How many segments:</label>
+                            <select ngModel name="segments" id="segments" class="form-control" (change)="selectNumberOfSegments($event)">
+                              <option disabled selected value> -- select number of segments -- </option>
+                              <option value="1">1</option>
+                              <option value="2">2</option>
+                              <option value="3">3</option>
+                              <option value="4">4</option>
+                              <option value="5">5</option>
+                            </select>
+                          </div>
+
+                          <div class="form-actions">
+                            <div class="row">
+                              <div class="col-sm-12">
+                                <ul class="pager wizard no-margin">
+                                  <li class="next">
+                                    <button (click)="onNext()" class="btn btn-default btn-round pull-right"> Next </button>
+                                  </li>
+                                </ul>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="tab-pane" id="tab2" #segments_name_div>
+                          <br>
+                          <h3><strong>Segments and Tables</strong> - Choose segment name and number of table</h3>
+                          <form (ngSubmit)="onSegmentsNameSubmit(ff)" #ff="ngForm">
+                            <div class="form-group" *ngFor="let i of numberOfSegments">
+                              <div class="row">
+                                <div class="col-md-8">
+                                  <label>Segment name</label>
+                                  <input type="text" class="form-control" id="{{'segmentName'+i}}" name="{{'segmentName'+i}}" required ngModel
+                                  >
+                                </div>
+                                <div class="col-md-4">
+                                  <label>Number of tables</label>
+                                  <select required ngModel name="segments" id="{{'numberOfTables'+i}}" name="{{'numberOfTables'+i}}" class="form-control">
+                                    <option disabled selected value> -- select number of tables -- </option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                    <option value="7">7</option>
+                                    <option value="8">8</option>
+                                  </select>
+                                </div>
+                              </div>
+                            </div>
+
+                          <div class="form-actions">
+                            <div class="row">
+                              <div class="col-sm-12">
+                                <ul class="pager wizard no-margin">
+                                  <li class="next">
+                                    <button type="submit" class="btn btn-default btn-round pull-right"> Next </button>
+                                  </li>
+                                </ul>
+                              </div>
+                            </div>
+                          </div>
+                          </form>
+                        </div>
+                        <div class="tab-pane" id="tab3" #schedule_div>
+                          <br>
+                          <h3><strong>Schedule</strong> - Define tables schedule</h3>
+                          <br>
+                          <div class="row"  *ngFor="let rs of restaurantSegments">
+                            <div class="col-md-8">
+                              <svg width="500" height="300" style="border: 1px solid black">
+                                <filter id="image" x="0%" y="0%" width="100%" height="100%">
+                                  <feImage xlink:href="./images/table-texture.jpg"/>
+                                </filter>
+
+                                <rect filter="url(#image)" *ngFor="let t of rs.tables" style="cursor: pointer" attr.transform="{{'matrix(1 0 0 1 '+t.startX+' '+t.startY+')'}}"
+                                        (mousedown)="selectElement($event)" (mousemove)="moveElement($event)" (mouseup)="unselectElement(t,$event)"  cx="90" cy="90" width="125" height="71" stroke="green"  stroke-width="4" fill="yellow" />
+                              </svg>
+                            </div>
+                            <div class="col-md-4">
+                              <div class="row" style="text-align: left">
+                                <label style="font-family: Copperplate; font-size: 20px" align="left">Number of tables:</label><strong style="font-family: Copperplate; font-size: 20px">  {{rs.tables.length}}</strong>
+                              </div>
+                              <div class="row" style="text-align: left">
+                                <label style="font-family: Copperplate; font-size: 20px" align="left">Name:</label><strong style="font-family: Copperplate; font-size: 20px">  {{rs.name}}</strong>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div class="form-actions">
+                            <div class="row">
+                              <div class="col-sm-12">
+                                <ul class="pager wizard no-margin">
+                                  <li class="next disabled">
+                                    <button class="btn btn-default btn-round pull-right" (click)="onNextToFinish()"> Next </button>
+                                  </li>
+                                </ul>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="tab-pane" id="tab4" #finish_div>
+                          <br>
+                          <h3><strong>Step 4</strong> - Finish configuration</h3>
+                          <br>
+                          <h1 class="text-center text-success"><strong><i class="fa fa-check fa-lg"></i> Complete</strong></h1>
+                          <h4 class="text-center">Click Save to finish</h4>
+                          <br>
+                          <br>
+                          <div class="form-actions">
+                            <div class="row">
+                              <div class="col-sm-12">
+                                <ul class="pager wizard no-margin">
+                                  <li class="next disabled">
+                                    <button (click)="onFinishConfiguration()"  class="btn btn-default btn-round pull-right"> Save </button>
+                                  </li>
+                                </ul>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+
+                      </div>
+                    </div>
+                  </form>
+                </div>
+
+              </div>
+              <!-- end widget content -->
+
+            </div>
+            <!-- end widget div -->
+
+          </div>
+          <!-- end widget -->
+
+        </article>
+      </div>
+
+    </div>
+
+    <div class="container" style="padding-left: 200px" *ngIf="segments">
+
+      <div class="row"  *ngFor="let rs of thisSegments;let i = index">
+        <hr>
+        <h3>Segment {{i+1}}</h3>
+        <div class="col-md-8">
+          <svg width="500" height="300" style="border: 1px solid black">
+            <filter id="image" x="0%" y="0%" width="100%" height="100%">
+              <feImage xlink:href="./images/table-texture.jpg"/>
+            </filter>
+            <rect filter="url(#image)" *ngFor="let t of rs.tables" style="cursor: pointer" attr.transform="{{'matrix(1 0 0 1 '+t.x+' '+t.y+')'}}"
+                    width="125" height="71" cx="90" cy="90" stroke="green"  stroke-width="4" fill="yellow" />
+          </svg>
+        </div>
+        <div class="col-md-4">
+          <div class="row" style="text-align: left">
+            <label style="font-family: Copperplate; font-size: 20px" align="left">Number of tables:</label><strong style="font-family: Copperplate; font-size: 20px">  {{rs.tables.length}}</strong>
+          </div>
+          <div class="row" style="text-align: left">
+            <label style="font-family: Copperplate; font-size: 20px" align="left">Name:</label><strong style="font-family: Copperplate; font-size: 20px">  {{rs.name}}</strong>
+          </div>
+        </div>
+      </div>
     </div>
 
 

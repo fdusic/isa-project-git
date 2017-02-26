@@ -3,6 +3,7 @@ import {Http, Headers} from "@angular/http";
 import {RestaurantHelp} from "../beans/helps/restaurant-help";
 import {MenuItem} from "../beans/menu-item";
 import {Restaurant} from "../beans/app.restaurant";
+import {RestaurantSegment} from "../beans/restaurant-segment";
 
 @Injectable()
 export class RestaurantService {
@@ -41,6 +42,18 @@ export class RestaurantService {
     let h = new Headers();
     h.append('Content-type','application/json');
     return this.http.post(this.path + 'getMenuItems/', JSON.stringify(restaurant), { headers : h, withCredentials : true });
+  }
+
+  onFinishConfiguration(rs:RestaurantSegment[]){
+    let h = new Headers();
+    h.append('Content-type','application/json');
+    return this.http.post(this.path + 'onFinishConfiguration/', JSON.stringify(rs), { headers : h, withCredentials : true });
+  }
+
+  getRestaurantSegments(r:Restaurant){
+    let h = new Headers();
+    h.append('Content-type','application/json');
+    return this.http.post(this.path + 'getRestaurantSegments/', JSON.stringify(r), { headers : h, withCredentials : true });
   }
 
 }
