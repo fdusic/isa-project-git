@@ -1,9 +1,12 @@
 <nav class="navbar navbar-inverse navbar-fixed-top">
   <div class="container">
     <div class="navbar-header">
-      <a class="navbar-brand hacked-font"><font face="impact">DBV-site</font></a>
+      <a class="navbar-brand hacked-font"><font face="impact"><a style="text-decoration: none" [routerLink]="['/home']">DBV</a></font></a>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav navbar-left">
+        <li><a [routerLink]="['/home/restaurants']">Restaurants</a></li>
+      </ul>
       <ul class="nav navbar-nav navbar-right">
         <li routerLinkActive="active"><a [routerLink]="['/home']">Profile</a></li>
         <li class="dropdown">

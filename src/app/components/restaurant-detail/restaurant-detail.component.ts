@@ -1,12 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from "@angular/core";
 import {Restaurant} from "../../beans/app.restaurant";
 import {ActivatedRoute} from "@angular/router";
 import {RestaurantService} from "../../services/restaurant.service";
 import {ViewChild} from "@angular/core/src/metadata/di";
 import {MenuItem} from "../../beans/menu-item";
-import {NgForm} from "@angular/forms";
 import {RestaurantSegment} from "../../beans/restaurant-segment";
 import {RestaurantTable} from "../../beans/restaurant-table";
+import {Employee} from "../../beans/employee";
+import {Schedule} from "../../beans/schedule";
+import {NgForm} from "@angular/forms";
+import {isNullOrUndefined} from "util";
 declare let sweetAlert : any;
 declare let swal : any;
 
@@ -22,6 +25,9 @@ export class RestaurantDetailComponent implements OnInit {
   @ViewChild('settings_li') settings_li : any;
   @ViewChild('menu_li') menu_li : any;
   @ViewChild('segments_li') segments_li : any;
+  @ViewChild('repeatPass') repeatPass : any;
+  @ViewChild('username') username : any;
+  @ViewChild('schedule') schedule_li : any;
 
 
   //ZA kreiranje konfiguracije rastorana i segmenata
@@ -55,12 +61,13 @@ export class RestaurantDetailComponent implements OnInit {
   private home:boolean=false;
   private segments:boolean=false;
   private menu:boolean=false;
+  private addEmployee : boolean = false;
+  private scheduleBool : boolean = false;
 
   private restaurant:Restaurant = new Restaurant();
   private menuItems:MenuItem[]=[];
   private foodMenu:MenuItem[]=[];
   private drinkMenu:MenuItem[]=[];
-
 
   private finishedConfiguration:boolean = false;
 
@@ -71,17 +78,52 @@ export class RestaurantDetailComponent implements OnInit {
   //OVE KORISTITI
   private thisSegments:RestaurantSegment[] = [];
 
+  private errMessage = false;
+  private errUsernameMessage = false;
+
+  private schedulesFirst : Schedule[] = [];
+  private schedulesSecond : Schedule[] = [];
+
+  private addEmployeeSchedule = false;
+  private selectedDate : string;
+  private selectedShift : boolean;
+
+  private workers : Employee[] = []
+
+  private freeWorkers : Employee[] = [];
 
   constructor(private activatedRoute:ActivatedRoute,private restaurantService:RestaurantService) { }
 
   ngOnInit() {
-      this.restaurantService.getRestaurantByName(this.activatedRoute.snapshot.params['name']).subscribe(
-        (data) => {
-          this.restaurant = JSON.parse(data['_body']);
-        }
-      );
+    var date = new Date();
+    this.selectedDate = date.getFullYear() + '-' + ((date.getMonth() % 12) + 1) + "-" + date.getDate();
+    this.restaurantService.getRestaurantByName(this.activatedRoute.snapshot.params['name']).subscribe(
+      (data) => {
+        this.restaurant = JSON.parse(data['_body']);
+        this.restaurantService.getWorkers(this.restaurant).subscribe(
+          data => {
+            this.workers = JSON.parse(data['_body']);
+          }
+        );
+      }
+    );
   }
 
+  onAddEmployee(){
+    this.addMenuItem=false;
+    this.home=false;
+    this.menu=false;
+    this.segments=false;
+    this.addEmployee = true;
+    this.scheduleBool = false;
+    this.createRestaurantConfiguarion = false;
+
+    this.settings_li.nativeElement.classList.add('active');
+    this.home_li.nativeElement.classList.remove('active');
+    this.menu_li.nativeElement.classList.remove('active');
+    this.segments_li.nativeElement.classList.remove('active');
+    this.schedule_li.nativeElement.classList.remove('active');
+  }
 
   onAddMenuItem(){
     this.addMenuItem=true;
@@ -89,30 +131,78 @@ export class RestaurantDetailComponent implements OnInit {
     this.menu=false;
     this.segments=false;
     this.createRestaurantConfiguarion = false;
+    this.addEmployee = false;
+    this.scheduleBool = false;
 
     this.settings_li.nativeElement.classList.add('active');
     this.home_li.nativeElement.classList.remove('active');
     this.menu_li.nativeElement.classList.remove('active');
     this.segments_li.nativeElement.classList.remove('active');
-  }
+    this.schedule_li.nativeElement.classList.remove('active');
 
+  }
 
   onSubmitMenuItem(mi:MenuItem){
     mi.restaurant = this.restaurant;
     this.restaurantService.addMenuItem(mi).subscribe(
       (data) => {
-          if(data['_body']=='false'){
-            sweetAlert("Ouups!", "Menu item with same name already exist.", "error");
-          }else{
-            swal("Good job!", "You added menu item!", "success");
-            var dirtyFormID = 'menuItemForm';
-            var resetForm = <HTMLFormElement>document.getElementById(dirtyFormID);
-            resetForm.reset();
-          }
+        if(data['_body']=='false'){
+          sweetAlert("Ouups!", "Menu item with same name already exist.", "error");
+        }else{
+          swal("Good job!", "You added menu item!", "success");
+          var dirtyFormID = 'menuItemForm';
+          var resetForm = <HTMLFormElement>document.getElementById(dirtyFormID);
+          resetForm.reset();
+        }
       }
     );
   }
 
+  onSchedule(){
+    let desc = this.restaurant.description;
+    this.restaurant.description = 'today';
+    this.restaurantService.getSchedules(this.restaurant).subscribe(
+      data => {
+        this.restaurant.description = desc;
+        this.schedulesFirst = [];
+        this.schedulesSecond = [];
+        this.freeWorkers = [];
+        let schedules : Schedule[] = JSON.parse(data['_body']);
+        for(var i=0; i < schedules.length; i++){
+          if(schedules[i].shift == 'FIRST')
+            this.schedulesFirst.push(schedules[i]);
+          else
+            this.schedulesSecond.push(schedules[i]);
+        }
+
+        for(var i=0; i < this.workers.length; i++){
+          let flag = true;
+          for(var j=0; j < schedules.length; j++){
+            if(this.workers[i].id == schedules[j].employee.id){
+              flag = false;
+              break;
+            }
+          }
+          if(flag)
+            this.freeWorkers.push(this.workers[i]);
+        }
+      }
+    );
+
+    this.addMenuItem=false;
+    this.home=false;
+    this.menu=false;
+    this.segments=false;
+    this.addEmployee = false;
+    this.scheduleBool = true;
+    this.createRestaurantConfiguarion = false;
+
+    this.settings_li.nativeElement.classList.remove('active');
+    this.home_li.nativeElement.classList.remove('active');
+    this.menu_li.nativeElement.classList.remove('active');
+    this.segments_li.nativeElement.classList.remove('active');
+    this.schedule_li.nativeElement.classList.add('active');
+  }
 
   onMenuClick(){
     this.addMenuItem=false;
@@ -120,11 +210,14 @@ export class RestaurantDetailComponent implements OnInit {
     this.menu=true;
     this.segments=false;
     this.createRestaurantConfiguarion = false;
+    this.scheduleBool = false;
+    this.addEmployee = false;
 
     this.menu_li.nativeElement.classList.add('active');
     this.home_li.nativeElement.classList.remove('active');
     this.settings_li.nativeElement.classList.remove('active');
     this.segments_li.nativeElement.classList.remove('active');
+    this.schedule_li.nativeElement.classList.remove('active');
 
     this.restaurantService.getMenuItems(this.restaurant).subscribe(
       (data) => {
@@ -142,7 +235,6 @@ export class RestaurantDetailComponent implements OnInit {
     );
   }
 
-
   onCreateRestaurantConfiguration(){
 
     if(this.finishedConfiguration){
@@ -155,12 +247,15 @@ export class RestaurantDetailComponent implements OnInit {
     this.menu=false;
     this.segments=false;
     this.createRestaurantConfiguarion = true;
+    this.scheduleBool = false;
+    this.addEmployee = false;
 
 
     this.menu_li.nativeElement.classList.remove('active');
     this.home_li.nativeElement.classList.remove('active');
     this.settings_li.nativeElement.classList.add('active');
     this.segments_li.nativeElement.classList.remove('active');
+    this.schedule_li.nativeElement.classList.remove('active');
 
   }
 
@@ -218,11 +313,6 @@ export class RestaurantDetailComponent implements OnInit {
       this.segments_name_a.nativeElement.classList.add('active');
       return;
     }
-
-
-
-
-
   }
 
 
@@ -301,22 +391,134 @@ export class RestaurantDetailComponent implements OnInit {
   }
 
 
-  onFinishConfiguration(){
+  onFinishConfiguration() {
     this.restaurantService.onFinishConfiguration(this.restaurantSegments).subscribe(
       () => {
         swal("Good job!", "You created configuration!", "success");
-        this.addMenuItem=false;
-        this.home=false;
-        this.menu=false;
-        this.segments=true;
+        /*this.addMenuItem = false;
+        this.home = false;
+        this.menu = false;
+        this.segments = true;
         this.createRestaurantConfiguarion = false;
+        this.scheduleBool = false;
 
         this.menu_li.nativeElement.classList.remove('active');
         this.home_li.nativeElement.classList.remove('active');
         this.settings_li.nativeElement.classList.remove('active');
         this.segments_li.nativeElement.classList.add('active');
+        this.schedule_li.nativeElement.classList.remove('active');*/
+        this.onSegmentsClick();
         this.finishedConfiguration = true;
+      });
+  }
 
+  onSubmitAddEmployee(emp : Employee, repeatPassword : string){
+    if(emp.password != repeatPassword){
+      this.errMessage = true;
+      this.repeatPass.nativeElement.value = '';
+      return;
+    } else{
+      this.errMessage = false;
+    }
+
+    emp.restaurant = this.restaurant;
+
+    this.restaurantService.addEmployee(emp).subscribe(
+      () => {
+        swal("Good job!", "You added a new employee!", "success");
+        var dirtyFormID = 'modifyEmpForm';
+        var resetForm = <HTMLFormElement>document.getElementById(dirtyFormID);
+        resetForm.reset();
+      }
+    );
+  }
+
+  checkEmployeeUsername(username : string){
+    this.restaurantService.checkEmployeeUsername(username).subscribe(
+      data => {
+        if(data['_body'] == 'true'){
+          this.errUsernameMessage = true;
+          this.username.nativeElement.value = ''
+        } else{
+          this.errUsernameMessage = false;
+        }
+      }
+    );
+  }
+
+  dateChange(event){
+    this.selectedDate = event.srcElement.value.toString();
+    let desc = this.restaurant.description;
+    if(event.srcElement.value.toString() == '') {
+      this.schedulesFirst = [];
+      this.schedulesSecond = [];
+      return;
+    }
+    this.restaurant.description = event.srcElement.value.toString();
+    this.restaurantService.getSchedules(this.restaurant).subscribe(
+      data => {
+        this.restaurant.description = desc;
+        let schedules : Schedule[] = JSON.parse(data['_body']);
+        this.schedulesSecond = [];
+        this.schedulesFirst = [];
+        for(var i=0; i < schedules.length; i++){
+          if(schedules[i].shift == 'FIRST')
+            this.schedulesFirst.push(schedules[i]);
+          else
+            this.schedulesSecond.push(schedules[i]);
+        }
+        this.freeWorkers = [];
+        for(var i=0; i < this.workers.length; i++){
+          let flag = true;
+          for(var j=0; j < schedules.length; j++){
+            if(this.workers[i].id == schedules[j].employee.id){
+              flag = false;
+              break;
+            }
+          }
+          if(flag)
+            this.freeWorkers.push(this.workers[i]);
+        }
+      }
+    );
+  }
+
+  onCloseAddEmployeeSchedule(){
+    this.addEmployeeSchedule = false;
+  }
+
+  onAddEmployeeSchedule(firstShift : boolean){
+    if(this.freeWorkers.length == 0){
+      swal("Error!", "All workers are already scheduled for today!", "error")
+    } else
+      this.addEmployeeSchedule = true;
+
+    this.selectedShift = firstShift;
+  }
+
+  onSaveEmployeeSchedule(form : NgForm){
+    let newS = new Schedule();
+    newS.employee = this.freeWorkers[form.controls['selectedWorker'].value];
+    if(this.selectedShift)
+      newS.shift = 'FIRST';
+    else
+      newS.shift = 'SECOND';
+    newS.restaurant = this.restaurant;
+    let desc = this.restaurant.description;
+    if(isNullOrUndefined(this.selectedDate))
+      newS.restaurant.description = 'today';
+    else
+      newS.restaurant.description = this.selectedDate.toString();
+    this.restaurantService.addSchedule(newS).subscribe(
+      () => {
+        this.onCloseAddEmployeeSchedule();
+
+        if(this.selectedShift)
+          this.schedulesFirst.push(newS);
+        else
+          this.schedulesSecond.push(newS);
+        this.freeWorkers.splice(form.controls['selectedWorker'].value,1);
+        this.restaurant.description = desc;
       }
     );
   }
@@ -327,12 +529,14 @@ export class RestaurantDetailComponent implements OnInit {
     this.menu=false;
     this.segments=true;
     this.createRestaurantConfiguarion = false;
+    this.scheduleBool = false;
+    this.addEmployee = false;
 
     this.menu_li.nativeElement.classList.remove('active');
     this.home_li.nativeElement.classList.remove('active');
     this.settings_li.nativeElement.classList.remove('active');
     this.segments_li.nativeElement.classList.add('active');
-
+    this.schedule_li.nativeElement.classList.remove('active');
 
     this.restaurantService.getRestaurantSegments(this.restaurant).subscribe(
       (data) => {
@@ -344,4 +548,52 @@ export class RestaurantDetailComponent implements OnInit {
     );
   }
 
+  onRemoveEmployeeSchedule(emp : Employee){
+    console.log(emp);
+    console.log(emp.id);
+    let s = new Schedule();
+    let desc = this.restaurant.description;
+    let d = this.restaurant;
+    if(isNullOrUndefined(this.selectedDate))
+      this.restaurant.description = 'today';
+    else
+      this.restaurant.description = this.selectedDate.toString();
+    s.restaurant = this.restaurant;
+    s.employee = emp;
+    let service = this.restaurantService;
+    let fw = this.freeWorkers;
+    let sf = this.schedulesFirst;
+    let ss = this.schedulesSecond;
+    swal({
+        title: "Delete employee shift",
+        text: "Are you shure you wan't to delete this employee's shift?",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#DD6B55",
+        confirmButtonText: "Yes, delete it!",
+        closeOnConfirm: false
+      },
+      function(){
+        service.removeSchedule(s).subscribe(
+          () => {
+            swal("Deleted!", "The worker is free today.", "success");
+            d.description = desc;
+            fw.push(emp);
+            for(let i=0; i < sf.length; i++){
+              console.log(sf[i]);
+              if(sf[i].employee.id == emp.id){
+                sf.splice(i,1);
+                return;
+              }
+            }
+            for(let i=0; i < ss.length; i++){
+              if(ss[i].employee.id == emp.id){
+                ss.splice(i,1);
+                return;
+              }
+            }
+          }
+        );
+      });
+  }
 }

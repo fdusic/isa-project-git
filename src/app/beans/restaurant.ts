@@ -6,6 +6,5 @@ export class Restaurant{
   public grade:number;
   public address:string;
 
-
   constructor(){}
 }
