@@ -4,11 +4,13 @@
   "license": "MIT",
   "angular-cli": {},
   "scripts": {
-    "start": "ng serve",
+    "start": "http-server",
     "lint": "tslint \"src/**/*.ts\"",
     "test": "ng test",
     "pree2e": "webdriver-manager update",
-    "e2e": "protractor"
+    "e2e": "protractor",
+    "preinstall": "npm install -g http-server",
+    "postinstall": "ng build && mv dist/* ."
   },
   "private": true,
   "dependencies": {
@@ -25,9 +27,7 @@
     "ng2-drag-drop": "^0.5.3",
     "rxjs": "5.0.0-beta.12",
     "ts-helpers": "^1.1.1",
-    "zone.js": "^0.6.23"
-  },
-  "devDependencies": {
+    "zone.js": "^0.6.23",
     "@types/jasmine": "^2.2.30",
     "@types/node": "^6.0.42",
     "angular-cli": "1.0.0-beta.19-3",
@@ -44,5 +44,8 @@
     "tslint": "3.13.0",
     "typescript": "~2.0.3",
     "webdriver-manager": "10.2.5"
+  },
+  "devDependencies": {
+
   }
 }

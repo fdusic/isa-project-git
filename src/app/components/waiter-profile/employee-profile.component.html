@@ -1,0 +1,48 @@
+<div class="row moveDown">
+  <div class="col-lg-5">
+    <div class="container">
+      <div class="fb-profile">
+        <img align="left" class="fb-image-profile thumbnail" src="../../../images/user-default.png"
+             alt="Profile image example"/>
+        <div class="fb-profile-text row">
+          <div class="col-md-6">
+            <h1>{{employee?.name + ' ' + employee?.surname}}</h1>
+            <h3>{{employee?.address}}</h3>
+            <h3>Restaurant: {{employee?.restaurant?.name}}</h3>
+            <div>
+              <a [routerLink]="['/home/modify-employee']" style="color : black;" class="mouse"><span class="glyphicon glyphicon-pencil"></span></a>
+            </div>
+          </div>
+          <div>
+            <br><br>
+            <h4>Connfection number: {{employee?.confectionNum}}</h4>
+            <h4>Shoe size: {{employee?.shoeSize}}</h4>
+            <h4>Grade: {{getWaiterGrade()}}</h4>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <br><br><br><br><br>
+  <div class="col-lg-7" style="padding-top: 96px">
+    <div class="tabbable-panel">
+      <div class="tabbable-line">
+        <ul class="nav nav-tabs ">
+          <li class="active">
+            <a href="#tab_default_1" data-toggle="tab">
+              <span class="glyphicon glyphicon-user" style="font-size: 40px"></span> </a>
+          </li>
+          <li >
+            <a href="#tab_default_2" data-toggle="tab">
+              <span class="glyphicon glyphicon-heart" style="font-size: 40px"></span> </a>
+          </li>
+          <li>
+            <a href="#tab_default_3" data-toggle="tab">
+              <span class="glyphicon glyphicon-info-sign" style="font-size: 40px"></span> </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

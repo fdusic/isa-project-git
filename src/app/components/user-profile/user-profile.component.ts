@@ -22,6 +22,7 @@ export class UserProfileComponent implements OnInit {
     this.httpService.getUser().subscribe(
       data => {
         this.user = JSON.parse(data['_body']);
+        console.log(this.user);
       }
     );
     this.httpService.getFriends().subscribe(
@@ -150,6 +151,26 @@ export class UserProfileComponent implements OnInit {
         this.requestsSent.splice(this.requestsSent.indexOf(user),1);
         this.notFriends.push(user);
         swal("Success!", "Request sent removed!", "success");
+      }
+    );
+  }
+
+  searchFriends(data : string){
+    if(data == "")
+      data = " ";
+    this.httpService.searchFriends(data).subscribe(
+      ret => {
+        this.friends = JSON.parse(ret['_body']);
+      }
+    );
+  }
+
+  searchPeople(data : string){
+    if(data == "")
+      data = " ";
+    this.httpService.searchPeople(data).subscribe(
+      ret => {
+        this.notFriends = JSON.parse(ret['_body']);
       }
     );
   }

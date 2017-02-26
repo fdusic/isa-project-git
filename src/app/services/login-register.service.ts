@@ -66,11 +66,11 @@ export class LoginRegisterService{
   }
 
   sendEmail(email : string){
-    return this.http.post(this.path + 'sendEmail/', email.trim());
+    return this.http.post(this.path + 'sendEmail/', email.trim(), {withCredentials : true});
   }
 
   deleteFromEmailHelper(email:string){
-    return this.http.post(this.path + 'deleteFromEmailHelper/', email.trim());
+    return this.http.post(this.path + 'deleteFromEmailHelper/', email.trim(), {withCredentials : true});
   }
 
   addFriendRequest(receiver : string){
@@ -84,7 +84,19 @@ export class LoginRegisterService{
   modifyUser(user : User){
     let h = new Headers();
     h.append('Content-type','application/json');
-    return this.http.post(this.path + 'modifyUser/', JSON.stringify(user), { headers : h });
+    return this.http.post(this.path + 'modifyUser/', JSON.stringify(user), { headers : h, withCredentials : true });
+  }
+
+  checkPassword(password : string){
+    return this.http.post(this.path + 'checkPassword', password, {withCredentials: true})
+  }
+
+  searchFriends(data : string){
+    return this.http.post(this.path + 'searchFriends', data, { withCredentials : true });
+  }
+
+  searchPeople(data : string){
+    return this.http.post(this.path + 'searchPeople', data, { withCredentials : true });
   }
 
 }
