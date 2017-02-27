@@ -28,6 +28,9 @@ import { ChangeRestaurantComponent } from './components/change-restaurant/change
 import { SupplierComponent } from './components/supplier/supplier.component';
 import {SupplierService} from "./services/supplier.service";
 import { SupplierModifyComponent } from './components/supplier-modify/supplier-modify.component';
+import { AddOrderComponent } from './components/waiter-profile/add-order/add-order.component';
+import { ChangeOrderComponent } from './components/waiter-profile/change-order/change-order.component';
+import { SetPasswordComponent } from './components/login/set-password/set-password.component';
 
 @NgModule({
   declarations: [
@@ -47,7 +50,10 @@ import { SupplierModifyComponent } from './components/supplier-modify/supplier-m
     ModifyEmployeeComponent,
     ChangeRestaurantComponent,
     SupplierComponent,
-    SupplierModifyComponent
+    SupplierModifyComponent,
+    AddOrderComponent,
+    ChangeOrderComponent,
+    SetPasswordComponent
   ],
   imports: [
     BrowserModule,

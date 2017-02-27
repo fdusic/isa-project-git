@@ -79,14 +79,54 @@ export class LoginRegisterComponent implements OnInit {
           this.roleService.user = true;
           this.roleService.supplier = false;
           this.roleService.waiter = false;
+          this.roleService.chef = false;
+          this.roleService.bartender = false;
           this.roleService.getFriendRequests();
         }else if(data['_body']=='manager'){
+
 
         }else if (data['_body'] == 'waiter'){
           this.router.navigateByUrl('home/employee-profile');
           this.roleService.user = false;
           this.roleService.supplier = false;
           this.roleService.waiter = true;
+          this.roleService.chef = false;
+          this.roleService.bartender = false;;
+        }else if(data['_body'] == 'chef'){
+          this.router.navigateByUrl('home/employee-profile');
+          this.roleService.user = false;
+          this.roleService.waiter = false;
+          this.roleService.supplier = false;
+          this.roleService.chef = true;
+          this.roleService.bartender = false;
+        }else if(data['_body'] == 'bartender'){
+          this.router.navigateByUrl('home/employee-profile');
+          this.roleService.user = false;
+          this.roleService.waiter = false;
+          this.roleService.chef = false;
+          this.roleService.supplier = false;
+          this.roleService.bartender = true;
+        }else if(data['_body'] == 'fwaiter'){
+          this.router.navigateByUrl('home/set-password');
+          this.roleService.user = false;
+          this.roleService.supplier = false;
+          this.roleService.waiter = true;
+          this.roleService.chef = false;
+          this.roleService.bartender = false;
+        }else if(data['_body'] == 'fbartender'){
+          this.router.navigateByUrl('home/set-password');
+          this.roleService.user = false;
+          this.roleService.waiter = false;
+          this.roleService.chef = false;
+          this.roleService.bartender = true;
+          this.roleService.supplier = false;
+        }else if(data['_body'] == 'fchef'){
+          this.router.navigateByUrl('home/set-password');
+          this.roleService.user = false;
+          this.roleService.waiter = false;
+          this.roleService.supplier = false;
+          this.roleService.chef = true;
+          this.roleService.bartender = false;
         } else if(data['_body']=='check_email'){
           sweetAlert("Check your email!", "Please click on the link on your email to procced login.", "error");
         } else if(data['_body'] == 'supplier'){
@@ -94,6 +134,8 @@ export class LoginRegisterComponent implements OnInit {
           this.roleService.user = false;
           this.roleService.supplier = true;
           this.roleService.waiter = false;
+          this.roleService.chef = false;
+          this.roleService.bartender = false;
         } else {
           document.getElementById('err_login').innerHTML = 'Incorrect email or password.';
         }
@@ -104,7 +146,6 @@ export class LoginRegisterComponent implements OnInit {
   checkEmail(email : string){
     this.httpService.checkEmail(email).subscribe(
       data => {
-        console.log(data['_body']);
         if(data['_body'] == 'true') {
           document.getElementById('err_span').innerHTML = 'Email \'' + email + '\' already exists.';
           this.canSubmitRegister = false;

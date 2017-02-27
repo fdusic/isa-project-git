@@ -18,6 +18,9 @@ import {
   ModifyEmployeeComponent
 } from "../components/waiter-profile/modify-employee/modify-employee.component";
 import {ChangeRestaurantComponent} from "../components/change-restaurant/change-restaurant.component";
+import {AddOrderComponent} from "../components/waiter-profile/add-order/add-order.component";
+import {ChangeOrderComponent} from "../components/waiter-profile/change-order/change-order.component";
+import {SetPasswordComponent} from "../components/login/set-password/set-password.component";
 
 
 const APP_ROUTES: Routes=[
@@ -38,8 +41,11 @@ const APP_ROUTES: Routes=[
        {path: 'employee-profile', component:EmployeeProfileComponent},
        {path: 'modify-employee', component:ModifyEmployeeComponent},
        {path: 'supplier', component:SupplierComponent},
-       {path : 'modify-supplier', component : SupplierModifyComponent}
-     ]}
+       {path : 'modify-supplier', component : SupplierModifyComponent},
+       {path: 'add-order', component:AddOrderComponent},
+       {path: 'change-order', component:ChangeOrderComponent},
+       {path: 'set-password', component:SetPasswordComponent}
+      ]}
     ]
 
 export const routing = RouterModule.forRoot(APP_ROUTES);

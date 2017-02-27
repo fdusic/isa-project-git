@@ -14,7 +14,6 @@ export class Guardian implements CanActivate{
 
     return this.http.get('http://localhost:8080/user/isLoged', {withCredentials : true}).map(
       auth => {
-        console.log(auth['_body']);
         if(auth['_body'] == 'true')
           return true;
         else {

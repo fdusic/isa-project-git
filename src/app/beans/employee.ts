@@ -7,6 +7,7 @@ export class Employee extends AbstractEmployee {
   public waiterGrade: number;
   public role: string;
   public restaurant: Restaurant;
+  public firstTimeLogged: boolean;
 
   constructor(){
     super();

@@ -8,6 +8,8 @@ export class RoleService {
   public waiter: boolean = false;
   public friendRequestCount : number;
   public supplier : boolean = false;
+  public chef: boolean = false;
+  public bartender: boolean = false;
 
   constructor(private httpService : LoginRegisterService) { }
 

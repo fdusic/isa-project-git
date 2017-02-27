@@ -1,0 +1,119 @@
+<div class="container">
+  <div>
+    <a class="btn btn-danger pull-left" [routerLink]="['/home/employee-profile']">Back</a>
+    <button type="button" class="btn btn-primary pull-right" [disabled]="isAddOrderDisabled()" (click)="onAddOrder()">Add order</button>
+    <h1 align="center" style="margin-top: 70px">Add order</h1>
+  </div>
+  <hr>
+  <div class="form-group">
+    <label for="bartender">Chef</label>
+    <select required name="chef" id="chef" class="form-control" #ch (change)="chefChanged($event)">
+      <option disabled selected value> -- select chef -- </option>
+      <option *ngFor="let chef of chefs">{{chef.name + ' (' + chef.username + ')'}}</option>
+    </select>
+  </div>
+
+
+  <div class="form-group">
+    <label for="bartender">Bartender</label>
+    <select required  name="bartender" id="bartender" class="form-control" #bart (change)="bartenderChanged()">
+      <option disabled selected value> -- select bartender -- </option>
+      <option *ngFor="let bartender of bartenders">{{bartender.name + ' (' + bartender.username + ')'}}</option>
+    </select>
+  </div>
+
+  <div>
+    <div>
+      <button class="btn btn-md btn-success" (click)="addMenuItem()" [disabled]="isDisabled()">Add Menu Item</button>
+    </div>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-6">
+          <hr>
+          <div class="table-title">
+            <h3 style="color: goldenrod">FOOD</h3>
+          </div>
+          <table class="table-fill">
+            <thead>
+            <tr>
+              <th class="text-left">Name</th>
+              <th class="text-left">Description</th>
+              <th class="text-left">Price</th>
+              <th class="text-left">Category</th>
+            </tr>
+            </thead>
+            <tbody class="table-hover">
+            <tr *ngFor="let menuItem of addedFoodItems">
+              <td class="text-left">{{menuItem.name}}</td>
+              <td class="text-left">{{menuItem.description}}</td>
+              <td class="text-left">{{menuItem.price}}$</td>
+              <td class="text-center"><img class="media-object" src="./images/food.png" style="width: 45px; height: 45px"></td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="col-md-6">
+          <hr>
+          <div class="table-title">
+            <h3 style="color: goldenrod">DRINKS</h3>
+          </div>
+          <table class="table-fill">
+            <thead>
+            <tr>
+              <th class="text-left">Name</th>
+              <th class="text-left">Description</th>
+              <th class="text-left">Price</th>
+              <th class="text-left">Category</th>
+            </tr>
+            </thead>
+            <tbody class="table-hover">
+            <tr *ngFor="let menuItem of addedDrinkItems">
+              <td class="text-left">{{menuItem.name}}</td>
+              <td class="text-left">{{menuItem.description}}</td>
+              <td class="text-left">{{menuItem.price}}$</td>
+              <td class="text-center"><img class="media-object" src="./images/drink.jpg" style="width: 45px; height: 45px"></td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div *ngIf="addMenuItemDialog" class="modal fade show in danger" id="addMenuItemDialog" role="dialog">
+    <div class="modal-dialog" style="background:grey;">
+      <div class="modal-content">
+        <div class="modal-header" style = "border:2px yellow;">
+          <button type="button" class="close" (click)="onCloseAddMenuItem()" data-dismiss="modal">&times;</button>
+          <div align="center"><h2 class="modal-title">Add Menu Item</h2></div>
+          <hr>
+        </div>
+        <form role="form" id="addMenuItemForm" #form="ngForm">
+          <div class="modal-body">
+              <div class="form-group">
+                <div class="col-sm-12 form-group">
+                  <label for="menuItem">Category</label>
+                  <select name="menuItem" id="menuItem" required class="form-control" ngModel>
+                    <option disabled selected value>Select Menu Item</option>
+                    <option *ngFor="let menuItem of menuItems" required>{{menuItem.name}}({{menuItem.id}})</option>
+                  </select>
+                </div>
+              </div>
+              <div align="center">
+                <button type="button" (click)="onAddMenuItemForOrder(form)" id="AddMenuItemBtn" class="btn btn-primary btn-md btn-block">Add Item</button>
+              </div>
+              <br>
+              <div align="center">
+                <button type="button" id="cancelAddMenuItemBtn" class="btn btn-danger btn-md btn-block" (click)="onCloseAddMenuItem()">Cancel</button>
+              </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+
+
+
+</div>

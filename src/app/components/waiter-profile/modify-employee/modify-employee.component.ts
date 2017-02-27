@@ -48,13 +48,11 @@ export class ModifyEmployeeComponent implements OnInit {
     let employee = new Employee();
     employee.username = this.employee.username;
     employee.password = this.employee.password;
-
+    employee.id = this.employee.id;
 
     if(form.controls['newPassword1'].value != "" || form.controls['newPassword2'].value != ""){
-      console.log("znjznjznj111")
       if(form.controls['newPassword1'].value != form.controls['newPassword2'].value){
         this.newPassErr.nativeElement.innerHTML = "Passwords are different!";
-        console.log("rrrr")
         return;
 
       } else{
@@ -71,7 +69,7 @@ export class ModifyEmployeeComponent implements OnInit {
     this.employeService.modifyUser(employee).subscribe(
       () => {
         swal({title : "Success!", text : "Your data has been modified!", type : "success"}, function(){
-          router.navigateByUrl('/home/modify-employee');
+          router.navigateByUrl('/home/employee-profile');
         });
       }
     );
