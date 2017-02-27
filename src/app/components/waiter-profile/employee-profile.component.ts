@@ -7,6 +7,7 @@ import {RoleService} from "../../services/role.service";
 import {MenuItem} from "../../beans/menu-item";
 import {Subscription, Observable} from "rxjs";
 import {Schedule} from "../../beans/schedule";
+import {Bill} from "../../beans/bill";
 declare let swal: any;
 
 @Component({
@@ -33,6 +34,10 @@ export class EmployeeProfileComponent implements OnInit, OnDestroy {
   private schedules: Schedule[] = [];
   private todaySchedule: Schedule;
   private todayDate: Date;
+
+  private billDialog;
+  private orderOnBill: Order;
+
   constructor(private employeeService: EmployeeService, private router: Router, private roleService: RoleService) {
     let timer = Observable.timer(2000,10000);
 
@@ -77,8 +82,6 @@ export class EmployeeProfileComponent implements OnInit, OnDestroy {
             let year = this.todayDate.getFullYear();
             if(month == (+this.getMonth(this.schedules[i])) && year == (+this.getYear(this.schedules[i])) && day == (+this.getDay(this.schedules[i]))){
               this.todaySchedule = this.schedules[i];
-              console.log(this.todaySchedule.segments[0].name);
-              console.log(this.todaySchedule.segments[0].tables.length);
               break;
             }
           }
@@ -86,6 +89,50 @@ export class EmployeeProfileComponent implements OnInit, OnDestroy {
       }
     )
   }
+
+  hideBillDialog(){
+    this.billDialog = false;
+  }
+
+  createBill(){
+    let bill: Bill = new Bill();
+    bill.oneOrder = this.orderOnBill;
+    console.log(bill.oneOrder);
+    this.employeeService.createBill(bill).subscribe(
+      (data) => {
+        for(var i = 0;i<this.orders.length;i++){
+          if(this.orders[i].id == bill.oneOrder.id){
+            this.orders.splice(i,1);
+            break;
+          }
+        }
+        this.billDialog = false;
+       swal({title : "Success!", text : "Bill printed.", type : "success"});
+    });
+
+  }
+
+  getTotal(){
+    let t = 0;
+    for(var i = 0;i<this.orderOnBill.menuItems.length;i++){
+      t += this.orderOnBill.menuItems[i].price;
+    }
+    return t;
+  }
+  waiterFinishOrder(order: Order){
+    this.orderOnBill = order;
+    this.foodForShow = [];
+    this.drinksForShow = [];
+    for(var i = 0;i<order.menuItems.length; i++){
+      if(order.menuItems[i].menuItemType == "FOOD"){
+        this.foodForShow.push(order.menuItems[i]);
+      }else{
+        this.drinksForShow.push(order.menuItems[i]);
+      }
+    }
+    this.billDialog = true;
+  }
+
 
   getDay(sch: Schedule){
     let string = sch.date.toString().split("-");
@@ -159,18 +206,7 @@ export class EmployeeProfileComponent implements OnInit, OnDestroy {
     return false;
   }
 
-  waiterFinishOrder(order: Order){
-    this.employeeService.waiterFinishOrder(order).subscribe(
-      (data) => {
-        for(var i = 0;i<this.orders.length;i++){
-          if(this.orders[i].id == order.id){
-            this.orders.splice(i,1);
-            break;
-          }
-        }
-        swal({title : "Success!", text : "Order's been finished.", type : "success"});
-      });
-  }
+
 
   bartenderFinishOrder(order: Order){
     this.employeeService.bartenderFinishOrder(order).subscribe(
@@ -181,6 +217,7 @@ export class EmployeeProfileComponent implements OnInit, OnDestroy {
             break;
           }
         }
+
         swal({title : "Success!", text : "Order's been finished.", type : "success"});
       });
   }

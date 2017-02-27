@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {Http, Headers} from "@angular/http";
 import {Employee} from "../beans/employee";
 import {Order} from "../beans/order";
+import {Bill} from "../beans/bill";
 
 @Injectable()
 export class EmployeeService {
@@ -97,6 +98,12 @@ export class EmployeeService {
     let h = new Headers();
     h.append('Content-type','application/json');
     return this.http.post(this.path + 'getScheduleForEmp', JSON.stringify(emp), {headers: h, withCredentials: true});
+  }
+
+  createBill(bill: Bill){
+    let h = new Headers();
+    h.append('Content-type','application/json');
+    return this.http.post(this.path + 'createBill', JSON.stringify(bill), {headers: h, withCredentials: true});
   }
 
 }

@@ -84,14 +84,14 @@ export class AddOrderComponent implements OnInit {
           this.employeeService.getScheduleForEmp(this.chefs[i]).subscribe(
             (data) => {
               this.schedules = JSON.parse(data['_body']);
-              for (var j = 0; j < this.schedules.length; i++) {
+              for (var j = 0; j < this.schedules.length; j++) {
                 this.todayDate = new Date();
                 let month = this.todayDate.getMonth() + 1;
                 let day = this.todayDate.getDate();
                 let year = this.todayDate.getFullYear();
                 let hours = this.todayDate.getHours();
                 if(month == (+this.getMonth(this.schedules[j])) && year == (+this.getYear(this.schedules[j])) && day == (+this.getDay(this.schedules[j])) ){
-                  if(this.schedules[i].shift == "FIRST"){
+                  if(this.schedules[j].shift == "FIRST"){
                     if(hours < 15) {
                       this.chefsForShow.push(this.schedules[j].employee);
                     }
