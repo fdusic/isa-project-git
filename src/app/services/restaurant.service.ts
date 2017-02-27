@@ -6,6 +6,7 @@ import {Restaurant} from "../beans/app.restaurant";
 import {RestaurantSegment} from "../beans/restaurant-segment";
 import {Employee} from "../beans/employee";
 import {Schedule} from "../beans/schedule";
+import {UserGrade} from "../beans/user-grade";
 
 @Injectable()
 export class RestaurantService {
@@ -48,6 +49,10 @@ export class RestaurantService {
     return this.http.post(this.path + 'getRestaurantByName/', name.trim(), { withCredentials : true});
   }
 
+  getRestaurantById(id:string){
+    return this.http.post(this.path + 'getRestaurantById/', id, { withCredentials : true});
+  }
+
   getAllRestaurants(){
     return this.http.get(this.path + 'getAllRestaurants', { withCredentials : true} );
   }
@@ -65,10 +70,28 @@ export class RestaurantService {
     return this.http.post(this.path + 'getMenuItems/', JSON.stringify(restaurant), { headers : h, withCredentials : true });
   }
 
+  changeMenuItem(mi:MenuItem){
+    let h = new Headers();
+    h.append('Content-type','application/json');
+    return this.http.post(this.path + 'changeMenuItem/', JSON.stringify(mi), { headers : h, withCredentials : true });
+  }
+
+  deleteMenuItem(mi:MenuItem){
+    let h = new Headers();
+    h.append('Content-type','application/json');
+    return this.http.post(this.path + 'deleteMenuItem/', JSON.stringify(mi), { headers : h, withCredentials : true });
+  }
+
   onFinishConfiguration(rs:RestaurantSegment[]){
     let h = new Headers();
     h.append('Content-type','application/json');
     return this.http.post(this.path + 'onFinishConfiguration/', JSON.stringify(rs), { headers : h, withCredentials : true });
+  }
+
+  changeRestaurantSegment(rs:RestaurantSegment){
+    let h = new Headers();
+    h.append('Content-type','application/json');
+    return this.http.post(this.path + 'changeRestaurantSegment/', JSON.stringify(rs), { headers : h, withCredentials : true });
   }
 
   getRestaurantSegments(r:Restaurant) {
@@ -108,6 +131,24 @@ export class RestaurantService {
     let h = new Headers();
     h.append('Content-type','application/json');
     return this.http.post(this.path + 'removeSchedule', JSON.stringify(s), {withCredentials : true, headers : h});
+  }
+
+  getRestaurantManager(restaurant:Restaurant){
+    let h = new Headers();
+    h.append('Content-type','application/json');
+    return this.http.post(this.path + 'getRestaurantManager', JSON.stringify(restaurant), {withCredentials : true, headers : h});
+  }
+
+  changeRestaurant(rh:RestaurantHelp){
+    let h = new Headers();
+    h.append('Content-type','application/json');
+    return this.http.post(this.path + 'changeRestaurant/', JSON.stringify(rh), { headers : h, withCredentials : true });
+  }
+
+  rateRestaurant(userGrade:UserGrade){
+    let h = new Headers();
+    h.append('Content-type','application/json');
+    return this.http.post(this.path + 'rateRestaurant/', JSON.stringify(userGrade), { headers : h, withCredentials : true });
   }
 
 }

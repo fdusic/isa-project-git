@@ -117,7 +117,7 @@ nav.sidebar, .main{
 
 /* .....NavBar: Fully showing nav bar..... */
 
-@media (min-width: 1900px) {
+@media (min-width: 2000px) {
 
   /*Allow main to be next to Nav*/
   .main{
@@ -407,3 +407,41 @@ td.text-right {
 }
 
 /*End Wizard*/
+.btn-glyphicon { padding:8px; background:#ffffff; margin-right:4px; }
+.icon-btn { padding: 1px 15px 3px 2px; border-radius:50px;}
+
+
+.jumbotron {
+  background-image: url("./images/restaurant-jumbotron.jpg");
+  background-size: cover;}
+
+.restaurant-title{
+  font-family: 'Brush Script MT', cursive;
+  font-size: 85px;
+  font-style: normal;
+  font-variant: normal;
+  font-weight: 500;
+  line-height: 120px;
+  color: #b1b258;
+}
+
+#starOne:hover{
+  cursor: pointer;
+}
+#starTwo:hover{
+  cursor: pointer;
+}
+#starThree:hover{
+  cursor: pointer;
+}
+#starFour:hover{
+  cursor: pointer;
+}
+#starFive:hover{
+  cursor: pointer;
+}
+.stars{
+  width: 90px;
+  height: 90px;
+  font-size: 70px;
+}

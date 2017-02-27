@@ -10,6 +10,7 @@ import {Employee} from "../../beans/employee";
 import {Schedule} from "../../beans/schedule";
 import {NgForm} from "@angular/forms";
 import {isNullOrUndefined} from "util";
+import {UserGrade} from "../../beans/user-grade";
 declare let sweetAlert : any;
 declare let swal : any;
 
@@ -43,6 +44,7 @@ export class RestaurantDetailComponent implements OnInit {
 
 
 
+
   //Za drag and drop stolova
   private currentMatrix:any;
   private currentX = 0;
@@ -55,14 +57,21 @@ export class RestaurantDetailComponent implements OnInit {
   private numberOfSegments:number[] = [];
 
 
+  //ZA CHANGE SEGMENTA
+  private segmentForChange:RestaurantSegment = new RestaurantSegment();
+  private segNameExists:boolean = false;
+
+
   //Promenljive za prikazivanje odgovarajuceg div-a
   private addMenuItem:boolean=false;
   private createRestaurantConfiguarion:boolean = false;
-  private home:boolean=false;
+  private home:boolean=true;
   private segments:boolean=false;
   private menu:boolean=false;
   private addEmployee : boolean = false;
   private scheduleBool : boolean = false;
+
+  private menuItemForChange:MenuItem = new MenuItem();
 
   private restaurant:Restaurant = new Restaurant();
   private menuItems:MenuItem[]=[];
@@ -92,6 +101,10 @@ export class RestaurantDetailComponent implements OnInit {
 
   private freeWorkers : Employee[] = [];
 
+
+
+  private changeNameExists:boolean = false;
+
   constructor(private activatedRoute:ActivatedRoute,private restaurantService:RestaurantService) { }
 
   ngOnInit() {
@@ -105,8 +118,34 @@ export class RestaurantDetailComponent implements OnInit {
             this.workers = JSON.parse(data['_body']);
           }
         );
+
+        this.restaurantService.getRestaurantSegments(this.restaurant).subscribe(
+          (data) => {
+            this.thisSegments = JSON.parse(data['_body']);
+            if(this.thisSegments.length > 0){
+              this.finishedConfiguration=true;
+            }
+          }
+        );
       }
     );
+  }
+
+
+  onHomeClick(){
+    this.addMenuItem=false;
+    this.home=true;
+    this.menu=false;
+    this.segments=false;
+    this.addEmployee = false;
+    this.scheduleBool = false;
+    this.createRestaurantConfiguarion = false;
+
+    this.settings_li.nativeElement.classList.remove('active');
+    this.home_li.nativeElement.classList.add('active');
+    this.menu_li.nativeElement.classList.remove('active');
+    this.segments_li.nativeElement.classList.remove('active');
+    this.schedule_li.nativeElement.classList.remove('active');
   }
 
   onAddEmployee(){
@@ -595,5 +634,163 @@ export class RestaurantDetailComponent implements OnInit {
           }
         );
       });
+  }
+
+
+  assignMenuItemForChange(mi:MenuItem){
+    this.changeNameExists = false;
+      this.menuItemForChange = mi;
+  }
+
+  onSubmitChangeMenuItem(form:NgForm){
+    let mi:MenuItem = new MenuItem();
+    mi.name = form.controls['namec'].value;
+    mi.price = form.controls['pricec'].value;
+    mi.description = form.controls['descriptionc'].value;
+    mi.id = this.menuItemForChange.id;
+    mi.menuItemType = this.menuItemForChange.menuItemType;
+    mi.restaurant = this.menuItemForChange.restaurant;
+
+    this.restaurantService.changeMenuItem(mi).subscribe(
+      (data) => {
+        if(data['_body']=='true'){
+          document.getElementById('closeMenuItemChangeModal').click();
+          this.menuItemForChange.name = form.controls['namec'].value;
+          this.menuItemForChange.price = form.controls['pricec'].value;
+          this.menuItemForChange.description = form.controls['descriptionc'].value;
+        }else{
+          this.changeNameExists = true;
+        }
+      }
+    );
+  }
+
+
+  deleteMenuItem(menuItem:MenuItem){
+
+    let restaurantService:RestaurantService = this.restaurantService;
+    let menuItems:MenuItem[] = this.menuItems;
+    let foodMenu:MenuItem[] = this.foodMenu;
+    let drinkMenu:MenuItem[] = this.drinkMenu;
+    swal({   title: "Are you sure?",
+      text: "You will not be able to recover this item!",
+      type: "warning",   showCancelButton: true,   confirmButtonColor: "#DD6B55",
+      confirmButtonText: "Yes, delete it!",   closeOnConfirm: false },
+      function(){
+
+        restaurantService.deleteMenuItem(menuItem).subscribe(
+          () => {
+            if(menuItem.menuItemType == 'DRINK'){
+              var index = drinkMenu.indexOf(menuItem, 0);
+              if (index > -1) {
+                drinkMenu.splice(index, 1);
+              }
+            }else{
+              var index = foodMenu.indexOf(menuItem, 0);
+              if (index > -1) {
+                foodMenu.splice(index, 1);
+              }
+            }
+            var index = menuItems.indexOf(menuItem, 0);
+            if (index > -1) {
+              menuItems.splice(index, 1);
+            }
+          }
+        );
+        swal("Deleted!", "Your item has been deleted.", "success");
+      });
+  }
+
+
+  assignSegmentForChange(seg:RestaurantSegment){
+    this.segNameExists=false;
+    this.segmentForChange = JSON.parse(JSON.stringify(seg));
+  }
+
+  onNumberOfTableChange(event){
+    if(event.srcElement.value < this.segmentForChange.tables.length){
+      this.segmentForChange.tables.splice(event.srcElement.value);
+    }else{
+      let rt:RestaurantTable = new RestaurantTable();
+      rt.x = 10;
+      rt.y = 90;
+      this.segmentForChange.tables.push(rt);
+    }
+  }
+
+
+  onSubmitSegmentChange(form:NgForm){
+    this.segmentForChange.name = form.controls['segName'].value;
+    this.restaurantService.changeRestaurantSegment(this.segmentForChange).subscribe(
+      (data) => {
+        if(data['_body']=='true'){
+            this.onSegmentsClick();
+            document.getElementById('closeSegmentChangeModal').click();
+        }else{
+            this.segNameExists = true;
+        }
+      }
+    );
+  }
+
+  onStarOneOver(){
+    document.getElementById("starOne").style.color="#cc1b1f";
+    document.getElementById("starTwo").style.removeProperty('color');
+    document.getElementById("starThree").style.removeProperty('color');
+    document.getElementById("starFour").style.removeProperty('color');
+    document.getElementById("starFive").style.removeProperty('color');
+  }
+  onStarTwoOver(){
+    document.getElementById("starOne").style.color="#cc1b1f";
+    document.getElementById("starTwo").style.color="#f8c21e";
+    document.getElementById("starThree").style.removeProperty('color');
+    document.getElementById("starFour").style.removeProperty('color');
+    document.getElementById("starFive").style.removeProperty('color');
+  }
+  onStarThreeOver(){
+    document.getElementById("starOne").style.color="#cc1b1f";
+    document.getElementById("starTwo").style.color="#f8c21e";
+    document.getElementById("starThree").style.color="#4ae3f8";
+    document.getElementById("starFour").style.removeProperty('color');
+    document.getElementById("starFive").style.removeProperty('color');
+  }
+  onStarFourOver(){
+    document.getElementById("starOne").style.color="#cc1b1f";
+    document.getElementById("starTwo").style.color="#f8c21e";
+    document.getElementById("starThree").style.color="#4ae3f8";
+    document.getElementById("starFour").style.color="#465ef8";
+    document.getElementById("starFive").style.removeProperty('color');
+  }
+
+  onStarFiveOver(){
+    document.getElementById("starOne").style.color="#cc1b1f";
+    document.getElementById("starTwo").style.color="#f8c21e";
+    document.getElementById("starThree").style.color="#4ae3f8";
+    document.getElementById("starFour").style.color="#465ef8";
+    document.getElementById("starFive").style.color="#3da71a";
+  }
+
+  onStarMouseLeave(){
+    document.getElementById("starOne").style.removeProperty('color');
+    document.getElementById("starTwo").style.removeProperty('color');
+    document.getElementById("starThree").style.removeProperty('color');
+    document.getElementById("starFour").style.removeProperty('color');
+    document.getElementById("starFive").style.removeProperty('color');
+  }
+
+  onStarRate(rating:number){
+    let ug:UserGrade = new UserGrade();
+    ug.restaurant = this.restaurant;
+    ug.grade = rating;
+    this.restaurantService.rateRestaurant(ug).subscribe(
+      (data) => {
+          if(data['_body']==-1){
+            sweetAlert("Sorry...", "You already rated this restaurant!", "error");
+          }else{
+            swal("Thank you!", "You rated restaurant "+this.restaurant.name+"!", "success");
+            this.restaurant.grade = data['_body'];
+          }
+      }
+    );
   }
 }

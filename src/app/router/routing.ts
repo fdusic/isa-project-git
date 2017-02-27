@@ -15,6 +15,7 @@ import {
 import {
   ModifyEmployeeComponent
 } from "../components/waiter-profile/modify-employee/modify-employee.component";
+import {ChangeRestaurantComponent} from "../components/change-restaurant/change-restaurant.component";
 
 
 const APP_ROUTES: Routes=[
@@ -24,6 +25,7 @@ const APP_ROUTES: Routes=[
        {path:'',component:UserProfileComponent, canActivate : [Guardian]},
        {path:'addrestaurant',component: AddRestaurantComponent},
        {path:'email/:email',component:EmailComponent},
+       {path:'changerestaurant/:id',component:ChangeRestaurantComponent},
        {path:'restaurant/:name',component:RestaurantDetailComponent},
        {path: 'modifyUser', component:ModifyUserComponent, canActivate : [Guardian]},
        {path:'restaurants/addmenuitem/:name',component:AddMenuItemComponent},

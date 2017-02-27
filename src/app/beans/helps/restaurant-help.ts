@@ -4,6 +4,7 @@ export class RestaurantHelp{
   public description:string;
   public manager:string;
   public address:string;
+  public id:number;
 
   constructor(){}
 }

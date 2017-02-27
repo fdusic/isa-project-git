@@ -1,0 +1,59 @@
+<div class="container">
+  <h1 align="center" style="margin-top: 70px">Restaurant form</h1>
+  <hr>
+
+  <form (ngSubmit)="onSubmit(f.value,f)" #f="ngForm">
+
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="name">Name</label>
+          <input type="text"
+                 class="form-control"
+                 id="name"
+                 name="name"
+                 [ngModel]="restaurant.name"
+                 required
+                 (change)="checkRestaurantName($event)"
+          >
+          <small  *ngIf="nameExists" style="color: red">Name already exists!</small>
+
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="address">Address</label>
+          <input type="text"
+                 class="form-control"
+                 id="address"
+                 name="address"
+                 [ngModel]="restaurant.address"
+                 required
+          >
+
+        </div>
+      </div>
+    </div>
+
+
+    <div class="form-group">
+      <label for="description">Description</label>
+      <textarea class="form-control" id="description" name="description" required [ngModel]="restaurant.description"></textarea>
+    </div>
+
+
+    <div class="form-group">
+      <label for="manager">Manager</label>
+      <select required ngModel name="manager" id="manager" class="form-control" (change)="onSelectChange($event)">
+        <option disabled selected value> -- select manager -- </option>
+        <option *ngFor="let m of managers" [selected]="m.id == manager.id">{{'Username:'+m.username+' Name:'+m.name}}</option>
+      </select>
+    </div>
+
+
+    <button type="submit" class="btn btn-primary">Save</button>
+    <a class="btn btn-danger" [routerLink]="['/home/restaurants',restaurant.name]">Discard</a>
+
+  </form>
+
+</div>

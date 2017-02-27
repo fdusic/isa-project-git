@@ -1,3 +1,4 @@
+import {Manager} from "./manager";
 export class Restaurant{
 
   public id:number;
@@ -5,6 +6,7 @@ export class Restaurant{
   public address:string;
   public description:string;
   public grade:number;
+  public manager:Manager;
 
 
   constructor(){}

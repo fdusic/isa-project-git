@@ -24,6 +24,7 @@ import { AddMenuItemComponent } from './components/add-menu-item/add-menu-item.c
 import { EmployeeProfileComponent} from './components/waiter-profile/employee-profile.component';
 import {EmployeeService} from "./services/employee.service";
 import { ModifyEmployeeComponent} from './components/waiter-profile/modify-employee/modify-employee.component';
+import { ChangeRestaurantComponent } from './components/change-restaurant/change-restaurant.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { ModifyEmployeeComponent} from './components/waiter-profile/modify-emplo
     RestaurantsComponent,
     AddMenuItemComponent,
     EmployeeProfileComponent,
-    ModifyEmployeeComponent
+    ModifyEmployeeComponent,
+    ChangeRestaurantComponent
   ],
   imports: [
     BrowserModule,
