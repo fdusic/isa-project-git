@@ -23,6 +23,10 @@ declare let swal: any;
 })
 export class RestaurantDetailComponent implements OnInit {
 
+  lat: number = 51.678418;
+  lng: number = 7.809007;
+
+
   //Za Li-jeve
   @ViewChild('home_li') home_li: any;
   @ViewChild('settings_li') settings_li: any;
@@ -555,7 +559,7 @@ export class RestaurantDetailComponent implements OnInit {
     }
 
     emp.restaurant = this.restaurant;
-
+    this.freeWorkers.push(emp);
     this.restaurantService.addEmployee(emp).subscribe(
       () => {
         swal("Good job!", "You added a new employee!", "success");

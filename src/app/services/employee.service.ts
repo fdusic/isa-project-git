@@ -92,4 +92,11 @@ export class EmployeeService {
   setPassword(password: string){
     return this.http.post(this.path + 'setPassword', password, {withCredentials: true});
   }
+
+  getScheduleForEmp(emp: Employee) {
+    let h = new Headers();
+    h.append('Content-type','application/json');
+    return this.http.post(this.path + 'getScheduleForEmp', JSON.stringify(emp), {headers: h, withCredentials: true});
+  }
+
 }

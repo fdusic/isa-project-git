@@ -32,6 +32,8 @@ import { AddOrderComponent } from './components/waiter-profile/add-order/add-ord
 import { ChangeOrderComponent } from './components/waiter-profile/change-order/change-order.component';
 import { SetPasswordComponent } from './components/login/set-password/set-password.component';
 
+import { AgmCoreModule } from 'angular2-google-maps/core';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -59,7 +61,10 @@ import { SetPasswordComponent } from './components/login/set-password/set-passwo
     BrowserModule,
     FormsModule,
     HttpModule,
-    routing
+    routing,
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyA7CjHO9NDrwajILB8gTeNn88_3K0FLdWM'
+    })
   ],
   providers: [LoginRegisterService,ManagerService,RestaurantService, RoleService, Guardian, SupplierService,EmployeeService],
   bootstrap: [AppComponent]

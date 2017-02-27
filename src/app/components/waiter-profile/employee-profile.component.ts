@@ -31,7 +31,8 @@ export class EmployeeProfileComponent implements OnInit, OnDestroy {
   private ordersTab = true;
 
   private schedules: Schedule[] = [];
-
+  private todaySchedule: Schedule;
+  private todayDate: Date;
   constructor(private employeeService: EmployeeService, private router: Router, private roleService: RoleService) {
     let timer = Observable.timer(2000,10000);
 
@@ -68,6 +69,20 @@ export class EmployeeProfileComponent implements OnInit, OnDestroy {
     this.employeeService.getEmployeeSchedules().subscribe(
       (data) => {
         this.schedules = JSON.parse(data["_body"]);
+        if(this.roleService.waiter) {
+          for (var i = 0; i < this.schedules.length; i++) {
+            this.todayDate = new Date();
+            let month = this.todayDate.getMonth() + 1;
+            let day = this.todayDate.getDate();
+            let year = this.todayDate.getFullYear();
+            if(month == (+this.getMonth(this.schedules[i])) && year == (+this.getYear(this.schedules[i])) && day == (+this.getDay(this.schedules[i]))){
+              this.todaySchedule = this.schedules[i];
+              console.log(this.todaySchedule.segments[0].name);
+              console.log(this.todaySchedule.segments[0].tables.length);
+              break;
+            }
+          }
+        }
       }
     )
   }

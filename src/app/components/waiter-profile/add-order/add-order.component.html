@@ -9,7 +9,7 @@
     <label for="bartender">Chef</label>
     <select required name="chef" id="chef" class="form-control" #ch (change)="chefChanged($event)">
       <option disabled selected value> -- select chef -- </option>
-      <option *ngFor="let chef of chefs">{{chef.name + ' (' + chef.username + ')'}}</option>
+      <option *ngFor="let chef of chefsForShow">{{chef?.name + ' (' + chef?.username + ')'}}</option>
     </select>
   </div>
 
@@ -18,7 +18,7 @@
     <label for="bartender">Bartender</label>
     <select required  name="bartender" id="bartender" class="form-control" #bart (change)="bartenderChanged()">
       <option disabled selected value> -- select bartender -- </option>
-      <option *ngFor="let bartender of bartenders">{{bartender.name + ' (' + bartender.username + ')'}}</option>
+      <option *ngFor="let bartender of bartendersForShow">{{bartender?.name + ' (' + bartender?.username + ')'}}</option>
     </select>
   </div>
 

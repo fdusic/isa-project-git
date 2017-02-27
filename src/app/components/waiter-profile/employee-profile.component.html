@@ -122,65 +122,28 @@
           </div>
         </div>
       </div>
-      <!--<div class="container-fluid">
+      </div>
+      <div class="tab-pane" id="tab_default_3">
+        <br><br><br>
+        <div style="margin-top: 100px;" class="col-md-8 col-md-offset-4">
+          <div class="row"  *ngFor="let rs of todaySchedule?.segments">
+            <div class="col-md-8">
+              <h2 class="text-center" style="margin-right: 150px;"><strong>{{rs.name}}</strong></h2>
+              <hr style="margin-right: 150px;"><br>
+              <svg width="500" height="300" style="border: 1px solid black;background: #91c5cc">
+                <filter id="image" x="0%" y="0%" width="100%" height="100%">
+                  <feImage xlink:href="./images/table-texture.jpg"/>
+                </filter>
 
-        <div class="agenda">
-          <div class="table-responsive">
-            <table class="table table-condensed table-bordered">
-              <thead>
-              <tr>
-                <th>Date</th>
-                <th>Time</th>
-
-              </tr>
-              </thead>
-              <tbody>
-              &lt;!&ndash; Single event in a single day &ndash;&gt;
-              <tr>
-                <td class="agenda-date" class="active" rowspan="1">
-                  <div class="dayofmonth">26</div>
-                  <div class="dayofweek">Saturday</div>
-                  <div class="shortdate text-muted">July, 2014</div>
-                </td>
-                <td class="agenda-time">
-                  5:30 AM
-                </td>
-
-              </tr>
-
-              &lt;!&ndash; Multiple events in a single day (note the rowspan) &ndash;&gt;
-              <tr>
-                <td class="agenda-date" class="active" rowspan="3">
-                  <div class="dayofmonth">24</div>
-                  <div class="dayofweek">Thursday</div>
-                  <div class="shortdate text-muted">July, 2014</div>
-                </td>
-                <td class="agenda-time">
-                  8:00 - 9:00 AM
-                </td>
-
-              </tr>
-              <tr>
-                <td class="agenda-time">
-                  10:15 AM - 12:00 PM
-                </td>
-
-              </tr>
-              <tr>
-                <td class="agenda-time">
-                  7:00 - 9:00 PM
-                </td>
-
-              </tr>
-              </tbody>
-            </table>
+                <rect filter="url(#image)" *ngFor="let t of rs.tables" style="cursor: pointer" attr.transform="{{'matrix(1 0 0 1 '+t.x+' '+t.y+')'}}"
+                        cx="90" cy="90" width="125" height="71" stroke="green"  stroke-width="4" fill="yellow" />
+              </svg>
+            </div>
           </div>
-        </div>-->
       </div>
 
 
     </div>
-
   </div>
 
 

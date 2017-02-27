@@ -22,6 +22,7 @@ export class NavbarComponent implements OnInit {
         this.roleService.user = false;
         this.roleService.bartender = false;
         this.roleService.chef = false;
+        this.roleService.supplier = false;
         this.router.navigateByUrl('/');
       }
     );

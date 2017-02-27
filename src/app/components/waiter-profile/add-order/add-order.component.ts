@@ -6,6 +6,7 @@ import {MenuItem} from "../../../beans/menu-item";
 import {NgForm} from "@angular/forms";
 import {Order} from "../../../beans/order";
 import {Router} from "@angular/router";
+import {Schedule} from "../../../beans/schedule";
 declare let swal: any;
 
 @Component({
@@ -29,6 +30,13 @@ export class AddOrderComponent implements OnInit {
   private bartender = "";
   private chef = "";
 
+
+  private schedules: Schedule[] = [];
+  private todayDate: Date;
+
+  private bartendersForShow:Employee[] = [];
+  private chefsForShow: Employee[] = [];
+
   @ViewChild('bart') bart: any;
   @ViewChild('ch') ch: any;
 
@@ -38,18 +46,73 @@ export class AddOrderComponent implements OnInit {
     this.employeeService.getBartenders().subscribe(
       (data) => {
         this.bartenders = JSON.parse(data['_body']);
+        for(var i = 0;i < this.bartenders.length;i++){
+          this.employeeService.getScheduleForEmp(this.bartenders[i]).subscribe(
+            (data) => {
+              this.schedules = [];
+              this.schedules = JSON.parse(data['_body']);
+              for (var j = 0; j < this.schedules.length; j++) {
+                this.todayDate = new Date();
+                let month = this.todayDate.getMonth() + 1;
+                let day = this.todayDate.getDate();
+                let year = this.todayDate.getFullYear();
+                let hours = this.todayDate.getHours();
+                if(month == (+this.getMonth(this.schedules[j])) && year == (+this.getYear(this.schedules[j])) && day == (+this.getDay(this.schedules[j])) ){
+                  if(this.schedules[j].shift == "FIRST"){
+                    if(hours < 15) {
+                      this.bartendersForShow.push(this.schedules[j].employee);
+                      break;
+                    }
+                  }else{
+                    if(hours > 15){
+                      this.bartendersForShow.push(this.schedules[j].employee);
+                      break;
+                    }
+                  }
+                  break;
+                }
+              }
+            }
+          );
+        }
       }
     );
     this.employeeService.getChefs().subscribe(
       (data) => {
         this.chefs = JSON.parse(data['_body']);
+        for(var i = 0;i < this.chefs.length;i++){
+          this.employeeService.getScheduleForEmp(this.chefs[i]).subscribe(
+            (data) => {
+              this.schedules = JSON.parse(data['_body']);
+              for (var j = 0; j < this.schedules.length; i++) {
+                this.todayDate = new Date();
+                let month = this.todayDate.getMonth() + 1;
+                let day = this.todayDate.getDate();
+                let year = this.todayDate.getFullYear();
+                let hours = this.todayDate.getHours();
+                if(month == (+this.getMonth(this.schedules[j])) && year == (+this.getYear(this.schedules[j])) && day == (+this.getDay(this.schedules[j])) ){
+                  if(this.schedules[i].shift == "FIRST"){
+                    if(hours < 15) {
+                      this.chefsForShow.push(this.schedules[j].employee);
+                    }
+                  }else{
+                    if(hours > 15){
+                      this.chefsForShow.push(this.schedules[j].employee);
+                    }
+                  }
+                  break;
+                }
+              }
+            }
+          );
+        }
       }
-    )
+    );
     this.employeeService.getMenuItems().subscribe(
       (data) => {
         this.menuItems = JSON.parse(data['_body']);
       }
-    )
+    );
   }
 
   onCloseAddMenuItem(){
@@ -111,8 +174,6 @@ export class AddOrderComponent implements OnInit {
         }
       }
     }
-    console.log(order.chef);
-    console.log(order.bartender);
     let router = this.router;
     this.employeeService.addOrder(order).subscribe(
       (data) => {
@@ -151,6 +212,21 @@ export class AddOrderComponent implements OnInit {
       return false;
     }
     return true;
+  }
+
+  getDay(sch: Schedule){
+    let string = sch.date.toString().split("-");
+    return string[2];
+  }
+
+  getMonth(sch: Schedule){
+    let string = sch.date.toString().split("-");
+    return string[1];
+  }
+
+  getYear(sch: Schedule){
+    let string = sch.date.toString().split("-");
+    return string[0];
   }
 
 }
