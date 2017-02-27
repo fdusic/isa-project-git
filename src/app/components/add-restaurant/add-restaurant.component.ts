@@ -4,6 +4,8 @@ import {Manager} from "../../beans/manager";
 import {RestaurantService} from "../../services/restaurant.service";
 import {RestaurantHelp} from "../../beans/helps/restaurant-help";
 import {Router} from "@angular/router";
+declare let sweetAlert:any;
+
 
 @Component({
   selector: 'app-add-restaurant',
@@ -15,6 +17,11 @@ export class AddRestaurantComponent implements OnInit {
   private managers:Manager[]=[];
   private managerEmail:string='';
   private nameExists:boolean=false;
+  private lat: number = 51.678418;
+  private lng: number = 7.809007;
+
+  private rlat:number = -1;
+  private rlng:number = -1;
 
   constructor(private managerService:ManagerService,private restaurantService:RestaurantService,private router:Router) { }
 
@@ -29,6 +36,14 @@ export class AddRestaurantComponent implements OnInit {
 
 
   onSubmit(rh:RestaurantHelp){
+
+      if(this.rlat == -1 && this.rlng==-1){
+        sweetAlert("Sorry..", "Please set restaurant position..", "error");
+        return;
+      }
+
+      rh.lat = this.rlat;
+      rh.lng = this.rlng;
       this.restaurantService.addRestaurant(rh).subscribe(
         (data) => {
           this.router.navigateByUrl('/home/restaurants/'+rh.name);
@@ -48,6 +63,12 @@ export class AddRestaurantComponent implements OnInit {
         }
       }
     );
+  }
+
+
+  onMapClick(event){
+    this.rlat = event.coords.lat;
+    this.rlng = event.coords.lng;
   }
 
 }

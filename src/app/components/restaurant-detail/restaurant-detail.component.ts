@@ -16,6 +16,7 @@ import {Purchase} from "../../beans/purchase";
 declare let sweetAlert: any;
 declare let swal: any;
 
+
 @Component({
   selector: 'app-restaurant-detail',
   templateUrl: './restaurant-detail.component.html',
@@ -23,8 +24,6 @@ declare let swal: any;
 })
 export class RestaurantDetailComponent implements OnInit {
 
-  lat: number = 51.678418;
-  lng: number = 7.809007;
 
 
   //Za Li-jeve
@@ -39,6 +38,7 @@ export class RestaurantDetailComponent implements OnInit {
   @ViewChild('schedule') schedule_li: any;
 
 
+
   //ZA kreiranje konfiguracije rastorana i segmenata
   @ViewChild('segments_div') segments_div: any;
   @ViewChild('segments_name_div') segments_name_div: any;
@@ -48,6 +48,17 @@ export class RestaurantDetailComponent implements OnInit {
   @ViewChild('schedule_div') schedule_div: any;
   @ViewChild('finish_a') finish_a: any;
   @ViewChild('finish_div') finish_div: any;
+
+  @ViewChild('google_map') google_map : any;
+
+
+
+  //TEST GOOGLE MAPE
+  private lat: number = 51.678418;
+  private lng: number = 7.809007;
+
+
+
 
   //Za drag and drop stolova
   private currentMatrix: any;
@@ -920,6 +931,7 @@ export class RestaurantDetailComponent implements OnInit {
     );
   }
 
+
   onAddSegments(form: NgForm) {
     let send: RestaurantSegment[] = [];
     for (let i = 0; i < this.thisSegments.length; i++) {
@@ -963,4 +975,5 @@ export class RestaurantDetailComponent implements OnInit {
 
     return ret;
   }
+
 }

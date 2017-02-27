@@ -7,6 +7,8 @@ export class Restaurant{
   public grade:number;
   public address:string;
   public manager:Manager;
+  public lat:number;
+  public lng:number;
 
   constructor(){}
 }

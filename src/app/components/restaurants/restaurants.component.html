@@ -21,7 +21,31 @@
       <td>{{restaurant.name}}</td>
       <td>{{restaurant.address}}</td>
       <td>{{restaurant.description}}</td>
-      <td *ngIf="restaurant.grade != 0">{{restaurant.grade}}</td>
+      <td *ngIf="restaurant.grade >= 1 && restaurant.grade < 2">
+        <span class="glyphicon glyphicon-star"></span>
+      </td>
+      <td *ngIf="restaurant.grade >= 2 && restaurant.grade < 3">
+        <span class="glyphicon glyphicon-star"></span>
+        <span class="glyphicon glyphicon-star"></span>
+      </td>
+      <td *ngIf="restaurant.grade >= 3 && restaurant.grade < 4">
+        <span class="glyphicon glyphicon-star"></span>
+        <span class="glyphicon glyphicon-star"></span>
+        <span class="glyphicon glyphicon-star"></span>
+      </td>
+      <td *ngIf="restaurant.grade >= 4 && restaurant.grade < 5">
+        <span class="glyphicon glyphicon-star"></span>
+        <span class="glyphicon glyphicon-star"></span>
+        <span class="glyphicon glyphicon-star"></span>
+        <span class="glyphicon glyphicon-star"></span>
+      </td>
+      <td *ngIf="restaurant.grade == 5">
+        <span class="glyphicon glyphicon-star"></span>
+        <span class="glyphicon glyphicon-star"></span>
+        <span class="glyphicon glyphicon-star"></span>
+        <span class="glyphicon glyphicon-star"></span>
+        <span class="glyphicon glyphicon-star"></span>
+      </td>
       <td *ngIf="restaurant.grade == 0">
         <div class="progress">
           <div class="progress-bar  progress-bar-warning progress-bar-striped" role="progressbar" style="width: 100%;">
@@ -32,4 +56,11 @@
     </tr>
     </tbody>
   </table>
+
+  <br>
+  <br>
+  <label>Locations</label>
+  <sebm-google-map [latitude]="lat" [longitude]="lng">
+    <sebm-google-map-marker *ngFor="let r of restaurants" title="{{r.name.toUpperCase()}}" [latitude]="r.lat" [longitude]="r.lng"></sebm-google-map-marker>
+  </sebm-google-map>
 </div>

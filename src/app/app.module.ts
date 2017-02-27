@@ -25,6 +25,7 @@ import { EmployeeProfileComponent} from './components/waiter-profile/employee-pr
 import {EmployeeService} from "./services/employee.service";
 import { ModifyEmployeeComponent} from './components/waiter-profile/modify-employee/modify-employee.component';
 import { ChangeRestaurantComponent } from './components/change-restaurant/change-restaurant.component';
+
 import { SupplierComponent } from './components/supplier/supplier.component';
 import {SupplierService} from "./services/supplier.service";
 import { SupplierModifyComponent } from './components/supplier-modify/supplier-modify.component';
@@ -33,6 +34,9 @@ import { ChangeOrderComponent } from './components/waiter-profile/change-order/c
 import { SetPasswordComponent } from './components/login/set-password/set-password.component';
 
 import { AgmCoreModule } from 'angular2-google-maps/core';
+
+import { RezervationComponent } from './components/rezervation/rezervation.component';
+
 
 @NgModule({
   declarations: [
@@ -55,7 +59,9 @@ import { AgmCoreModule } from 'angular2-google-maps/core';
     SupplierModifyComponent,
     AddOrderComponent,
     ChangeOrderComponent,
-    SetPasswordComponent
+    SetPasswordComponent,
+    RezervationComponent
+
   ],
   imports: [
     BrowserModule,
