@@ -8,6 +8,5 @@ export class Restaurant{
   public grade:number;
   public manager:Manager;
 
-
   constructor(){}
 }

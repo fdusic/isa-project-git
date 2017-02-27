@@ -5,8 +5,9 @@ import {LoginRegisterService} from "./login-register.service";
 export class RoleService {
 
   public user : boolean = false;
-  public waiter: boolean = true;
-  public friendRequestCount : number
+  public waiter: boolean = false;
+  public friendRequestCount : number;
+  public supplier : boolean = false;
 
   constructor(private httpService : LoginRegisterService) { }
 

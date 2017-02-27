@@ -1,0 +1,97 @@
+<div class="row moveDown" style="margin-top: 110px;">
+  <div class="col-md-5">
+    <div class="container">
+      <div class="fb-profile">
+        <img align="left" class="fb-image-profile thumbnail" src="../../../images/user-default.png"
+             alt="Profile image example"/>
+        <div class="fb-profile-text row">
+          <div class="col-md-6">
+            <h1>{{supplier.username}}</h1>
+            <h3>supplier</h3>
+            <div>
+              <a [routerLink]="['/home/modify-supplier']" style="color : black;" class="mouse"><span
+                class="glyphicon glyphicon-pencil"></span></a>
+            </div>
+          </div>
+          <div>
+            <br><br>
+            <h4>Name : {{supplier.name}}</h4>
+            <h4>Surname : {{supplier.surname}}</h4>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <br><br><br><br><br>
+  <div class="col-md-7">
+    <div class="tabbable-panel">
+      <div class="tabbable-line">
+        <ul class="nav nav-tabs ">
+          <li class="active">
+            <a href="#tab_default_1" data-toggle="tab">
+              <span class="glyphicon glyphicon-ok" style="font-size: 40px"></span> </a>
+          </li>
+          <li>
+            <a href="#tab_default_2" data-toggle="tab">
+              <span class="glyphicon glyphicon-dashboard" style="font-size: 40px"></span> </a>
+          </li>
+          <li>
+            <a href="#tab_default_3" data-toggle="tab">
+              <span class="glyphicon glyphicon-plus" style="font-size: 40px"></span> </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="tab-content">
+    <div class="tab-pane active" id="tab_default_1">
+      <div class="container-fluid" style="margin-left: 66px; margin-top: 66px;">
+        <div class="row" *ngFor="let ps of purchaseSupplier">
+          <div class="col-md-11">
+            <div class="panel-body" id="mainpanel">
+              <div class="panel-group">
+                <div class="panel panel-default">
+                  <div class="panel-heading">
+                    <div class="row">
+                      <div class="col-md-3">
+                          <span><strong>Restaurant:</strong> <span> {{ps.purchase.restaurant.name}}</span>
+                          </span>
+                      </div>
+                      <div class="col-md-2">
+                        <span><strong>Price: </strong><span>{{ps.price}}$</span></span>
+                      </div>
+                      <div class="col-md-7">
+                        <span><strong>Text: </strong><span>{{ps.purchase.text}}</span></span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <br>
+                  <div class="progress" >
+                    <div *ngIf="ps.status == 'ACCEPTED'" class="progress-bar  progress-bar-success progress-bar-striped" role="progressbar" style="width: 100%;">
+                      Accepted
+                    </div>
+                    <div *ngIf="ps.status == 'DECLINED'" class="progress-bar  progress-bar-danger progress-bar-striped" role="progressbar" style="width: 100%;">
+                      Declined
+                    </div>
+                    <div *ngIf="ps.status == 'PENDING'" class="progress-bar  progress-bar-warning progress-bar-striped" role="progressbar" style="width: 100%;">
+                      Pending
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="tab-pane" id="tab_default_2">
+      taab 2
+    </div>
+    <div class="tab-pane" id="tab_default_3">
+      taab 3
+    </div>
+  </div>
+</div>

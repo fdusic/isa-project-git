@@ -16,7 +16,8 @@ export class HomeComponent implements OnInit, OnDestroy {
   constructor(private roleService : RoleService, private httpService : LoginRegisterService) { }
 
   ngOnInit() {
-
+    console.log(this.roleService.supplier);
+    console.log(this.roleService.user);
     if(this.roleService.user){
       let timer = Observable.timer(2000,10000);
       this.sub = timer.subscribe(() => {

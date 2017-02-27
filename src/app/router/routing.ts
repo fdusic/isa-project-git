@@ -9,6 +9,8 @@ import {ModifyUserComponent} from "../components/modify-user/modify-user.compone
 import {Guardian} from "../guardian";
 import {RestaurantsComponent} from "../components/restaurants/restaurants.component";
 import {AddMenuItemComponent} from "../components/add-menu-item/add-menu-item.component";
+import {SupplierComponent} from "../components/supplier/supplier.component";
+import {SupplierModifyComponent} from "../components/supplier-modify/supplier-modify.component";
 import {
   EmployeeProfileComponent
 } from "../components/waiter-profile/employee-profile.component";
@@ -34,7 +36,9 @@ const APP_ROUTES: Routes=[
        {path: 'modifyUser', component:ModifyUserComponent},
        {path: 'modifyUser', component:ModifyUserComponent},
        {path: 'employee-profile', component:EmployeeProfileComponent},
-       {path: 'modify-employee', component:ModifyEmployeeComponent}
+       {path: 'modify-employee', component:ModifyEmployeeComponent},
+       {path: 'supplier', component:SupplierComponent},
+       {path : 'modify-supplier', component : SupplierModifyComponent}
      ]}
     ]
 

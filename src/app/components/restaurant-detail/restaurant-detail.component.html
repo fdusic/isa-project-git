@@ -5,41 +5,7 @@
   </div>
 </div>
 
-    <nav class="navbar navbar-inverse sidebar" role="navigation" style="margin-top: -27px;position: fixed">
-      <div class="container-fluid">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-sidebar-navbar-collapse-1">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand  toggle-btn" href="#" (click)="false">{{restaurant.name}} <span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-leaf"></span></a>
-        </div>
-        <div class="collapse navbar-collapse" id="bs-sidebar-navbar-collapse-1">
-          <ul class="nav navbar-nav">
-            <li #home_li class="active"><a (click)="onHomeClick()">Home<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-home"></span></a></li>
-            <li #menu_li><a (click)="onMenuClick()">Menu<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-indent-left"></span></a></li>
-            <li #segments_li><a (click)="onSegmentsClick()">Segments<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-globe"></span></a></li>
-            <li #settings_li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Settings <span class="caret"></span><span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-cog"></span></a>
-              <ul class="dropdown-menu forAnimate" role="menu">
-                <li><a (click)="onAddMenuItem()">Add Menu Item</a></li>
-                <li><a (click)="onCreateRestaurantConfiguration()">Create Configuration</a></li>
-                <li><a (click)="onAddEmployee()">Add employee</a></li>
-                <li class="divider"></li>
-                <li><a [routerLink]="['/home/changerestaurant',restaurant.id]">Change restaurant</a></li>
-                <li class="divider"></li>
-                <li><a href="#">One more separated link</a></li>
-              </ul>
-            </li>
-            <li #schedule><a (click)="onSchedule()">Schedule<span class="glyphicon glyphicon-time pull-right"></span></a></li>
-          </ul>
-        </div>
-      </div>
-    </nav>
-
-<!--<nav class="navbar navbar-inverse sidebar" role="navigation" style="margin-top: -27px;position: fixed">
+<nav class="navbar navbar-inverse sidebar" role="navigation" style="margin-top: -27px;position: fixed">
   <div class="container-fluid">
     <div class="navbar-header">
       <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-sidebar-navbar-collapse-1">
@@ -48,63 +14,177 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand  toggle-btn" href="#">{{restaurant.name}} <span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-leaf"></span></a>
+      <a class="navbar-brand  toggle-btn" href="#" (click)="false">{{restaurant.name}} <span style="font-size:16px;"
+                                                                                             class="pull-right hidden-xs showopacity glyphicon glyphicon-leaf"></span></a>
     </div>
     <div class="collapse navbar-collapse" id="bs-sidebar-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        <li #home_li class="active"><a>Home<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-home"></span></a></li>
-        <li #menu_li><a (click)="onMenuClick()">Menu<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-indent-left"></span></a></li>
-        <li #segments_li><a href="#">Segments<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-globe"></span></a></li>
+        <li #home_li class="active"><a (click)="onHomeClick()">Home<span style="font-size:16px;"
+                                                                         class="pull-right hidden-xs showopacity glyphicon glyphicon-home"></span></a>
+        </li>
+        <li #menu_li><a (click)="onMenuClick()">Menu<span style="font-size:16px;"
+                                                          class="pull-right hidden-xs showopacity glyphicon glyphicon-indent-left"></span></a>
+        </li>
+        <li #segments_li><a (click)="onSegmentsClick()">Segments<span style="font-size:16px;"
+                                                                      class="pull-right hidden-xs showopacity glyphicon glyphicon-globe"></span></a>
+        </li>
         <li #settings_li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Settings <span class="caret"></span><span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-cog"></span></a>
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Settings <span class="caret"></span><span
+            style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-cog"></span></a>
           <ul class="dropdown-menu forAnimate" role="menu">
             <li><a (click)="onAddMenuItem()">Add Menu Item</a></li>
-            <li><a href="#">Another action</a></li>
+            <li><a (click)="onCreateRestaurantConfiguration()">Create Configuration</a></li>
             <li><a (click)="onAddEmployee()">Add employee</a></li>
+            <li><a (click)="onAddSupplier()">Add supplier</a></li>
+            <li><a (click)="onAddPurchase()">Add purchase</a></li>
             <li class="divider"></li>
-            <li><a href="#">Separated link</a></li>
+            <li><a [routerLink]="['/home/changerestaurant',restaurant.id]">Change restaurant</a></li>
+            <li class="divider"></li>
+            <li><a href="#">One more separated link</a></li>
           </ul>
         </li>
-        <li #schedule><a (click)="onSchedule()">Schedule<span class="glyphicon glyphicon-time pull-right"></span></a></li>
+        <li #schedule><a (click)="onSchedule()">Schedule<span class="glyphicon glyphicon-time pull-right"></span></a>
+        </li>
       </ul>
     </div>
   </div>
-</nav>-->
+</nav>
+
+<div class="container" *ngIf="addPurchase">
+  <h1 align="center">Add purchase</h1>
+  <hr>
+  <div class="row" style="margin-left: 30px; margin-right: 30px;">
+    <form (ngSubmit)="onSubmitAddPurchase(formm.value)" #formm="ngForm" id="purchaseForm">
+      <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+          <div class="form-group">
+            <label for="price">Enter what you want in your purchase:</label>
+            <textarea type="text" class="form-control" name="text" ngModel required minlength="10"></textarea>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-3 col-md-offset-3">
+          <div class="form-group">
+            <label for="name">Password</label>
+            <input type="date" class="form-control" name="startDate" ngModel required>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="form-group">
+            <label for="price">Repeat password</label>
+            <input type="date" class="form-control" name="endDate" ngModel required>
+          </div>
+        </div>
+      </div>
+      <div align="center">
+        <button type="submit" class="btn btn-primary">Send</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="container" *ngIf="addSupplier">
+  <h1 align="center">Add supplier</h1>
+  <hr>
+  <div class="row" style="margin-left: 30px; margin-right: 30px;">
+    <form (ngSubmit)="onSubmitAddSupplier(formm.value, formm.controls['repeatPassword'].value)" #formm="ngForm"
+          id="addSupplierForm">
+      <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+          <div class="form-group">
+            <label for="price">Username</label>
+            <input type="text" class="form-control" #usernameSupplier name="username" ngModel required
+                   (change)="checkSupplierUsername(formm.controls['username'].value)">
+          </div>
+        </div>
+      </div>
+      <div align="center" *ngIf="errUsernameSupplierMessage">
+        <span style="color: red"> Username already exists! </span>
+      </div>
+      <div class="row">
+        <div class="col-md-3 col-md-offset-3">
+          <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" class="form-control" name="name" ngModel required>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="form-group">
+            <label for="price">Surname</label>
+            <input type="text" class="form-control" name="surname" ngModel required>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-3 col-md-offset-3">
+          <div class="form-group">
+            <label for="name">Password</label>
+            <input type="password" class="form-control" name="password" ngModel required>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="form-group">
+            <label for="price">Repeat password</label>
+            <input type="password" class="form-control" #repeatSupplierPass name="repeatPassword" ngModel required>
+          </div>
+        </div>
+      </div>
+      <div align="center" *ngIf="errSupplierMessage">
+        <span style="color: red"> The password don't match! </span>
+      </div>
+      <div align="center">
+        <button type="submit" class="btn btn-primary">Save</button>
+      </div>
+    </form>
+  </div>
+</div>
 
 <div class="container" *ngIf="scheduleBool">
   <div align="center">
-    <input style="margin-bottom: 20px;" #datee type="date" class="hide-replaced" data-date-size="2" (change)="dateChange($event)" id="date"/>
+    <input style="margin-bottom: 20px;" #datee type="date" class="hide-replaced" data-date-size="2"
+           (change)="dateChange($event)" id="date"/>
   </div>
   <div class="row">
     <div class="col-md-4 col-md-offset-2">
-      <h1 style="display: inline;">First shift</h1> <button (click)="onAddEmployeeSchedule(true)" class="btn btn-primary pull-right">Add <span class="glyphicon glyphicon-plus"></span></button>
+      <h1 style="display: inline;">First shift</h1>
+      <button (click)="onAddEmployeeSchedule(true)" class="btn btn-primary pull-right">Add <span
+        class="glyphicon glyphicon-plus"></span></button>
       <table class="table-fill">
         <thead>
         <tr>
           <th class="text-left">Name</th>
           <th class="text-left">Surname</th>
           <th class="text-left">Role</th>
+          <th class="text-left">Segments</th>
           <th class="text-left"></th>
         </tr>
         </thead>
         <tbody class="table-hover">
-          <tr *ngFor="let s of schedulesFirst">
-            <td class="text-left">{{s.employee.name}}</td>
-            <td class="text-left">{{s.employee.surname}}</td>
-            <td class="text-left">{{s.employee.role}}</td>
-            <td class="text-left"> <button class="btn btn-danger" (click)="onRemoveEmployeeSchedule(s.employee)">Remove <span class="glyphicon glyphicon-remove"></span></button> </td>
-          </tr>
+        <tr *ngFor="let s of schedulesFirst">
+          <td class="text-left">{{s.employee.name}}</td>
+          <td class="text-left">{{s.employee.surname}}</td>
+          <td class="text-left">{{s.employee.role}}</td>
+          <td class="text-left">{{getSegmentsString(s)}}</td>
+          <td class="text-left">
+            <button class="btn btn-danger" (click)="onRemoveEmployeeSchedule(s.employee)">Remove <span
+              class="glyphicon glyphicon-remove"></span></button>
+          </td>
+        </tr>
         </tbody>
       </table>
     </div>
     <div class="col-md-4 col-md-offset-2">
-      <h1 style="display: inline;">Second shift</h1> <button (click)="onAddEmployeeSchedule(false)" class="btn btn-primary pull-right">Add <span class="glyphicon glyphicon-plus"></span></button>
+      <h1 style="display: inline;">Second shift</h1>
+      <button (click)="onAddEmployeeSchedule(false)" class="btn btn-primary pull-right">Add <span
+        class="glyphicon glyphicon-plus"></span></button>
       <table class="table-fill">
         <thead>
         <tr>
           <th class="text-left">Name</th>
           <th class="text-left">Surname</th>
           <th class="text-left">Role</th>
+          <th class="text-left">Segments</th>
           <th class="text-left"></th>
         </tr>
         </thead>
@@ -113,7 +193,11 @@
           <td class="text-left">{{s.employee.name}}</td>
           <td class="text-left">{{s.employee.surname}}</td>
           <td class="text-left">{{s.employee.role}}</td>
-          <td class="text-left"> <button class="btn btn-danger" (click)="onRemoveEmployeeSchedule(s.employee)">Remove <span class="glyphicon glyphicon-remove"></span></button> </td>
+          <td class="text-left">{{getSegmentsString(s)}}</td>
+          <td class="text-left">
+            <button class="btn btn-danger" (click)="onRemoveEmployeeSchedule(s.employee)">Remove <span
+              class="glyphicon glyphicon-remove"></span></button>
+          </td>
         </tr>
         </tbody>
       </table>
@@ -124,8 +208,9 @@
 <div *ngIf="addEmployeeSchedule" class="modal fade show in danger" id="addMenuItemDialog" role="dialog">
   <div class="modal-dialog" style="background:grey;">
     <div class="modal-content">
-      <div class="modal-header" style = "border:2px yellow;">
-        <button type="button" class="close" (click)="onCloseAddEmployeeSchedule()" data-dismiss="modal">&times;</button>
+      <div class="modal-header" style="border:2px yellow;">
+        <button type="button" class="close" (click)="onCloseAddEmployeeSchedule()"
+                data-dismiss="modal">&times;</button>
         <div align="center"><h2 class="modal-title">Add Menu Item</h2></div>
         <hr>
       </div>
@@ -136,13 +221,17 @@
               <label for="menuItem">Category</label>
               <select name="selectedWorker" id="menuItem" required class="form-control" ngModel>
                 <option disabled selected value>Select employee</option>
-                <option *ngFor="let emp of freeWorkers; let i = index" required value="{{i}}" (click)="alert('a')">{{emp.name}} {{emp.surname}}</option>
+                <option *ngFor="let emp of freeWorkers; let i = index" required value="{{i}}" (click)="alert('a')">
+                  {{emp.name}} {{emp.surname}}({{emp.role}})
+                </option>
               </select>
             </div>
           </div>
           <div align="center">
             <button type="submit" id="AddMenuItemBtn" class="btn btn-primary">Add</button>
-            <button type="button" id="cancelAddMenuItemBtn" class="btn btn-danger" (click)="onCloseAddEmployeeSchedule()">Cancel</button>
+            <button type="button" id="cancelAddMenuItemBtn" class="btn btn-danger"
+                    (click)="onCloseAddEmployeeSchedule()">Cancel
+            </button>
           </div>
         </div>
       </form>
@@ -150,224 +239,320 @@
   </div>
 </div>
 
-    <div class="container" *ngIf="createRestaurantConfiguarion">
+<div class="container" *ngIf="createRestaurantConfiguarion">
+  <div *ngIf="addSegmentsBool" class="modal fade show in danger" id="addSegmentsDialog" role="dialog">
+    <div class="modal-dialog" style="background:grey;">
+      <div class="modal-content">
+        <div class="modal-header" style="border:2px yellow;">
+          <button type="button" class="close" (click)="onCloseAddSegmentsDialog()"
+                  data-dismiss="modal">&times;</button>
+          <div align="center"><h2 class="modal-title">Add segments</h2></div>
+          <hr>
+        </div>
+        <form role="form" id="addSegmentForm" #form="ngForm" (ngSubmit)="onAddSegments(form)">
+          <div class="modal-body">
+            <div class="form-group">
+              <div class="col-sm-12 form-group">
+              <span *ngFor="let segment of thisSegments; let i = index">
+                <input name="{{segment.id}}" style="display: inline; width: 20%; margin-left: 150px; margin-top: 10px;"
+                       type="checkbox" class="form-control" ngModel>
+                <span style="margin-bottom: 55px;">{{i+1}}) {{segment.name}}</span><br>
+              </span>
+              </div>
+            </div>
+            <div align="center">
+              <button type="submit" class="btn btn-primary">Ok</button>
+              <button type="button" class="btn btn-danger" (click)="onCloseAddSegmentsDialog()">Cancel</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
 
-      <div class="row">
-        <article class="col-sm-12 col-md-12 col-lg-12 sortable-grid ui-sortable">
-          <div id="wid-id-0">
-            <header role="heading">
-              <h2>Restaurant configuration </h2>
-            </header>
+<div class="container" *ngIf="createRestaurantConfiguarion" style="padding-left: 200px">
 
-            <div role="content">
+  <div class="row">
+    <article class="col-sm-12 col-md-12 col-lg-12 sortable-grid ui-sortable">
+      <div id="wid-id-0">
+        <header role="heading">
+          <h2>Restaurant configuration </h2>
+        </header>
 
-              <div class="widget-body">
+        <div role="content">
 
-                <div class="row">
-                  <form id="wizard-1" novalidate="novalidate">
-                    <div id="bootstrap-wizard-1" class="col-sm-12">
-                      <div class="form-bootstrapWizard">
-                        <ul class="bootstrapWizard form-wizard">
-                          <li class="active" #segments_a>
-                            <a class="active"> <span class="step">1</span> <span class="title">Segments</span> </a>
-                          </li>
-                          <li class="" #segments_name_a>
-                            <a> <span class="step">2</span> <span class="title">Segments and Tables</span> </a>
-                          </li>
-                          <li class="" #schedule_a>
-                            <a> <span class="step">3</span> <span class="title">Schedule</span> </a>
-                          </li>
-                          <li #finish_a>
-                            <a> <span class="step">4</span> <span class="title">Finish</span> </a>
-                          </li>
-                        </ul>
-                        <div class="clearfix"></div>
+          <div class="widget-body">
+
+            <div class="row">
+              <form id="wizard-1" novalidate="novalidate">
+                <div id="bootstrap-wizard-1" class="col-sm-12">
+                  <div class="form-bootstrapWizard">
+                    <ul class="bootstrapWizard form-wizard">
+                      <li class="active" #segments_a>
+                        <a class="active"> <span class="step">1</span> <span class="title">Segments</span> </a>
+                      </li>
+                      <li class="" #segments_name_a>
+                        <a> <span class="step">2</span> <span class="title">Segments and Tables</span> </a>
+                      </li>
+                      <li class="" #schedule_a>
+                        <a> <span class="step">3</span> <span class="title">Schedule</span> </a>
+                      </li>
+                      <li #finish_a>
+                        <a> <span class="step">4</span> <span class="title">Finish</span> </a>
+                      </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="tab-content">
+                    <div class="tab-pane active" id="tab1" #segments_div>
+                      <br>
+                      <h3><strong>Segments</strong> - Choose number of segments</h3>
+                      <div class="form-group">
+                        <label for="segments">How many segments:</label>
+                        <select ngModel name="segments" id="segments" class="form-control"
+                                (change)="selectNumberOfSegments($event)">
+                          <option disabled selected value> -- select number of segments --</option>
+                          <option value="1">1</option>
+                          <option value="2">2</option>
+                          <option value="3">3</option>
+                          <option value="4">4</option>
+                          <option value="5">5</option>
+                        </select>
                       </div>
-                      <div class="tab-content">
-                        <div class="tab-pane active" id="tab1" #segments_div>
-                          <br>
-                          <h3><strong>Segments</strong> - Choose number of segments</h3>
-                          <div class="form-group">
-                            <label for="segments">How many segments:</label>
-                            <select ngModel name="segments" id="segments" class="form-control" (change)="selectNumberOfSegments($event)">
-                              <option disabled selected value> -- select number of segments -- </option>
-                              <option value="1">1</option>
-                              <option value="2">2</option>
-                              <option value="3">3</option>
-                              <option value="4">4</option>
-                              <option value="5">5</option>
-                            </select>
-                          </div>
 
-                          <div class="form-actions">
-                            <div class="row">
-                              <div class="col-sm-12">
-                                <ul class="pager wizard no-margin">
-                                  <li class="next">
-                                    <button (click)="onNext()" class="btn btn-default btn-round pull-right"> Next </button>
-                                  </li>
-                                </ul>
-                              </div>
-                            </div>
+                      <div class="form-actions">
+                        <div class="row">
+                          <div class="col-sm-12">
+                            <ul class="pager wizard no-margin">
+                              <li class="next">
+                                <button (click)="onNext()" class="btn btn-default btn-round pull-right"> Next
+                                </button>
+                              </li>
+                            </ul>
                           </div>
                         </div>
-                        <div class="tab-pane" id="tab2" #segments_name_div>
-                          <br>
-                          <h3><strong>Segments and Tables</strong> - Choose segment name and number of table</h3>
-                          <form (ngSubmit)="onSegmentsNameSubmit(ff)" #ff="ngForm">
-                            <div class="form-group" *ngFor="let i of numberOfSegments">
-                              <div class="row">
-                                <div class="col-md-8">
-                                  <label>Segment name</label>
-                                  <input type="text" class="form-control" id="{{'segmentName'+i}}" name="{{'segmentName'+i}}" required ngModel
-                                  >
-                                </div>
-                                <div class="col-md-4">
-                                  <label>Number of tables</label>
-                                  <select required ngModel name="segments" id="{{'numberOfTables'+i}}" name="{{'numberOfTables'+i}}" class="form-control">
-                                    <option disabled selected value> -- select number of tables -- </option>
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                    <option value="4">4</option>
-                                    <option value="5">5</option>
-                                    <option value="6">6</option>
-                                    <option value="7">7</option>
-                                    <option value="8">8</option>
-                                  </select>
-                                </div>
-                              </div>
-                            </div>
-
-                          <div class="form-actions">
-                            <div class="row">
-                              <div class="col-sm-12">
-                                <ul class="pager wizard no-margin">
-                                  <li class="next">
-                                    <button type="submit" class="btn btn-default btn-round pull-right"> Next </button>
-                                  </li>
-                                </ul>
-                              </div>
-                            </div>
-                          </div>
-                          </form>
-                        </div>
-                        <div class="tab-pane" id="tab3" #schedule_div>
-                          <br>
-                          <h3><strong>Schedule</strong> - Define tables schedule</h3>
-                          <br>
-                          <div class="row"  *ngFor="let rs of restaurantSegments">
+                      </div>
+                    </div>
+                    <div class="tab-pane" id="tab2" #segments_name_div>
+                      <br>
+                      <h3><strong>Segments and Tables</strong> - Choose segment name and number of table</h3>
+                      <form (ngSubmit)="onSegmentsNameSubmit(ff)" #ff="ngForm">
+                        <div class="form-group" *ngFor="let i of numberOfSegments">
+                          <div class="row">
                             <div class="col-md-8">
+                              <<<<<<< Updated upstream
                               <svg width="500" height="300" style="border: 1px solid black;background: #91c5cc">
                                 <filter id="image" x="0%" y="0%" width="100%" height="100%">
                                   <feImage xlink:href="./images/table-texture.jpg"/>
                                 </filter>
 
-                                <rect filter="url(#image)" *ngFor="let t of rs.tables" style="cursor: pointer" attr.transform="{{'matrix(1 0 0 1 '+t.startX+' '+t.startY+')'}}"
-                                        (mousedown)="selectElement($event)" (mousemove)="moveElement($event)" (mouseup)="unselectElement(t,$event)"  cx="90" cy="90" width="125" height="71" stroke="green"  stroke-width="4" fill="yellow" />
+                                <rect filter="url(#image)" *ngFor="let t of rs.tables" style="cursor: pointer"
+                                      attr.transform="{{'matrix(1 0 0 1 '+t.startX+' '+t.startY+')'}}"
+                                      (mousedown)="selectElement($event)" (mousemove)="moveElement($event)"
+                                      (mouseup)="unselectElement(t,$event)" cx="90" cy="90" width="125" height="71"
+                                      stroke="green" stroke-width="4" fill="yellow"/>
                               </svg>
+                              =======
+                              <label>Segment name</label>
+                              <input type="text" class="form-control" id="{{'segmentName'+i}}"
+                                     name="{{'segmentName'+i}}" required ngModel
+                              >
+                              >>>>>>> Stashed changes
                             </div>
                             <div class="col-md-4">
-                              <div class="row" style="text-align: left">
-                                <label style="font-family: Copperplate; font-size: 20px" align="left">Number of tables:</label><strong style="font-family: Copperplate; font-size: 20px">  {{rs.tables.length}}</strong>
-                              </div>
-                              <div class="row" style="text-align: left">
-                                <label style="font-family: Copperplate; font-size: 20px" align="left">Name:</label><strong style="font-family: Copperplate; font-size: 20px">  {{rs.name}}</strong>
-                              </div>
-                            </div>
-                          </div>
-
-                          <div class="form-actions">
-                            <div class="row">
-                              <div class="col-sm-12">
-                                <ul class="pager wizard no-margin">
-                                  <li class="next disabled">
-                                    <button class="btn btn-default btn-round pull-right" (click)="onNextToFinish()"> Next </button>
-                                  </li>
-                                </ul>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="tab-pane" id="tab4" #finish_div>
-                          <br>
-                          <h3><strong>Step 4</strong> - Finish configuration</h3>
-                          <br>
-                          <h1 class="text-center text-success"><strong><i class="fa fa-check fa-lg"></i> Complete</strong></h1>
-                          <h4 class="text-center">Click Save to finish</h4>
-                          <br>
-                          <br>
-                          <div class="form-actions">
-                            <div class="row">
-                              <div class="col-sm-12">
-                                <ul class="pager wizard no-margin">
-                                  <li class="next disabled">
-                                    <button (click)="onFinishConfiguration()"  class="btn btn-default btn-round pull-right"> Save </button>
-                                  </li>
-                                </ul>
-                              </div>
+                              <label>Number of tables</label>
+                              <select required ngModel name="segments" id="{{'numberOfTables'+i}}"
+                                      name="{{'numberOfTables'+i}}" class="form-control">
+                                <option disabled selected value> -- select number of tables --</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                              </select>
                             </div>
                           </div>
                         </div>
 
+                        <div class="form-actions">
+                          <div class="row">
+                            <div class="col-sm-12">
+                              <ul class="pager wizard no-margin">
+                                <li class="next">
+                                  <button type="submit" class="btn btn-default btn-round pull-right"> Next</button>
+                                </li>
+                              </ul>
+                            </div>
+                          </div>
+                        </div>
+                      </form>
+                    </div>
+                    <div class="tab-pane" id="tab3" #schedule_div>
+                      <br>
+                      <h3><strong>Schedule</strong> - Define tables schedule</h3>
+                      <br>
+                      <div class="row" *ngFor="let rs of restaurantSegments">
+                        <div class="col-md-8">
+                          <svg width="500" height="300" style="border: 1px solid black">
+                            <filter id="image" x="0%" y="0%" width="100%" height="100%">
+                              <feImage xlink:href="./images/table-texture.jpg"/>
+                            </filter>
 
+                            <rect filter="url(#image)" *ngFor="let t of rs.tables" style="cursor: pointer"
+                                  attr.transform="{{'matrix(1 0 0 1 '+t.startX+' '+t.startY+')'}}"
+                                  (mousedown)="selectElement($event)" (mousemove)="moveElement($event)"
+                                  (mouseup)="unselectElement(t,$event)" cx="90" cy="90" width="125" height="71"
+                                  stroke="green" stroke-width="4" fill="yellow"/>
+                          </svg>
+                        </div>
+                        <div class="col-md-4">
+                          <div class="row" style="text-align: left">
+                            <label style="font-family: Copperplate; font-size: 20px" align="left">Number of
+                              tables:</label><strong style="font-family: Copperplate; font-size: 20px">
+                            {{rs.tables.length}}</strong>
+                          </div>
+                          <div class="row" style="text-align: left">
+                            <label style="font-family: Copperplate; font-size: 20px"
+                                   align="left">Name:</label><strong
+                            style="font-family: Copperplate; font-size: 20px"> {{rs.name}}</strong>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="form-actions">
+                        <div class="row">
+                          <div class="col-sm-12">
+                            <ul class="pager wizard no-margin">
+                              <li class="next disabled">
+                                <button class="btn btn-default btn-round pull-right" (click)="onNextToFinish()">
+                                  Next
+                                </button>
+                              </li>
+                            </ul>
+                          </div>
+                        </div>
                       </div>
                     </div>
-                  </form>
+                    <div class="tab-pane" id="tab4" #finish_div>
+                      <br>
+                      <h3><strong>Step 4</strong> - Finish configuration</h3>
+                      <br>
+                      <h1 class="text-center text-success"><strong><i class="fa fa-check fa-lg"></i>
+                        Complete</strong>
+                      </h1>
+                      <h4 class="text-center">Click Save to finish</h4>
+                      <br>
+                      <br>
+                      <div class="form-actions">
+                        <div class="row">
+                          <div class="col-sm-12">
+                            <ul class="pager wizard no-margin">
+                              <li class="next disabled">
+                                <button (click)="onFinishConfiguration()"
+                                        class="btn btn-default btn-round pull-right">
+                                  Save
+                                </button>
+                              </li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+
+                  </div>
                 </div>
-
-              </div>
-              <!-- end widget content -->
-
+              </form>
             </div>
-            <!-- end widget div -->
 
           </div>
-          <!-- end widget -->
+          <!-- end widget content -->
 
-        </article>
-      </div>
-
-    </div>
-
-    <div class="container" *ngIf="segments">
-
-      <div class="row"  *ngFor="let rs of thisSegments;let i = index">
-        <hr>
-        <h3 style="margin-left: 12px">Segment {{i+1}}</h3>
-        <a class="btn icon-btn btn-primary pull-right" (click)="assignSegmentForChange(rs)" data-toggle="modal" data-target="#changeSegmentModal"><span class="glyphicon btn-glyphicon glyphicon-wrench img-circle text-primary"></span>Edit</a>
-        <div class="col-md-8">
-          <svg width="500" height="300" style="border: 1px solid black;background: #91c5cc">
-            <filter id="image" x="0%" y="0%" width="100%" height="100%">
-              <feImage xlink:href="./images/table-texture.jpg"/>
-            </filter>
-            <rect filter="url(#image)" *ngFor="let t of rs.tables" style="cursor: pointer" attr.transform="{{'matrix(1 0 0 1 '+t.x+' '+t.y+')'}}"
-                    width="125" height="71" cx="90" cy="90" stroke="green"  stroke-width="4" fill="yellow" />
-          </svg>
         </div>
-        <div class="col-md-4">
-          <div class="row" style="text-align: left">
-            <label style="font-family: Copperplate; font-size: 25px" align="left">Number of tables:</label><strong style="font-family: Copperplate; font-size: 25px">  {{rs.tables.length}}</strong>
-          </div>
-          <div class="row" style="text-align: left">
-            <label style="font-family: Copperplate; font-size: 25px" align="left">Name:</label><strong style="font-family: Copperplate; font-size: 25px">  {{rs.name}}</strong>
-          </div>
-        </div>
+        <!-- end widget div -->
+
+      </div>
+      <!-- end widget -->
+
+    </article>
+  </div>
+</div>
+
+<div class="container" *ngIf="segments">
+
+  <div class="row" *ngFor="let rs of thisSegments;let i = index">
+    <hr>
+    <h3 style="margin-left: 12px">Segment {{i+1}}</h3>
+    <a class="btn icon-btn btn-primary pull-right" (click)="assignSegmentForChange(rs)" data-toggle="modal"
+       data-target="#changeSegmentModal"><span
+      class="glyphicon btn-glyphicon glyphicon-wrench img-circle text-primary"></span>Edit</a>
+    <div class="col-md-8">
+      <svg width="500" height="300" style="border: 1px solid black;background: #91c5cc">
+        <filter id="image" x="0%" y="0%" width="100%" height="100%">
+          <feImage xlink:href="./images/table-texture.jpg"/>
+        </filter>
+        <rect filter="url(#image)" *ngFor="let t of rs.tables" style="cursor: pointer"
+              attr.transform="{{'matrix(1 0 0 1 '+t.x+' '+t.y+')'}}"
+              width="125" height="71" cx="90" cy="90" stroke="green" stroke-width="4" fill="yellow"/>
+      </svg>
+    </div>
+    <div class="col-md-4">
+      <div class="row" style="text-align: left">
+        <label style="font-family: Copperplate; font-size: 25px" align="left">Number of tables:</label><strong
+        style="font-family: Copperplate; font-size: 25px"> {{rs.tables.length}}</strong>
+      </div>
+      <div class="row" style="text-align: left">
+        <label style="font-family: Copperplate; font-size: 25px" align="left">Name:</label><strong
+        style="font-family: Copperplate; font-size: 25px"> {{rs.name}}</strong>
       </div>
     </div>
+  </div>
+</div>
 
+<!--<div class="container" style="padding-left: 200px" *ngIf="segments">
+  <div class="row" *ngFor="let rs of thisSegments;let i = index">
+    <hr>
+    <h3>Segment {{i+1}}</h3>
+    <div class="col-md-8">
+      <svg width="500" height="300" style="border: 1px solid black">
+        <filter id="image" x="0%" y="0%" width="100%" height="100%">
+          <feImage xlink:href="./images/table-texture.jpg"/>
+        </filter>
+        <rect filter="url(#image)" *ngFor="let t of rs.tables" style="cursor: pointer"
+              attr.transform="{{'matrix(1 0 0 1 '+t.x+' '+t.y+')'}}"
+              width="125" height="71" cx="90" cy="90" stroke="green" stroke-width="4" fill="yellow"/>
+      </svg>
+    </div>
+    <div class="col-md-4">
+      <div class="row" style="text-align: left">
+        <label style="font-family: Copperplate; font-size: 20px" align="left">Number of tables:</label><strong
+        style="font-family: Copperplate; font-size: 20px"> {{rs.tables.length}}</strong>
+      </div>
+      <div class="row" style="text-align: left">
+        <label style="font-family: Copperplate; font-size: 20px" align="left">Name:</label><strong
+        style="font-family: Copperplate; font-size: 20px"> {{rs.name}}</strong>
+      </div>
+    </div>
+  </div>
+</div>-->
 
 
 <div class="container" *ngIf="addEmployee">
   <h1 align="center">Add employee</h1>
   <hr>
   <div class="row" style="margin-left: 30px; margin-right: 30px;">
-    <form (ngSubmit)="onSubmitAddEmployee(formm.value, formm.controls['repeatPassword'].value)" #formm="ngForm" id="modifyEmpForm">
+    <form (ngSubmit)="onSubmitAddEmployee(formm.value, formm.controls['repeatPassword'].value)" #formm="ngForm"
+          id="modifyEmpForm">
       <div class="row">
         <div class="col-md-6 col-md-offset-3">
           <div class="form-group">
             <label for="price">Username</label>
-            <input type="text" class="form-control" #username name="username" ngModel required (change)="checkEmployeeUsername(formm.controls['username'].value)">
+            <input type="text" class="form-control" #username name="username" ngModel required
+                   (change)="checkEmployeeUsername(formm.controls['username'].value)">
           </div>
         </div>
       </div>
@@ -378,7 +563,7 @@
         <div class="form-group col-md-6 col-md-offset-3">
           <label for="menuItemType">Role</label>
           <select required ngModel name="role" class="form-control">
-            <option disabled selected value> -- select role -- </option>
+            <option disabled selected value> -- select role --</option>
             <option value="WAITER">Waiter</option>
             <option value="BARTENDER">Bartender</option>
             <option value="CHEF">Chef</option>
@@ -488,7 +673,7 @@
     <div class="form-group">
       <label for="menuItemType">Category</label>
       <select required ngModel name="menuItemType" id="menuItemType" class="form-control">
-        <option disabled selected value> -- select category -- </option>
+        <option disabled selected value> -- select category --</option>
         <option value="DRINK">Drink</option>
         <option value="FOOD">Food</option>
       </select>
@@ -521,10 +706,13 @@
       <td class="text-left">{{menuItem.name}}</td>
       <td class="text-left">{{menuItem.description}}</td>
       <td class="text-left">{{menuItem.price}}$</td>
-      <td class="text-center"><img class="media-object" src="./images/food.png" style="width: 45px; height: 45px"></td>
+      <td class="text-center"><img class="media-object" src="./images/food.png"
+                                   style="width: 45px; height: 45px"></td>
       <td class="text-center">
-        <a (click)="assignMenuItemForChange(menuItem)" data-toggle="modal" data-target="#changeMenuItemModal" title="Edit" class="btn btn-primary"><i class="glyphicon glyphicon-list"></i></a>
-        <a title="Delete" (click)="deleteMenuItem(menuItem)" class="btn btn-danger"><i class="glyphicon glyphicon-trash"></i></a>
+        <a (click)="assignMenuItemForChange(menuItem)" data-toggle="modal" data-target="#changeMenuItemModal"
+           title="Edit" class="btn btn-primary"><i class="glyphicon glyphicon-list"></i></a>
+        <a title="Delete" (click)="deleteMenuItem(menuItem)" class="btn btn-danger"><i
+          class="glyphicon glyphicon-trash"></i></a>
       </td>
     </tr>
     </tbody>
@@ -549,10 +737,13 @@
       <td class="text-left">{{menuItem.name}}</td>
       <td class="text-left">{{menuItem.description}}</td>
       <td class="text-left">{{menuItem.price}}$</td>
-      <td class="text-center"><img class="media-object" src="./images/drink.jpg" style="width: 45px; height: 45px"></td>
+      <td class="text-center"><img class="media-object" src="./images/drink.jpg"
+                                   style="width: 45px; height: 45px"></td>
       <td class="text-center">
-        <a (click)="assignMenuItemForChange(menuItem)" data-toggle="modal" data-target="#changeMenuItemModal" title="Edit" class="btn btn-primary"><i class="glyphicon glyphicon-list"></i></a>
-        <a title="Delete" (click)="deleteMenuItem(menuItem)" class="btn btn-danger"><i class="glyphicon glyphicon-trash"></i></a>
+        <a (click)="assignMenuItemForChange(menuItem)" data-toggle="modal" data-target="#changeMenuItemModal"
+           title="Edit" class="btn btn-primary"><i class="glyphicon glyphicon-list"></i></a>
+        <a title="Delete" (click)="deleteMenuItem(menuItem)" class="btn btn-danger"><i
+          class="glyphicon glyphicon-trash"></i></a>
       </td>
     </tr>
     </tbody>
@@ -569,48 +760,49 @@
       </div>
       <div class="modal-body">
 
-          <form id="changeMenuItemForm" (ngSubmit)="onSubmitChangeMenuItem(fff)" #fff="ngForm">
-            <div class="row">
-              <div class="col-md-8">
-                <div class="form-group">
-                  <label for="namec">Name</label>
-                  <input type="text"
-                         class="form-control"
-                         id="namec"
-                         name="namec"
-                         [ngModel]="menuItemForChange.name"
-                         required
-                  >
-                  <small *ngIf="changeNameExists" style="color: red">Name already exists.</small>
+        <form id="changeMenuItemForm" (ngSubmit)="onSubmitChangeMenuItem(fff)" #fff="ngForm">
+          <div class="row">
+            <div class="col-md-8">
+              <div class="form-group">
+                <label for="namec">Name</label>
+                <input type="text"
+                       class="form-control"
+                       id="namec"
+                       name="namec"
+                       [ngModel]="menuItemForChange.name"
+                       required
+                >
+                <small *ngIf="changeNameExists" style="color: red">Name already exists.</small>
 
-                </div>
-              </div>
-              <div class="col-md-4">
-                <div class="form-group">
-                  <label for="pricec">Price</label>
-                  <input type="text"
-                         class="form-control"
-                         id="pricec"
-                         name="pricec"
-                         [ngModel]="menuItemForChange.price"
-                         required
-                  >
-
-                </div>
               </div>
             </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="pricec">Price</label>
+                <input type="text"
+                       class="form-control"
+                       id="pricec"
+                       name="pricec"
+                       [ngModel]="menuItemForChange.price"
+                       required
+                >
 
-
-            <div class="form-group">
-              <label for="descriptionc">Description</label>
-              <textarea class="form-control" id="descriptionc" name="descriptionc" required [ngModel]="menuItemForChange.description"></textarea>
+              </div>
             </div>
+          </div>
 
 
-            <button type="submit" class="btn btn-primary">Save</button>
-            <button type="button" data-dismiss="modal" class="btn btn-danger">Cancel</button>
+          <div class="form-group">
+            <label for="descriptionc">Description</label>
+            <textarea class="form-control" id="descriptionc" name="descriptionc" required
+                      [ngModel]="menuItemForChange.description"></textarea>
+          </div>
 
-          </form>
+
+          <button type="submit" class="btn btn-primary">Save</button>
+          <button type="button" data-dismiss="modal" class="btn btn-danger">Cancel</button>
+
+        </form>
       </div>
     </div>
   </div>
@@ -663,13 +855,16 @@
         </form>
         <hr>
 
-            <svg width="500" height="300" style="border: 1px solid black;margin-left: 32px;background: #91c5cc">
-              <filter id="image" x="0%" y="0%" width="100%" height="100%">
-                <feImage xlink:href="./images/table-texture.jpg"/>
-              </filter>
-              <rect filter="url(#image)" *ngFor="let t of segmentForChange.tables" style="cursor: pointer" attr.transform="{{'matrix(1 0 0 1 '+t.x+' '+t.y+')'}}"
-                    (mousedown)="selectElement($event)" (mousemove)="moveElement($event)" (mouseup)="unselectElement(t,$event)" width="125" height="71" cx="90" cy="90" stroke="green"  stroke-width="4" fill="yellow" />
-            </svg>
+        <svg width="500" height="300" style="border: 1px solid black;margin-left: 32px;background: #91c5cc">
+          <filter id="image" x="0%" y="0%" width="100%" height="100%">
+            <feImage xlink:href="./images/table-texture.jpg"/>
+          </filter>
+          <rect filter="url(#image)" *ngFor="let t of segmentForChange.tables" style="cursor: pointer"
+                attr.transform="{{'matrix(1 0 0 1 '+t.x+' '+t.y+')'}}"
+                (mousedown)="selectElement($event)" (mousemove)="moveElement($event)"
+                (mouseup)="unselectElement(t,$event)" width="125" height="71" cx="90" cy="90" stroke="green"
+                stroke-width="4" fill="yellow"/>
+        </svg>
         <hr>
         <button (click)="onSubmitSegmentChange(ffff)" type="button" class="btn btn-primary">Save</button>
         <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
@@ -685,13 +880,20 @@
   <div class="row">
     <div class="col-lg-8">
       <div class="rating-block">
-        <h4>Average user rating  : <span style="font-size: 30px" *ngIf="restaurant.grade!=0" class="bold padding-bottom-7">{{restaurant.grade}} <small>/ 5</small></span></h4>
+        <h4>Average user rating : <span style="font-size: 30px" *ngIf="restaurant.grade!=0"
+                                        class="bold padding-bottom-7">{{restaurant.grade}} <small>/ 5</small></span>
+        </h4>
         <br>
-        <span id="starOne" (click)="onStarRate(1)" (mouseleave)="onStarMouseLeave()" (mouseover)="onStarOneOver()" class="glyphicon glyphicon-star stars"></span>
-        <span id="starTwo" (click)="onStarRate(2)" (mouseleave)="onStarMouseLeave()" (mouseover)="onStarTwoOver()" class="glyphicon glyphicon-star stars"></span>
-        <span id="starThree" (click)="onStarRate(3)" (mouseleave)="onStarMouseLeave()" (mouseover)="onStarThreeOver()" class="glyphicon glyphicon-star stars"></span>
-        <span id="starFour" (click)="onStarRate(4)" (mouseleave)="onStarMouseLeave()" (mouseover)="onStarFourOver()" class="glyphicon glyphicon-star stars"></span>
-        <span id="starFive" (click)="onStarRate(5)" (mouseleave)="onStarMouseLeave()" (mouseover)="onStarFiveOver()" class="glyphicon glyphicon-star stars"></span>
+        <span id="starOne" (click)="onStarRate(1)" (mouseleave)="onStarMouseLeave()"
+              (mouseover)="onStarOneOver()" class="glyphicon glyphicon-star stars"></span>
+        <span id="starTwo" (click)="onStarRate(2)" (mouseleave)="onStarMouseLeave()"
+              (mouseover)="onStarTwoOver()" class="glyphicon glyphicon-star stars"></span>
+        <span id="starThree" (click)="onStarRate(3)" (mouseleave)="onStarMouseLeave()"
+              (mouseover)="onStarThreeOver()" class="glyphicon glyphicon-star stars"></span>
+        <span id="starFour" (click)="onStarRate(4)" (mouseleave)="onStarMouseLeave()"
+              (mouseover)="onStarFourOver()" class="glyphicon glyphicon-star stars"></span>
+        <span id="starFive" (click)="onStarRate(5)" (mouseleave)="onStarMouseLeave()"
+              (mouseover)="onStarFiveOver()" class="glyphicon glyphicon-star stars"></span>
 
       </div>
     </div>
@@ -703,7 +905,8 @@
         </div>
         <div class="pull-left" style="width:180px;">
           <div class="progress" style="height:9px; margin:8px 0;">
-            <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="5" aria-valuemin="0" aria-valuemax="5" style="width: 1000%">
+            <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="5"
+                 aria-valuemin="0" aria-valuemax="5" style="width: 1000%">
               <span class="sr-only">80% Complete (danger)</span>
             </div>
           </div>
@@ -716,7 +919,8 @@
         </div>
         <div class="pull-left" style="width:180px;">
           <div class="progress" style="height:9px; margin:8px 0;">
-            <div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="4" aria-valuemin="0" aria-valuemax="5" style="width: 80%">
+            <div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="4"
+                 aria-valuemin="0" aria-valuemax="5" style="width: 80%">
               <span class="sr-only">80% Complete (danger)</span>
             </div>
           </div>
@@ -729,7 +933,8 @@
         </div>
         <div class="pull-left" style="width:180px;">
           <div class="progress" style="height:9px; margin:8px 0;">
-            <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="3" aria-valuemin="0" aria-valuemax="5" style="width: 60%">
+            <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="3" aria-valuemin="0"
+                 aria-valuemax="5" style="width: 60%">
               <span class="sr-only">80% Complete (danger)</span>
             </div>
           </div>
@@ -742,7 +947,8 @@
         </div>
         <div class="pull-left" style="width:180px;">
           <div class="progress" style="height:9px; margin:8px 0;">
-            <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="2" aria-valuemin="0" aria-valuemax="5" style="width: 40%">
+            <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="2"
+                 aria-valuemin="0" aria-valuemax="5" style="width: 40%">
               <span class="sr-only">80% Complete (danger)</span>
             </div>
           </div>
@@ -755,7 +961,8 @@
         </div>
         <div class="pull-left" style="width:180px;">
           <div class="progress" style="height:9px; margin:8px 0;">
-            <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="1" aria-valuemin="0" aria-valuemax="5" style="width: 20%">
+            <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="1" aria-valuemin="0"
+                 aria-valuemax="5" style="width: 20%">
               <span class="sr-only">80% Complete (danger)</span>
             </div>
           </div>

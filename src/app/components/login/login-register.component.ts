@@ -77,15 +77,24 @@ export class LoginRegisterComponent implements OnInit {
         if(data['_body'] == 'user'){
           this.router.navigateByUrl('/home');
           this.roleService.user = true;
+          this.roleService.supplier = false;
+          this.roleService.waiter = false;
           this.roleService.getFriendRequests();
         }else if(data['_body']=='manager'){
 
         }else if (data['_body'] == 'waiter'){
           this.router.navigateByUrl('home/employee-profile');
+          this.roleService.user = false;
+          this.roleService.supplier = false;
           this.roleService.waiter = true;
         } else if(data['_body']=='check_email'){
           sweetAlert("Check your email!", "Please click on the link on your email to procced login.", "error");
-        } else{
+        } else if(data['_body'] == 'supplier'){
+          this.router.navigateByUrl('home/supplier');
+          this.roleService.user = false;
+          this.roleService.supplier = true;
+          this.roleService.waiter = false;
+        } else {
           document.getElementById('err_login').innerHTML = 'Incorrect email or password.';
         }
       }

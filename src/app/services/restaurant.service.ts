@@ -7,6 +7,8 @@ import {RestaurantSegment} from "../beans/restaurant-segment";
 import {Employee} from "../beans/employee";
 import {Schedule} from "../beans/schedule";
 import {UserGrade} from "../beans/user-grade";
+import {Supplier} from "../beans/supplier";
+import {Purchase} from "../beans/purchase";
 
 @Injectable()
 export class RestaurantService {
@@ -145,10 +147,28 @@ export class RestaurantService {
     return this.http.post(this.path + 'changeRestaurant/', JSON.stringify(rh), { headers : h, withCredentials : true });
   }
 
-  rateRestaurant(userGrade:UserGrade){
+  rateRestaurant(userGrade:UserGrade) {
+    let h = new Headers();
+    h.append('Content-type', 'application/json');
+    return this.http.post(this.path + 'rateRestaurant/', JSON.stringify(userGrade), {
+      headers: h,
+      withCredentials: true
+    });
+  }
+  checkSupplierUsername(username : string){
+    return this.http.post(this.path + 'checkSupplierUsername', username, { withCredentials : true });
+  }
+
+  addSupplier(supplier : Supplier){
     let h = new Headers();
     h.append('Content-type','application/json');
-    return this.http.post(this.path + 'rateRestaurant/', JSON.stringify(userGrade), { headers : h, withCredentials : true });
+    return this.http.post(this.path + 'addSupplier/', JSON.stringify(supplier), { headers : h, withCredentials : true });
+  }
+
+  addPurchase(purchase : Purchase){
+    let h = new Headers();
+    h.append('Content-type','application/json');
+    return this.http.post(this.path + 'addPurchase/', JSON.stringify(purchase), { headers : h, withCredentials : true });
   }
 
 }
