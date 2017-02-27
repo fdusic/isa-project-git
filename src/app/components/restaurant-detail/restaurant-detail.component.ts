@@ -409,8 +409,6 @@ export class RestaurantDetailComponent implements OnInit {
       this.currentMatrix[i] = parseFloat(this.currentMatrix[i]);
 
     }
-
-
   }
 
 

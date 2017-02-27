@@ -48,7 +48,7 @@
   <div class="tab-content">
     <div class="tab-pane active" id="tab_default_1">
       <div class="container-fluid" style="margin-left: 66px; margin-top: 66px;">
-        <div class="row" *ngFor="let ps of purchaseSupplier">
+        <div class="row" *ngFor="let ps of purchaseSupplierDone">
           <div class="col-md-11">
             <div class="panel-body" id="mainpanel">
               <div class="panel-group">
@@ -63,7 +63,7 @@
                         <span><strong>Price: </strong><span>{{ps.price}}$</span></span>
                       </div>
                       <div class="col-md-7">
-                        <span><strong>Text: </strong><span>{{ps.purchase.text}}</span></span>
+                        <span><strong>Order: </strong><span>{{ps.purchase.text}}</span></span>
                       </div>
                     </div>
                   </div>
@@ -76,9 +76,6 @@
                     <div *ngIf="ps.status == 'DECLINED'" class="progress-bar  progress-bar-danger progress-bar-striped" role="progressbar" style="width: 100%;">
                       Declined
                     </div>
-                    <div *ngIf="ps.status == 'PENDING'" class="progress-bar  progress-bar-warning progress-bar-striped" role="progressbar" style="width: 100%;">
-                      Pending
-                    </div>
                   </div>
                 </div>
               </div>
@@ -88,7 +85,43 @@
       </div>
     </div>
     <div class="tab-pane" id="tab_default_2">
-      taab 2
+      <div class="container-fluid" style="margin-left: 66px; margin-top: 66px;">
+        <div class="row" *ngFor="let ps of purchaseSupplierPending">
+          <div class="col-md-11">
+            <div class="panel-body">
+              <div class="panel-group">
+                <div class="panel panel-default">
+                  <div class="panel-heading">
+                    <div class="row">
+                      <div class="col-md-2">
+                          <span><strong>Restaurant:</strong> <span> {{ps.purchase.restaurant.name}}</span>
+                          </span>
+                      </div>
+                      <div class="col-md-2">
+                        <span><strong>Price: </strong><span>{{ps.price}}$</span></span>
+                      </div>
+                      <div class="col-md-6">
+                        <span><strong>Order: </strong><span>{{ps.purchase.text}}</span></span>
+                      </div>
+                      <div class="col-md-2 pull-right">
+                        <a><span style="color: darkred; font-size: 20px;" class="glyphicon glyphicon-remove"></span></a>
+                        <a><span style="color: yellow; font-size: 20px;" class="glyphicon glyphicon-modify"></span></a>
+                      </div>
+                    </div>
+                  </div>
+
+                  <br>
+                  <div class="progress" >
+                    <div class="progress-bar  progress-bar-warning progress-bar-striped" role="progressbar" style="width: 100%;">
+                      Pending
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
     <div class="tab-pane" id="tab_default_3">
       taab 3

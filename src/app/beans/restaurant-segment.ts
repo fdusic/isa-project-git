@@ -6,7 +6,4 @@ export class RestaurantSegment{
   public name:string;
   public restaurant:Restaurant;
   public tables:RestaurantTable[]=[];
-
-
-
 }

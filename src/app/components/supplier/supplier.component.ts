@@ -12,11 +12,8 @@ import {Purchase} from "../../beans/purchase";
 export class SupplierComponent implements OnInit {
 
   private supplier : Supplier = new Supplier();
-  private purchaseSupplier : PurchaseSupplier[] = [];
-
-  private pendingPruchases : Purchase[] = [];
-  private acceptedDeclinedPurchases : Purchase[] = [];
-  private newPurchases : Purchase[] = [];
+  private purchaseSupplierDone : PurchaseSupplier[] = [];
+  private purchaseSupplierPending : PurchaseSupplier[] = [];
 
   constructor(private httpService : SupplierService) { }
 
@@ -29,10 +26,18 @@ export class SupplierComponent implements OnInit {
     this.httpService.getPurchaseSupplier().subscribe(
       data => {
         console.log(data['_body']);
-        this.purchaseSupplier = JSON.parse(data['_body']);
+        let purchaseSupplier = JSON.parse(data['_body']);
+
+        for(let i=0; i < purchaseSupplier.length; i++){
+          if(purchaseSupplier[i].status == 'PENDING'){
+            this.purchaseSupplierPending.push(purchaseSupplier[i]);
+          } else{
+            this.purchaseSupplierDone.push(purchaseSupplier[i]);
+          }
+        }
+
       }
     );
-
   }
 
 }
