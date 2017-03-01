@@ -4,6 +4,7 @@ export class RestaurantTable{
   public startY:number;
   public x:number;
   public y:number;
+  public version:number;
 
 
   constructor(){}

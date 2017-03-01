@@ -61,7 +61,7 @@
                   <div class="panel panel-default" *ngFor="let order of orders">
                     <div class="panel-heading">
                       <div *ngIf="canWaiterFinish(order)" class="pull-right"><button style="margin-left:20px;margin-top: -8px;" (click)="waiterFinishOrder(order)"  class="btn btn-danger">Finish</button></div>
-                      <div *ngIf="canWaiterChange(order)" class="pull-right"><button  class="btn btn-warning" (click)="changeOrder(order)" style="margin-top: -8px; margin-left: 15px;">Change</button> </div>
+                      <div *ngIf="roleService.waiter" class="pull-right"><button  class="btn btn-warning" (click)="changeOrder(order)" style="margin-top: -8px; margin-left: 15px;">Change</button> </div>
                       <div *ngIf="roleService.chef && !order.chefFinished && order.chefAccepted" class="pull-right"><button style="margin-left:20px;margin-top: -8px;" (click)="chefFinishOrder(order)"  class="btn btn-danger">Finish order</button></div>
                       <div *ngIf="roleService.chef && !order.chefAccepted" class="pull-right"><button style="margin-left:20px;margin-top: -8px;" (click)="chefAcceptOrder(order)"  class="btn btn-primary">Accept order</button></div>
                       <div *ngIf="roleService.bartender && !order.bartenderFinished" class="pull-right"><button (click)="bartenderFinishOrder(order)" style="margin-left:20px;margin-top: -8px;"  class="btn btn-danger">Finish order</button></div>
@@ -94,25 +94,33 @@
       <div class="container-fluid">
         <br><br><br>
         <div class="row">
-          <div class="col-md-offset-4 col-md-6">
+          <div class="col-md-offset-2 col-md-8">
               <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-4">
                   <h2><strong>Date</strong></h2>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-4">
+                  <h2><strong>Employee</strong></h2>
+                </div>
+                <div class="col-md-4">
                   <h2><strong>Time</strong></h2>
                 </div>
               </div>
               <hr><br>
               <div class="row" *ngFor="let sch of schedules">
-                <div class="col-md-6">
+                <div class="col-md-4">
                   <div class="agenda-date">
                     <div class="dayofmonth">{{getDay(sch)}}</div>
                     <div class="dayofweek">{{getMonth(sch)}}</div>
                     <div class="shortdate text-muted">{{getYear(sch)}}</div>
                   </div>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-4">
+                  <div class="agenda-time">
+                    <h3>{{sch?.employee?.name}}</h3>
+                  </div>
+                </div>
+                <div class="col-md-4">
                   <div class="agenda-time">
                     {{getShift(sch)}}
                   </div>

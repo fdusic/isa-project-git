@@ -28,4 +28,12 @@ export class NavbarComponent implements OnInit {
     );
   }
 
+  onProfile(){
+    if(this.roleService.user){
+      this.router.navigateByUrl('/home');
+    }else if(this.roleService.bartender || this.roleService.waiter || this.roleService.chef){
+      this.router.navigateByUrl('/home/employee-profile');
+    }
+  }
+
 }

@@ -7,6 +7,7 @@ import {NgForm} from "@angular/forms";
 import {Order} from "../../../beans/order";
 import {Router} from "@angular/router";
 import {Schedule} from "../../../beans/schedule";
+import {RestaurantTable} from "../../../beans/restaurant-table";
 declare let swal: any;
 
 @Component({
@@ -37,8 +38,17 @@ export class AddOrderComponent implements OnInit {
   private bartendersForShow:Employee[] = [];
   private chefsForShow: Employee[] = [];
 
+  private todaySchedule: Schedule;
+  //private schedules: Schedule[];
+
+  private restaurantTable: RestaurantTable;
+  private tableSelected = false;
+
+  private tables: RestaurantTable[] = [];
+
   @ViewChild('bart') bart: any;
   @ViewChild('ch') ch: any;
+  @ViewChild('tab') tab: any;
 
   constructor(private employeeService: EmployeeService, private router: Router) { }
 
@@ -113,6 +123,31 @@ export class AddOrderComponent implements OnInit {
         this.menuItems = JSON.parse(data['_body']);
       }
     );
+    this.employeeService.getEmployee().subscribe(
+      (data) => {
+        let emp: Employee = JSON.parse(data['_body']);
+        this.employeeService.getScheduleForEmp(emp).subscribe(
+          (data) => {
+            this.schedules = JSON.parse(data['_body']);
+            for (var i = 0; i < this.schedules.length; i++) {
+              this.todayDate = new Date();
+              let month = this.todayDate.getMonth() + 1;
+              let day = this.todayDate.getDate();
+              let year = this.todayDate.getFullYear();
+              if(month == (+this.getMonth(this.schedules[i])) && year == (+this.getYear(this.schedules[i])) && day == (+this.getDay(this.schedules[i]))){
+                this.todaySchedule = this.schedules[i];
+                for(var i = 0;i < this.todaySchedule.segments.length;i++){
+                  for(var j = 0; j < this.todaySchedule.segments[i].tables.length;j++){
+                    this.tables.push(this.todaySchedule.segments[i].tables[j]);
+                  }
+                }
+                break;
+              }
+            }
+          }
+        );
+      }
+    );
   }
 
   onCloseAddMenuItem(){
@@ -174,6 +209,7 @@ export class AddOrderComponent implements OnInit {
         }
       }
     }
+    order.restaurantTable = this.restaurantTable;
     let router = this.router;
     this.employeeService.addOrder(order).subscribe(
       (data) => {
@@ -197,6 +233,17 @@ export class AddOrderComponent implements OnInit {
     this.bartender = string[1].split(")")[0];
   }
 
+  setTable(){
+    let id = this.tab.nativeElement.value;
+    for(var i = 0; i < this.tables.length; i++){
+      if(this.tables[i].id == id){
+        this.restaurantTable = this.tables[i];
+        this.tableSelected = true;
+        break;
+      }
+    }
+  }
+
   chefChanged(){
     this.chefChangedBoolean = true;
     let string: string[] = this.ch.nativeElement.value.split(" (");
@@ -204,11 +251,11 @@ export class AddOrderComponent implements OnInit {
   }
 
   isAddOrderDisabled(){
-    if(this.addedDrinkItems.length > 0 && this.addedFoodItems.length > 0 && this.chefChangedBoolean && this.bartenderChangedBoolean){
+    if(this.addedDrinkItems.length > 0 && this.addedFoodItems.length > 0 && this.chefChangedBoolean && this.bartenderChangedBoolean && this.tableSelected){
       return false;
-    }else if(this.addedDrinkItems.length > 0 && this.bartenderChangedBoolean && this.addedFoodItems.length == 0 ){
+    }else if(this.addedDrinkItems.length > 0 && this.bartenderChangedBoolean && this.addedFoodItems.length == 0 && this.tableSelected){
       return false;
-    }else if(this.addedFoodItems.length > 0 && this.chefChangedBoolean && this.addedDrinkItems.length == 0){
+    }else if(this.addedFoodItems.length > 0 && this.chefChangedBoolean && this.addedDrinkItems.length == 0 && this.tableSelected){
       return false;
     }
     return true;

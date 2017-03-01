@@ -19,8 +19,8 @@ export class HomeComponent implements OnInit, OnDestroy {
     console.log(this.roleService.supplier);
     console.log(this.roleService.user);
     if(this.roleService.user){
-      let timer = Observable.timer(2000,10000);
-      this.sub = timer.subscribe(() => {
+      //let timer = Observable.timer(2000,10000);
+      //this.sub = timer.subscribe(() => {
         this.httpService.getFriendRequests().subscribe(
           data => {
             let newFriendRequests = JSON.parse(data['_body']);
@@ -34,7 +34,7 @@ export class HomeComponent implements OnInit, OnDestroy {
             }
           }
         );
-      });
+      //});
     }
 
   }

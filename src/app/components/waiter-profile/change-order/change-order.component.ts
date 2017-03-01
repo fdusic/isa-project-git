@@ -5,6 +5,8 @@ import {Employee} from "../../../beans/employee";
 import {MenuItem} from "../../../beans/menu-item";
 import {NgForm} from "@angular/forms";
 import {Router} from "@angular/router";
+import {Schedule} from "../../../beans/schedule";
+import {RestaurantTable} from "../../../beans/restaurant-table";
 declare let swal: any;
 @Component({
   selector: 'app-change-order',
@@ -29,8 +31,20 @@ export class ChangeOrderComponent implements OnInit {
   private bartender = "";
   private chef = "";
 
+  private bartendersForShow:Employee[] = [];
+  private chefsForShow: Employee[] = [];
+  private todaySchedule: Schedule;
+
+  private schedules: Schedule[] = [];
+  private todayDate: Date;
+  private restaurantTable: RestaurantTable;
+  private tables: RestaurantTable[] = [];
+
+  private changedFood = false;
+
   @ViewChild('bart') bart: any;
   @ViewChild('ch') ch: any;
+  @ViewChild('tab') tab: any;
 
   constructor(private employeeService: EmployeeService, private router: Router) {
   }
@@ -40,70 +54,196 @@ export class ChangeOrderComponent implements OnInit {
     this.employeeService.getBartenders().subscribe(
       (data) => {
         this.bartenders = JSON.parse(data['_body']);
+        for(var i = 0;i < this.bartenders.length;i++){
+          this.employeeService.getScheduleForEmp(this.bartenders[i]).subscribe(
+            (data) => {
+              this.schedules = [];
+              this.schedules = JSON.parse(data['_body']);
+              for (var j = 0; j < this.schedules.length; j++) {
+                this.todayDate = new Date();
+                let month = this.todayDate.getMonth() + 1;
+                let day = this.todayDate.getDate();
+                let year = this.todayDate.getFullYear();
+                let hours = this.todayDate.getHours();
+                if(month == (+this.getMonth(this.schedules[j])) && year == (+this.getYear(this.schedules[j])) && day == (+this.getDay(this.schedules[j])) ){
+                  if(this.schedules[j].shift == "FIRST"){
+                    if(hours < 15) {
+                      this.bartendersForShow.push(this.schedules[j].employee);
+                      break;
+                    }
+                  }else{
+                    if(hours > 15){
+                      this.bartendersForShow.push(this.schedules[j].employee);
+                      break;
+                    }
+                  }
+                  break;
+                }
+              }
+            }
+          );
+        }
       }
     );
     this.employeeService.getChefs().subscribe(
       (data) => {
         this.chefs = JSON.parse(data['_body']);
+        for(var i = 0;i < this.chefs.length;i++){
+          this.employeeService.getScheduleForEmp(this.chefs[i]).subscribe(
+            (data) => {
+              this.schedules = JSON.parse(data['_body']);
+              for (var j = 0; j < this.schedules.length; j++) {
+                this.todayDate = new Date();
+                let month = this.todayDate.getMonth() + 1;
+                let day = this.todayDate.getDate();
+                let year = this.todayDate.getFullYear();
+                let hours = this.todayDate.getHours();
+                if(month == (+this.getMonth(this.schedules[j])) && year == (+this.getYear(this.schedules[j])) && day == (+this.getDay(this.schedules[j])) ){
+                  if(this.schedules[j].shift == "FIRST"){
+                    if(hours < 15) {
+                      this.chefsForShow.push(this.schedules[j].employee);
+                    }
+                  }else{
+                    if(hours > 15){
+                      this.chefsForShow.push(this.schedules[j].employee);
+                    }
+                  }
+                  break;
+                }
+              }
+            }
+          );
+        }
       }
     );
     this.employeeService.getMenuItems().subscribe(
       (data) => {
         this.menuItems = JSON.parse(data['_body']);
         for (var i = 0; i < this.order.menuItems.length; i++) {
-          if (this.order.menuItems[i].menuItemType == "FOOD") {
+          if (this.order.menuItems[i].menuItemType == "FOOD" && !this.employeeService.orderForChange.chefFinished) {
             this.addedFoodItems.push(this.order.menuItems[i]);
           }
-          else {
-            this.addedDrinkItems.push(this.order.menuItems[i]);
+          else if(!this.employeeService.orderForChange.bartenderFinished){
+
+            this.addedDrinkItems.push(this.order.menuItems[i] );
           }
           this.deleteMenuItem(this.order.menuItems[i]);
         }
       }
     );
-    if(this.employeeService.orderForChange.bartender != null)
-      this.bartender = this.employeeService.orderForChange.bartender.username ;
+    this.employeeService.getEmployee().subscribe(
+      (data) => {
+        let emp: Employee = JSON.parse(data['_body']);
+        this.employeeService.getScheduleForEmp(emp).subscribe(
+          (data) => {
+            this.schedules = JSON.parse(data['_body']);
+            for (var i = 0; i < this.schedules.length; i++) {
+              this.todayDate = new Date();
+              let month = this.todayDate.getMonth() + 1;
+              let day = this.todayDate.getDate();
+              let year = this.todayDate.getFullYear();
+              if(month == (+this.getMonth(this.schedules[i])) && year == (+this.getYear(this.schedules[i])) && day == (+this.getDay(this.schedules[i]))){
+                this.todaySchedule = this.schedules[i];
+                for(var i = 0;i < this.todaySchedule.segments.length;i++){
+                  for(var j = 0; j < this.todaySchedule.segments[i].tables.length;j++){
+                    this.tables.push(this.todaySchedule.segments[i].tables[j]);
+                  }
+                }
+                break;
+              }
+            }
+          }
+        );
+      }
+    );
+
+
+    if(this.employeeService.orderForChange.bartender != null) {
+      this.bartender = this.employeeService.orderForChange.bartender.username;
+    }
     if(this.employeeService.orderForChange.chef != null)
       this.chef = this.employeeService.orderForChange.chef.username;
+
+
+      this.restaurantTable = this.employeeService.orderForChange.restaurantTable;
+      console.log(this.restaurantTable);
+      console.log(this.chef);
   }
 
   onChangeOrder(){
     let order = new Order();
+    order.version = this.employeeService.orderForChange.version;
     order.id = this.employeeService.orderForChange.id;
+    order.date = this.employeeService.orderForChange.date;
+    order.bartenderFinished = this.employeeService.orderForChange.bartenderFinished;
+    if(!this.changedFood)
+      order.chefAccepted = this.employeeService.orderForChange.chefAccepted;
+    else
+      order.chefAccepted = false;
+    order.chefFinished = this.employeeService.orderForChange.chefFinished;
     if(this.addedFoodItems.length > 0){
       for(var i = 0;i < this.addedFoodItems.length; i++){
         order.menuItems.push(this.addedFoodItems[i]);
       }
-      for(var i = 0; i < this.chefs.length; i++){
-        if(this.chefs[i].username == this.chef){
-          order.chef = this.chefs[i];
-          break;
+      if(!this.employeeService.orderForChange.chefAccepted) {
+        for (var i = 0; i < this.chefs.length; i++) {
+          if (this.chefs[i].username == this.chef) {
+            order.chef = this.chefs[i];
+            break;
+          }
         }
+      }else{
+        order.chef = this.employeeService.orderForChange.chef;
       }
     }
+
     if(this.addedDrinkItems.length > 0){
       for(var i = 0;i < this.addedDrinkItems.length; i++){
         order.menuItems.push(this.addedDrinkItems[i]);
       }
-      for(var i = 0;i < this.bartenders.length; i++){
-        if(this.bartenders[i].username == this.bartender){
-          order.bartender = this.bartenders[i];
+      if(!this.employeeService.orderForChange.bartenderFinished) {
+        for (var i = 0; i < this.bartenders.length; i++) {
+          if (this.bartenders[i].username == this.bartender) {
+            order.bartender = this.bartenders[i];
+          }
         }
+      }else{
+        order.bartender = this.employeeService.orderForChange.bartender;
       }
     }
+    console.log(order.chef);
+    console.log(order.bartender);
+    order.restaurantTable = this.restaurantTable;
     let router = this.router;
     this.employeeService.changeOrder(order).subscribe(
       (data) => {
-        swal({title : "Success!", text : "Order's been changed.", type : "success"}, function(){
-          router.navigateByUrl('/home/employee-profile');
-        });
+        if(data['_body'] == "true") {
+          swal({title: "Success!", text: "Order's been changed.", type: "success"}, function () {
+            router.navigateByUrl('/home/employee-profile');
+          });
+        }else{
+          swal({title: "Error!", text: "Order's been modified, check order's details and try again.", type: "error"}, function () {
+            router.navigateByUrl('/home/employee-profile');
+          });
+        }
       }
     )
+  }
+
+  setTable(){
+    let id = this.tab.nativeElement.value;
+    for(var i = 0; i < this.tables.length; i++){
+      if(this.tables[i].id == id){
+        this.restaurantTable = this.tables[i];
+        break;
+      }
+    }
   }
 
   onRemove(menuItem: MenuItem){
     if(menuItem.menuItemType == "FOOD"){
       this.addedFoodItems.splice(this.addedFoodItems.indexOf(menuItem), 1);
+      this.changedFood = true;
     }else{
       this.addedDrinkItems.splice(this.addedDrinkItems.indexOf(menuItem), 1);
     }
@@ -146,6 +286,7 @@ export class ChangeOrderComponent implements OnInit {
 
     if (menuItem.menuItemType == "FOOD") {
       this.addedFoodItems.push(menuItem);
+      this.changedFood = true;
     } else {
       this.addedDrinkItems.push(menuItem);
     }
@@ -188,4 +329,20 @@ export class ChangeOrderComponent implements OnInit {
   onCloseAddMenuItem(){
     this.addMenuItemDialog = false;
   }
+
+  getDay(sch: Schedule){
+    let string = sch.date.toString().split("-");
+    return string[2];
+  }
+
+  getMonth(sch: Schedule){
+    let string = sch.date.toString().split("-");
+    return string[1];
+  }
+
+  getYear(sch: Schedule){
+    let string = sch.date.toString().split("-");
+    return string[0];
+  }
+
 }

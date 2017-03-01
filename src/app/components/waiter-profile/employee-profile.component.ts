@@ -166,7 +166,7 @@ export class EmployeeProfileComponent implements OnInit, OnDestroy {
     this.ordersTab = false;
   }
   ngOnDestroy(){
-    if(this.roleService.user){
+    if(this.roleService.waiter || this.roleService.bartender || this.roleService.chef){
       this.sub.unsubscribe();
     }
   }
@@ -211,39 +211,51 @@ export class EmployeeProfileComponent implements OnInit, OnDestroy {
   bartenderFinishOrder(order: Order){
     this.employeeService.bartenderFinishOrder(order).subscribe(
       (data) => {
-        for(var i = 0;i<this.orders.length;i++){
-          if(this.orders[i].id == order.id){
-            this.orders.splice(i,1);
-            break;
+        if(data['_body'] == "true") {
+          for (var i = 0; i < this.orders.length; i++) {
+            if (this.orders[i].id == order.id) {
+              this.orders.splice(i, 1);
+              break;
+            }
           }
+          swal({title: "Success!", text: "Order's been finished.", type: "success"});
+        }else {
+            swal({title: "Error!", text: "Order's been changed.", type: "error"});
         }
-
-        swal({title : "Success!", text : "Order's been finished.", type : "success"});
       });
   }
 
   chefFinishOrder(order: Order){
     this.employeeService.chefFinishOrder(order).subscribe(
       (data) => {
-        for(var i = 0;i<this.orders.length;i++){
-          if(this.orders[i].id == order.id){
-            this.orders.splice(i,1);
-            break;
+        if(data['_body']== "true") {
+          for (var i = 0; i < this.orders.length; i++) {
+            if (this.orders[i].id == order.id) {
+              this.orders.splice(i, 1);
+              break;
+            }
           }
+          swal({title: "Success!", text: "Order's been finished.", type: "success"});
+        }else{
+          swal({title: "Error!", text: "Order's been changed.", type: "error"});
         }
-        swal({title : "Success!", text : "Order's been finished.", type : "success"});
       });
   }
   chefAcceptOrder(order: Order){
     this.employeeService.chefAcceptOrder(order).subscribe(
       (data) => {
-        for(var i = 0;i<this.orders.length;i++){
-          if(this.orders[i].id == order.id){
-            this.orders[i] = JSON.parse(data['_body']);
-            break;
+        if (data['_body'] != "") {
+          for (var i = 0; i < this.orders.length; i++) {
+            if (this.orders[i].id == order.id) {
+              this.orders[i] = JSON.parse(data['_body']);
+              break;
+            }
           }
+          swal({title: "Success!", text: "Order's been accepted.", type: "success"});
         }
-        swal({title : "Success!", text : "Order's been accepted.", type : "success"});
+        else {
+          swal({title: "Error!", text: "Order's been changed.", type: "error"});
+        }
       }
     )
   }

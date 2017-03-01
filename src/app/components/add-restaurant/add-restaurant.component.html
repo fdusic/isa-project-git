@@ -50,6 +50,11 @@
       </select>
     </div>
 
+    <label>Position</label>
+    <sebm-google-map [latitude]="lat" [longitude]="lng" (mapClick)="onMapClick($event)">
+      <sebm-google-map-marker *ngIf="rlat != -1 && rlng != -1" [latitude]="rlat" [longitude]="rlng"></sebm-google-map-marker>
+    </sebm-google-map>
+    <br>
 
     <button type="submit" class="btn btn-primary" [disabled]="!f.valid || nameExists">Save</button>
     <a class="btn btn-danger" [routerLink]="['/home/']">Discard</a>

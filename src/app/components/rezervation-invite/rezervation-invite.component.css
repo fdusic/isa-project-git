@@ -1,0 +1,83 @@
+.jumbotron {
+  background-image: url("./images/invitation.jpg");
+  background-size: cover;
+}
+
+.invitation-title{
+  font-family: 'Brush Script MT', cursive;
+  font-size: 40px;
+  font-style: normal;
+  font-variant: normal;
+  font-weight: 500;
+  line-height: 60px;
+  color: gold;
+}
+
+button {
+  margin: 20px 0;
+  line-height: 34px;
+  position: relative;
+  cursor: pointer;
+  user-select: none;
+  outline:none !important;
+  width:100%;
+}
+
+button:active {
+
+  outline:none;
+}
+
+button.ribbon {
+
+  outline:none;
+  outline-color: transparent;
+}
+button.ribbon:before, button.ribbon:after {
+  top: 5px;
+  z-index: -10;
+}
+button.ribbon:before {
+  border-color: #53dab6 #53dab6 #53dab6 transparent;
+  left: -25px;
+  border-width: 17px;
+}
+button.ribbon:after {
+  border-color: #53dab6 transparent #53dab6 #53dab6;
+  right: -25px;
+  border-width: 17px;
+}
+
+button:before, button:after {
+  content: '';
+  position: absolute;
+  height: 0;
+  width: 0;
+  border-style: solid;
+  border-width: 0;
+  outline:none;
+}
+
+button.btn-default:before {
+  border-color: #757575 #757575 #757575 transparent;
+}
+button.btn-default:after {
+  border-color: #757575 transparent #757575 #757575;
+}
+
+
+
+button.btn-primary:before {
+  border-color: #2e6da4 #2e6da4 #2e6da4 transparent;
+}
+button.btn-primary:after {
+  border-color: #2e6da4 transparent #2e6da4 #2e6da4;
+}
+
+
+button.btn-success:before {
+  border-color: #398439 #398439 #398439 transparent;
+}
+button.btn-success:after {
+  border-color: #398439 transparent #398439 #398439;
+}

@@ -1,0 +1,357 @@
+<div class="container">
+  <br>
+  <br>
+  <br>
+  <div class="row">
+    <article class="col-sm-12 col-md-12 col-lg-12 sortable-grid ui-sortable">
+      <div id="wid-id-0">
+        <header role="heading">
+          <h2 align="center">Restaurant rezervation </h2>
+        </header>
+        <br>
+        <br>
+
+        <div role="content">
+
+          <div class="widget-body">
+
+            <div class="row">
+              <form id="wizard-1" novalidate="novalidate">
+                <div id="bootstrap-wizard-1" class="col-sm-12">
+                  <div class="form-bootstrapWizard">
+                    <ul class="bootstrapWizard form-wizard">
+                      <li class="active" #restaurants_a>
+                        <a class="active"> <span class="step">1</span> <span class="title">Restaurants</span> </a>
+                      </li>
+                      <li class="" #tables_a>
+                        <a> <span class="step">2</span> <span class="title">Tables</span> </a>
+                      </li>
+                      <li class="" #friends_a>
+                        <a> <span class="step">3</span> <span class="title">Invite friends</span> </a>
+                      </li>
+                      <li #orders_a>
+                        <a> <span class="step">4</span> <span class="title">Orders</span> </a>
+                      </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                    <br>
+                  </div>
+                  <div class="tab-content">
+                    <div class="tab-pane active" id="tab1" #restaurants_div>
+                      <br>
+                      <h3><strong>Restaurants</strong> - Choose restaurant</h3>
+                      <br>
+                      <table class="table table-hover table-inverse" id="storeTable">
+                        <thead>
+                        <tr>
+                          <th>Name</th>
+                          <th>Address</th>
+                          <th>Description</th>
+                          <th>Grade</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr *ngFor="let restaurant of restaurants" (click)="onRestaurantSelect(restaurant)" id="{{'restaurant'+restaurant.id}}">
+                          <td>{{restaurant.name}}</td>
+                          <td>{{restaurant.address}}</td>
+                          <td>{{restaurant.description}}</td>
+                          <td *ngIf="restaurant.grade >= 1 && restaurant.grade < 2">
+                            <span class="glyphicon glyphicon-star"></span>
+                          </td>
+                          <td *ngIf="restaurant.grade >= 2 && restaurant.grade < 3">
+                            <span class="glyphicon glyphicon-star"></span>
+                            <span class="glyphicon glyphicon-star"></span>
+                          </td>
+                          <td *ngIf="restaurant.grade >= 3 && restaurant.grade < 4">
+                            <span class="glyphicon glyphicon-star"></span>
+                            <span class="glyphicon glyphicon-star"></span>
+                            <span class="glyphicon glyphicon-star"></span>
+                          </td>
+                          <td *ngIf="restaurant.grade >= 4 && restaurant.grade < 5">
+                            <span class="glyphicon glyphicon-star"></span>
+                            <span class="glyphicon glyphicon-star"></span>
+                            <span class="glyphicon glyphicon-star"></span>
+                            <span class="glyphicon glyphicon-star"></span>
+                          </td>
+                          <td *ngIf="restaurant.grade == 5">
+                            <span class="glyphicon glyphicon-star"></span>
+                            <span class="glyphicon glyphicon-star"></span>
+                            <span class="glyphicon glyphicon-star"></span>
+                            <span class="glyphicon glyphicon-star"></span>
+                            <span class="glyphicon glyphicon-star"></span>
+                          </td>
+                          <td *ngIf="restaurant.grade == 0">
+                            <div class="progress">
+                              <div class="progress-bar  progress-bar-warning progress-bar-striped" role="progressbar" style="width: 100%;">
+                                Not rated
+                              </div>
+                            </div>
+                          </td>
+                        </tr>
+                        </tbody>
+                      </table>
+                      <br>
+                      <br>
+
+                      <form *ngIf="this.restaurantSelected">
+
+
+                            <div class="row">
+                              <div class="form-group" align="center">
+
+
+                                <label for="date">Rezervation date: </label>
+                                <input style="margin-bottom: 20px;" #datee type="date" class="hide-replaced" data-date-size="2"
+                                       (change)="dateChange($event)" id="date"/>
+
+                              </div>
+                            </div>
+
+
+                            <div class="row" style="text-align: left">
+                              <div class="form-group" align="center">
+                                <label for="time">Rezervation time: </label>
+                                <input id="time" name="time" [ngModel]="inputTime" (focus)="toggleTimePicker(true)" readonly />
+                                <time-picker [showSecond]="false" *ngIf="showTimePicker" [initTime]="time"
+                                             (onTimePickerCancel)="toggleTimePicker($event)"
+                                             (onSelectTime)="setTime($event)" style="position: fixed;z-index: 99999">
+
+                                </time-picker>
+
+                              </div>
+                            </div>
+
+                          <div class="row">
+                            <div class="form-group" align="center">
+                              <label for="duration">Rezervation duration: </label>
+                              <input id="duration" name="duration" [ngModel]="durationTimeInput" (focus)="toggleDurationTimePicker(true)" readonly />
+                              <time-picker [showSecond]="false" *ngIf="showDurationTimePicker" [initTime]="durationTime"
+                                           (onTimePickerCancel)="toggleDurationTimePicker($event)"
+                                           (onSelectTime)="setDurationTime($event)" style="position: fixed;z-index: 99999">
+
+                              </time-picker>
+
+                            </div>
+                          </div>
+
+
+
+                      </form>
+
+                      <div class="form-actions">
+                        <div class="row">
+                          <div class="col-sm-12">
+                            <ul class="pager wizard no-margin">
+                              <li class="next">
+                                <button (click)="onNext()" class="btn btn-default btn-round pull-right"> Next </button>
+                              </li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="tab-pane" id="tab2" #tables_div>
+                      <br>
+                      <h3><strong>Tables</strong> - Choose table you want to reserve</h3>
+                      <br>
+                      <div class="row" *ngFor="let rs of segments;let i = index">
+                        <hr>
+                        <h3 style="margin-left: 12px">Segment {{i+1}}</h3>
+                        <div class="col-md-8">
+                          <svg width="500" height="300" style="border: 1px solid black;background: #91c5cc">
+                            <filter id="image" x="0%" y="0%" width="100%" height="100%">
+                              <feImage xlink:href="./images/table-texture.jpg"/>
+                            </filter>
+
+                            <rect filter="url(#image)" *ngFor="let t of rs.tables" style="cursor: pointer" (click)="onTableClick(t)"
+                                  attr.transform="{{'matrix(1 0 0 1 '+t.x+' '+t.y+')'}}" id="{{'rect'+t.id}}"
+                                  width="125" height="71" cx="90" cy="90" stroke="green" stroke-width="10" fill="yellow">
+                              <animate id="{{'animate'+t.id}}"/>
+
+                            </rect>
+
+                          </svg>
+                        </div>
+                        <div class="col-md-4">
+                          <div class="row" style="text-align: left">
+                            <label style="font-family: Copperplate; font-size: 25px" align="left">Available tables:</label><strong
+                            style="font-family: Copperplate; font-size: 25px"> {{rs.tables.length}}</strong>
+                          </div>
+                          <div class="row" style="text-align: left">
+                            <label style="font-family: Copperplate; font-size: 25px" align="left">Name:</label><strong
+                            style="font-family: Copperplate; font-size: 25px"> {{rs.name}}</strong>
+                          </div>
+                          <div class="row" style="text-align: left">
+                            <label style="font-family: Copperplate; font-size: 25px" align="left">Date:</label><strong
+                            style="font-family: Copperplate; font-size: 25px"> {{date}}</strong>
+                          </div>
+                          <div class="row" style="text-align: left">
+                            <label style="font-family: Copperplate; font-size: 25px" align="left">Time:</label><strong
+                            style="font-family: Copperplate; font-size: 25px"> {{inputTime}}</strong>
+                          </div>
+                          <div class="row" style="text-align: left">
+                            <label style="font-family: Copperplate; font-size: 25px" align="left">Duration:</label><strong
+                            style="font-family: Copperplate; font-size: 25px"> {{durationTimeInput}}</strong>
+                          </div>
+                        </div>
+                      </div>
+
+                        <div class="form-actions">
+                          <div class="row">
+                            <div class="col-sm-12">
+                              <ul class="pager wizard no-margin">
+                                <li class="next">
+                                  <button type="button" class="btn btn-default btn-round pull-right" (click)="onNextToInviteFriends()"> Next </button>
+                                </li>
+                              </ul>
+                            </div>
+                          </div>
+                        </div>
+
+                    </div>
+                    <div class="tab-pane" id="tab3" #friends_div>
+                      <br>
+                      <h3><strong>Friends</strong> - Invite friends in restaurant:</h3>
+                      <br>
+                      <table class="table table-hover table-inverse">
+                        <thead>
+                        <tr>
+                          <th>Name</th>
+                          <th>Surname</th>
+                          <th>Email</th>
+                          <th>Invite</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr *ngFor="let friend of friends">
+                          <td>{{friend.name}}</td>
+                          <td>{{friend.surname}}</td>
+                          <td>{{friend.email}}</td>
+                          <td>
+                            <button (click)="sendInvite(friend)" id="{{'button'+friend.email}}" type="submit" class="btn btn-primary">
+                              Send <span class="glyphicon glyphicon-send"></span>
+                            </button>
+                          </td>
+
+                        </tr>
+                        </tbody>
+                      </table>
+
+                      <div class="form-actions">
+                        <div class="row">
+                          <div class="col-sm-12">
+                            <ul class="pager wizard no-margin">
+                              <li class="next disabled">
+                                <button class="btn btn-default btn-round pull-right" (click)="onNextToOrders()"> Next </button>
+                              </li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="tab-pane" id="tab4" #orders_div>
+                      <br>
+                      <h3><strong>Step 4</strong> - Orders</h3>
+                      <br>
+                      <h1 class="text-center text-success"><strong><i class="fa fa-check fa-lg"></i> Complete</strong></h1>
+                      <h4 class="text-center">Choose food and drink and click save to finish</h4>
+                      <br>
+                      <br>
+                      <div class="container">
+                        <div class="table-title">
+                          <h3 style="color: goldenrod">FOOD MENU</h3>
+                        </div>
+                        <table class="table table-hover table-inverse">
+                          <thead>
+                          <tr>
+                            <th class="text-left">Name</th>
+                            <th class="text-left">Description</th>
+                            <th class="text-left">Price</th>
+                            <th class="text-left">Category</th>
+                            <th class="text-left">Options</th>
+                          </tr>
+                          </thead>
+                          <tbody class="table-hover">
+                          <tr *ngFor="let menuItem of foodMenu">
+                            <td class="text-left">{{menuItem.name}}</td>
+                            <td class="text-left">{{menuItem.description}}</td>
+                            <td class="text-left">{{menuItem.price}}$</td>
+                            <td class="text-center"><img class="media-object" src="./images/food.png"
+                                                         style="width: 45px; height: 45px"></td>
+                            <td class="text-center">
+                              <a title="Add" id="{{'fooda'+menuItem.id}}" (click)="addToOrders(menuItem)" class="btn btn-success"><i class="glyphicon glyphicon-plus"></i>
+                              </a>
+                            </td>
+                          </tr>
+                          </tbody>
+                        </table>
+
+                        <hr>
+                        <div class="table-title">
+                          <h3 style="color: goldenrod">DRINK MENU</h3>
+                        </div>
+                        <table class="table table-hover table-inverse">
+                          <thead>
+                          <tr>
+                            <th class="text-left">Name</th>
+                            <th class="text-left">Description</th>
+                            <th class="text-left">Price</th>
+                            <th class="text-left">Category</th>
+                            <th class="text-left">Options</th>
+                          </tr>
+                          </thead>
+                          <tbody class="table-hover">
+                          <tr *ngFor="let menuItem of drinkMenu">
+                            <td class="text-left">{{menuItem.name}}</td>
+                            <td class="text-left">{{menuItem.description}}</td>
+                            <td class="text-left">{{menuItem.price}}$</td>
+                            <td class="text-center"><img class="media-object" src="./images/drink.jpg"
+                                                         style="width: 45px; height: 45px"></td>
+                            <td class="text-center">
+                              <a title="Add" id="{{'drinka'+menuItem.id}}" (click)="addToOrders(menuItem)" class="btn btn-success"><i class="glyphicon glyphicon-plus"></i></a>
+                            </td>
+                          </tr>
+                          </tbody>
+                        </table>
+                      </div>
+
+                      <br>
+                      <br>
+                      <div class="form-actions">
+                        <div class="row">
+                          <div class="col-sm-12">
+                            <ul class="pager wizard no-margin">
+                              <li class="next">
+                                <div class="checkbox checkbox-success">
+                                  <input id="pre-prepared-check" #pre_prepared_check type="checkbox" (click)="onPrePrepare()">
+                                  <label for="pre-prepared-check">
+                                    I wish my order pre-prepared
+                                  </label>
+                                </div>
+                                <button (click)="onSaveRezervation()"  class="btn btn-default btn-round pull-right"> Save </button>
+                              </li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+
+                  </div>
+                </div>
+              </form>
+            </div>
+
+          </div>
+          <!-- end widget content -->
+
+        </div>
+        <!-- end widget div -->
+
+      </div>
+      <!-- end widget -->
+
+    </article>
+  </div>
+
+</div>

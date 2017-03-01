@@ -18,9 +18,14 @@ import {
   ModifyEmployeeComponent
 } from "../components/waiter-profile/modify-employee/modify-employee.component";
 import {ChangeRestaurantComponent} from "../components/change-restaurant/change-restaurant.component";
+
 import {AddOrderComponent} from "../components/waiter-profile/add-order/add-order.component";
 import {ChangeOrderComponent} from "../components/waiter-profile/change-order/change-order.component";
 import {SetPasswordComponent} from "../components/login/set-password/set-password.component";
+
+import {RezervationComponent} from "../components/rezervation/rezervation.component";
+import {RezervationInviteComponent} from "../components/rezervation-invite/rezervation-invite.component";
+
 
 
 const APP_ROUTES: Routes=[
@@ -28,6 +33,8 @@ const APP_ROUTES: Routes=[
     {path:'home',component:HomeComponent,
       children:[
        {path:'',component:UserProfileComponent, canActivate : [Guardian]},
+       {path:'rezervationinvite/:email/:id/:invid',component:RezervationInviteComponent},
+       {path:'rezervation',component:RezervationComponent},
        {path:'addrestaurant',component: AddRestaurantComponent},
        {path:'email/:email',component:EmailComponent},
        {path:'changerestaurant/:id',component:ChangeRestaurantComponent},

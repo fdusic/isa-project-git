@@ -5,20 +5,28 @@
     <h1 align="center" style="margin-top: 70px">Change order</h1>
   </div>
   <hr>
-  <div class="form-group">
+  <div *ngIf="!employeeService.orderForChange.chefAccepted" class="form-group">
     <label for="bartender">Chef</label>
-    <select [ngModel]="chef" required name="chef" id="chef" class="form-control" #ch (change)="chefChanged($event)">
+    <select  required name="chef" id="chef" class="form-control" #ch (change)="chefChanged($event)">
       <option disabled selected value> -- select chef -- </option>
-      <option *ngFor="let chef of chefs">{{chef.name + ' (' + chef.username + ')'}}</option>
+      <option *ngFor="let chef of chefsForShow">{{chef.name + ' (' + chef.username + ')'}}</option>
     </select>
   </div>
 
 
-  <div class="form-group">
+  <div *ngIf="!employeeService.orderForChange.bartenderFinished" class="form-group">
     <label for="bartender">Bartender</label>
-    <select required ngModel="bartender"  name="bartender" id="bartender" class="form-control" #bart (change)="bartenderChanged()">
+    <select required  name="bartender" id="bartender" class="form-control" #bart (change)="bartenderChanged()">
       <option disabled selected value> -- select bartender -- </option>
-      <option *ngFor="let bartender of bartenders">{{bartender.name + ' (' + bartender.username + ')'}}</option>
+      <option *ngFor="let bartender of bartendersForShow">{{bartender.name + ' (' + bartender.username + ')'}}</option>
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label for="bartender">Tables</label>
+    <select required [(ngModel)]="restaurantTable"  name="table" id="table" class="form-control" #tab (change)="setTable($event)">
+      <option disabled selected value> -- select table -- </option>
+      <option *ngFor="let t of tables">{{t.id}}</option>
     </select>
   </div>
 

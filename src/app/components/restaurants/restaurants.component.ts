@@ -10,6 +10,11 @@ import {Restaurant} from "../../beans/app.restaurant";
 export class RestaurantsComponent implements OnInit {
 
   private restaurants:Restaurant[]=[];
+
+  private lat: number = 51.678418;
+  private lng: number = 7.809007;
+
+
   constructor(private restaurantService:RestaurantService) { }
 
   ngOnInit() {
