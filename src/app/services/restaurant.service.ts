@@ -9,6 +9,10 @@ import {Schedule} from "../beans/schedule";
 import {UserGrade} from "../beans/user-grade";
 import {Supplier} from "../beans/supplier";
 import {Purchase} from "../beans/purchase";
+import {RezervationHelp} from "../beans/helps/rezervation-help";
+import {InviteHelp} from "../beans/helps/invite-help";
+import {Rezervation} from "../beans/rezervation";
+import {User} from "../beans/user";
 
 @Injectable()
 export class RestaurantService {
@@ -169,6 +173,35 @@ export class RestaurantService {
     let h = new Headers();
     h.append('Content-type','application/json');
     return this.http.post(this.path + 'addPurchase/', JSON.stringify(purchase), { headers : h, withCredentials : true });
+  }
+
+
+
+  getAvailableTables(rezervationHelp : RezervationHelp){
+    let h = new Headers();
+    h.append('Content-type','application/json');
+    return this.http.post(this.path + 'getAvailableTables/', JSON.stringify(rezervationHelp), { headers : h, withCredentials : true });
+  }
+
+  saveRezervation(rezervation : Rezervation){
+    let h = new Headers();
+    h.append('Content-type','application/json');
+    return this.http.post(this.path + 'saveRezervation/', JSON.stringify(rezervation), { headers : h, withCredentials : true });
+  }
+
+
+  getRezervationById(id : string){
+    return this.http.post(this.path + 'getRezervationById', id, { withCredentials : true });
+  }
+
+  declineInvite(id : string){
+    return this.http.post(this.path + 'declineInvite', id, { withCredentials : true });
+  }
+
+  acceptInvite(rezervation : Rezervation){
+    let h = new Headers();
+    h.append('Content-type','application/json');
+    return this.http.post(this.path + 'acceptInvite/', JSON.stringify(rezervation), { headers : h, withCredentials : true });
   }
 
 }

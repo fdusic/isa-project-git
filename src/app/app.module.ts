@@ -36,7 +36,8 @@ import { SetPasswordComponent } from './components/login/set-password/set-passwo
 import { AgmCoreModule } from 'angular2-google-maps/core';
 
 import { RezervationComponent } from './components/rezervation/rezervation.component';
-
+import { DateTimePickerModule } from 'ng2-date-time-picker';
+import { RezervationInviteComponent } from './components/rezervation-invite/rezervation-invite.component';
 
 @NgModule({
   declarations: [
@@ -60,7 +61,8 @@ import { RezervationComponent } from './components/rezervation/rezervation.compo
     AddOrderComponent,
     ChangeOrderComponent,
     SetPasswordComponent,
-    RezervationComponent
+    RezervationComponent,
+    RezervationInviteComponent
 
   ],
   imports: [
@@ -68,6 +70,7 @@ import { RezervationComponent } from './components/rezervation/rezervation.compo
     FormsModule,
     HttpModule,
     routing,
+    DateTimePickerModule,
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyA7CjHO9NDrwajILB8gTeNn88_3K0FLdWM'
     })

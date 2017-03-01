@@ -99,4 +99,8 @@ export class LoginRegisterService{
     return this.http.post(this.path + 'searchPeople', data, { withCredentials : true });
   }
 
+  getUserByEmail(email:string){
+    return this.http.post(this.path + 'getUserByEmail', email, { withCredentials : true });
+  }
+
 }

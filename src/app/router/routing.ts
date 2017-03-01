@@ -24,6 +24,7 @@ import {ChangeOrderComponent} from "../components/waiter-profile/change-order/ch
 import {SetPasswordComponent} from "../components/login/set-password/set-password.component";
 
 import {RezervationComponent} from "../components/rezervation/rezervation.component";
+import {RezervationInviteComponent} from "../components/rezervation-invite/rezervation-invite.component";
 
 
 
@@ -32,6 +33,7 @@ const APP_ROUTES: Routes=[
     {path:'home',component:HomeComponent,
       children:[
        {path:'',component:UserProfileComponent, canActivate : [Guardian]},
+       {path:'rezervationinvite/:email/:id/:invid',component:RezervationInviteComponent},
        {path:'rezervation',component:RezervationComponent},
        {path:'addrestaurant',component: AddRestaurantComponent},
        {path:'email/:email',component:EmailComponent},
