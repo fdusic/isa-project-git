@@ -188,6 +188,7 @@ export class AddOrderComponent implements OnInit {
 
   onAddOrder(){
     let order = new Order();
+
     if(this.addedFoodItems.length > 0){
       for(var i = 0;i < this.addedFoodItems.length; i++){
         order.menuItems.push(this.addedFoodItems[i]);

@@ -13,6 +13,8 @@ export class Rezervation{
   public time:string;
   public duration:string;
   public rezervationInvites:RezervationInvite[]=[];
+  public orderRate : number;
+  public serviceRate : number;
 
   constructor(){}
 }

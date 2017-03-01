@@ -12,7 +12,6 @@ export class EmployeeService {
 
   constructor(private http: Http) { }
 
-
   getEmployee(){
     return this.http.get(this.path + 'getEmployee', {withCredentials : true});
   }

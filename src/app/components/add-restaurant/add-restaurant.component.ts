@@ -5,7 +5,7 @@ import {RestaurantService} from "../../services/restaurant.service";
 import {RestaurantHelp} from "../../beans/helps/restaurant-help";
 import {Router} from "@angular/router";
 declare let sweetAlert:any;
-
+declare let swal:any;
 
 @Component({
   selector: 'app-add-restaurant',
@@ -46,7 +46,8 @@ export class AddRestaurantComponent implements OnInit {
       rh.lng = this.rlng;
       this.restaurantService.addRestaurant(rh).subscribe(
         (data) => {
-          this.router.navigateByUrl('/home/restaurants/'+rh.name);
+          swal("Good job!", "You successfully added a restaurant!", "success");
+          this.router.navigateByUrl('/home/admin');
         }
       );
   }

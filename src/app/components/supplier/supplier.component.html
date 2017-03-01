@@ -103,9 +103,9 @@
                       <div class="col-md-6">
                         <span><strong>Order: </strong><span>{{ps.purchase.text}}</span></span>
                       </div>
-                      <div class="col-md-2 pull-right">
-                        <a><span style="color: darkred; font-size: 20px;" class="glyphicon glyphicon-remove"></span></a>
-                        <a><span style="color: yellow; font-size: 20px;" class="glyphicon glyphicon-modify"></span></a>
+                      <div class="col-md2">
+                        <span (click)="removePS(ps)" class="btn-glyphicon glyphicon glyphicon-remove pull-right mouse" style="margin-left: 10px;" title="remove"></span> &nbsp; &nbsp;
+                        <span (click)="modifySupplier(ps)" class="btn-glyphicon glyphicon glyphicon-pencil pull-right mouse" title="modify"></span>
                       </div>
                     </div>
                   </div>
@@ -124,7 +124,38 @@
       </div>
     </div>
     <div class="tab-pane" id="tab_default_3">
-      taab 3
+      <div class="container-fluid" style="margin-left: 66px; margin-top: 66px;">
+        <div class="row" *ngFor="let ps of purchases">
+          <div class="col-md-11">
+            <div class="panel-body">
+              <div class="panel-group">
+                <div class="panel panel-default">
+                  <div class="panel-heading">
+                    <div class="row">
+                      <div class="col-md-2">
+                          <span><strong>Restaurant:</strong> <span> {{ps.restaurant.name}}</span>
+                          </span>
+                      </div>
+                      <div class="col-md-2">
+                        <span><strong>Start date: </strong><span>{{ps.startDate | date}}</span></span>
+                      </div>
+                      <div class="col-md-2">
+                        <span><strong>End date: </strong><span>{{ps.endDate | date}}</span></span>
+                      </div>
+                      <div class="col-md-4">
+                        <span><strong>Order: </strong><span>{{ps.text}}</span></span>
+                      </div>
+                      <div class="col-md-2 pull-right">
+                        <button class="btn btn-primary" (click)="sendOffer(ps)">Send offer</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>

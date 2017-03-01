@@ -361,7 +361,6 @@ export class RezervationComponent implements OnInit {
     this.orders_div.nativeElement.classList.add('active');
   }
 
-
   addToOrders(menuItem:MenuItem){
     this.rezervationOrder.menuItems.push(menuItem);
     if(menuItem.menuItemType == 'FOOD'){
@@ -369,10 +368,7 @@ export class RezervationComponent implements OnInit {
     }else{
       document.getElementById('drinka'+menuItem.id).setAttribute('disabled','true');
     }
-
-
   }
-
 
   onPrePrepare(){
     if(this.pre_prepared_check.nativeElement.checked){
@@ -382,7 +378,6 @@ export class RezervationComponent implements OnInit {
     }
   }
 
-
   onSaveRezervation(){
     let rezervation:Rezervation = new Rezervation();
     console.log(this.date);
@@ -390,6 +385,8 @@ export class RezervationComponent implements OnInit {
     rezervation.time = this.inputTime;
     rezervation.duration = this.durationTimeInput;
     rezervation.restaurant = this.selectedRestaurant;
+    rezervation.serviceRate = 0;
+    rezervation.orderRate = 0;
 
     for(let u of this.sentInvites){
       let ri:RezervationInvite = new RezervationInvite();

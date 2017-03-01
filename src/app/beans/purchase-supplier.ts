@@ -6,5 +6,5 @@ export class PurchaseSupplier{
   public purchase : Purchase;
   public price : number;
   public status : string;
-
+  public version : number;
 }

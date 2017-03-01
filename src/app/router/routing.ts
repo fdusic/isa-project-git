@@ -11,6 +11,7 @@ import {RestaurantsComponent} from "../components/restaurants/restaurants.compon
 import {AddMenuItemComponent} from "../components/add-menu-item/add-menu-item.component";
 import {SupplierComponent} from "../components/supplier/supplier.component";
 import {SupplierModifyComponent} from "../components/supplier-modify/supplier-modify.component";
+import {AdminComponent} from "../components/admin/admin.component";
 import {
   EmployeeProfileComponent
 } from "../components/waiter-profile/employee-profile.component";
@@ -25,6 +26,7 @@ import {SetPasswordComponent} from "../components/login/set-password/set-passwor
 
 import {RezervationComponent} from "../components/rezervation/rezervation.component";
 import {RezervationInviteComponent} from "../components/rezervation-invite/rezervation-invite.component";
+import {RezervationsComponent} from "../components/rezervations/rezervations.component";
 
 
 
@@ -48,11 +50,13 @@ const APP_ROUTES: Routes=[
        {path: 'employee-profile', component:EmployeeProfileComponent},
        {path: 'modify-employee', component:ModifyEmployeeComponent},
        {path: 'supplier', component:SupplierComponent},
-       {path : 'modify-supplier', component : SupplierModifyComponent},
+       {path: 'modify-supplier', component : SupplierModifyComponent},
        {path: 'add-order', component:AddOrderComponent},
        {path: 'change-order', component:ChangeOrderComponent},
-       {path: 'set-password', component:SetPasswordComponent}
+       {path: 'set-password/:type', component:SetPasswordComponent},
+       {path: 'admin', component:AdminComponent},
+       {path: 'rezervationss', component:RezervationsComponent}
       ]}
-    ]
+    ];
 
 export const routing = RouterModule.forRoot(APP_ROUTES);

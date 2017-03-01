@@ -18,11 +18,8 @@ export class NavbarComponent implements OnInit {
   logout(){
     this.httpService.logout().subscribe(
       () => {
-        this.roleService.waiter = false;
-        this.roleService.user = false;
-        this.roleService.bartender = false;
-        this.roleService.chef = false;
         this.roleService.supplier = false;
+        this.roleService.admin = false;
         this.router.navigateByUrl('/');
       }
     );

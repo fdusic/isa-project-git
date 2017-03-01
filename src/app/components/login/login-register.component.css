@@ -41,7 +41,6 @@ ul {
 /*Login Signup Page*/
 
 .bg-image {
-  background: url(http://jskrishna.com/work/merkury/images/background-login.jpg) no-repeat 0 0 / cover;
   position: relative;
   width: 100%;
   height: 100vh;
@@ -129,7 +128,6 @@ ul {
   -moz-border-right-colors: none;
   -moz-border-top-colors: none;
   background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
-  border-color: -moz-use-text-color -moz-use-text-color #d4d9e3;
   border-image: none;
   border-style: none none solid;
   border-width: medium medium 1px;
@@ -148,11 +146,9 @@ ul {
 }
 
 .user input {
-  background: rgba(0, 0, 0, 0) url("http://jskrishna.com/work/merkury/images/user.png") no-repeat scroll 7px 12px;
 }
 
 .pass input {
-  background: rgba(0, 0, 0, 0) url("http://jskrishna.com/work/merkury/images/password.png") no-repeat scroll 7px 12px;
 }
 
 .mail input {

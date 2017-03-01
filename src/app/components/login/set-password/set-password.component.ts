@@ -1,7 +1,8 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {NgForm} from "@angular/forms";
 import {EmployeeService} from "../../../services/employee.service";
-import {Router} from "@angular/router";
+import {Router, ActivatedRoute} from "@angular/router";
+import {SupplierService} from "../../../services/supplier.service";
 
 @Component({
   selector: 'app-set-password',
@@ -10,10 +11,13 @@ import {Router} from "@angular/router";
 })
 export class SetPasswordComponent implements OnInit {
 
+  private type : string;
+
   @ViewChild('newPassErr') newPassErr : any;
-  constructor(private employeeService: EmployeeService, private router: Router) { }
+  constructor(private employeeService: EmployeeService, private router: Router, private activatedRoute: ActivatedRoute, private supplierService : SupplierService) { }
 
   ngOnInit() {
+    this.type = this.activatedRoute.snapshot.params['type'];
   }
 
   onSubmit(form: NgForm){
@@ -27,12 +31,19 @@ export class SetPasswordComponent implements OnInit {
       }
     }
     let password = form.controls['password1'].value;
-    this.employeeService.setPassword(password).subscribe(
-      (data) => {
-        this.router.navigateByUrl('/home/employee-profile');
-      }
-    )
-
+    if(this.type == 'emp') {
+      this.employeeService.setPassword(password).subscribe(
+        (data) => {
+          this.router.navigateByUrl('/home/employee-profile');
+        }
+      )
+    } else if(this.type = 'supp'){
+      this.supplierService.changePassword(password).subscribe(
+        () => {
+          this.router.navigateByUrl('/home/supplier');
+        }
+      );
+    }
   }
 
 }

@@ -13,6 +13,7 @@ import {isNullOrUndefined} from "util";
 import {UserGrade} from "../../beans/user-grade";
 import {Supplier} from "../../beans/supplier";
 import {Purchase} from "../../beans/purchase";
+import {PurchaseSupplier} from "../../beans/purchase-supplier";
 declare let sweetAlert: any;
 declare let swal: any;
 
@@ -87,6 +88,7 @@ export class RestaurantDetailComponent implements OnInit {
   private scheduleBool: boolean = false;
   private addSupplier: boolean = false;
   private addPurchase: boolean = false;
+  private managePurchases : boolean = false;
 
   private menuItemForChange: MenuItem = new MenuItem();
 
@@ -124,6 +126,9 @@ export class RestaurantDetailComponent implements OnInit {
   private addSegmentsBool = false;
   private selectedEmp: Employee;
 
+  private purchasSupplierPending : PurchaseSupplier[] = [];
+  private purchases : Purchase[] = [];
+
   constructor(private activatedRoute: ActivatedRoute, private restaurantService: RestaurantService) {
   }
 
@@ -155,11 +160,12 @@ export class RestaurantDetailComponent implements OnInit {
     this.home = false;
     this.menu = false;
     this.segments = false;
-    this.createRestaurantConfiguarion = false;
-    this.scheduleBool = false;
     this.addEmployee = false;
+    this.scheduleBool = false;
+    this.createRestaurantConfiguarion = false;
     this.addSupplier = false;
     this.addPurchase = true;
+    this.managePurchases = false;
 
     this.menu_li.nativeElement.classList.remove('active');
     this.home_li.nativeElement.classList.remove('active');
@@ -188,6 +194,9 @@ export class RestaurantDetailComponent implements OnInit {
     this.addEmployee = false;
     this.scheduleBool = false;
     this.createRestaurantConfiguarion = false;
+    this.addSupplier = false;
+    this.addPurchase = false;
+    this.managePurchases = false;
 
     this.settings_li.nativeElement.classList.remove('active');
     this.home_li.nativeElement.classList.add('active');
@@ -206,6 +215,7 @@ export class RestaurantDetailComponent implements OnInit {
     this.createRestaurantConfiguarion = false;
     this.addSupplier = false;
     this.addPurchase = false;
+    this.managePurchases = false;
 
     this.settings_li.nativeElement.classList.add('active');
     this.home_li.nativeElement.classList.remove('active');
@@ -223,11 +233,12 @@ export class RestaurantDetailComponent implements OnInit {
     this.home = false;
     this.menu = false;
     this.segments = false;
-    this.createRestaurantConfiguarion = false;
     this.addEmployee = false;
     this.scheduleBool = false;
+    this.createRestaurantConfiguarion = false;
     this.addSupplier = false;
     this.addPurchase = false;
+    this.managePurchases = false;
 
     this.settings_li.nativeElement.classList.add('active');
     this.home_li.nativeElement.classList.remove('active');
@@ -258,11 +269,12 @@ export class RestaurantDetailComponent implements OnInit {
     this.home = false;
     this.menu = false;
     this.segments = false;
-    this.createRestaurantConfiguarion = false;
-    this.scheduleBool = false;
     this.addEmployee = false;
+    this.scheduleBool = false;
+    this.createRestaurantConfiguarion = false;
     this.addSupplier = true;
     this.addPurchase = false;
+    this.managePurchases = false;
 
     this.menu_li.nativeElement.classList.remove('active');
     this.home_li.nativeElement.classList.remove('active');
@@ -344,6 +356,7 @@ export class RestaurantDetailComponent implements OnInit {
     this.createRestaurantConfiguarion = false;
     this.addSupplier = false;
     this.addPurchase = false;
+    this.managePurchases = false;
 
     this.settings_li.nativeElement.classList.remove('active');
     this.home_li.nativeElement.classList.remove('active');
@@ -357,11 +370,12 @@ export class RestaurantDetailComponent implements OnInit {
     this.home = false;
     this.menu = true;
     this.segments = false;
-    this.createRestaurantConfiguarion = false;
-    this.scheduleBool = false;
     this.addEmployee = false;
+    this.scheduleBool = false;
+    this.createRestaurantConfiguarion = false;
     this.addSupplier = false;
     this.addPurchase = false;
+    this.managePurchases = false;
 
     this.menu_li.nativeElement.classList.add('active');
     this.home_li.nativeElement.classList.remove('active');
@@ -385,6 +399,93 @@ export class RestaurantDetailComponent implements OnInit {
     );
   }
 
+  onManagePurchases(){
+    this.addMenuItem = false;
+    this.home = false;
+    this.menu = false;
+    this.segments = false;
+    this.addEmployee = false;
+    this.scheduleBool = false;
+    this.createRestaurantConfiguarion = false;
+    this.addSupplier = false;
+    this.addPurchase = false;
+    this.managePurchases = true;
+
+    this.menu_li.nativeElement.classList.remove('active');
+    this.home_li.nativeElement.classList.remove('active');
+    this.settings_li.nativeElement.classList.add('active');
+    this.segments_li.nativeElement.classList.remove('active');
+    this.schedule_li.nativeElement.classList.remove('active');
+
+    this.restaurantService.getPurchaseSupplierRestaurant(this.restaurant).subscribe(
+      data => {
+        this.purchasSupplierPending = JSON.parse(data['_body']);
+        console.log(this.purchasSupplierPending);
+        for(let i=0; i < this.purchasSupplierPending.length; i++){
+          let flag = true;
+          for(let j=0; j < this.purchases.length; j++){
+            if(this.purchasSupplierPending[i].purchase.id == this.purchases[j].id){
+              flag = false;
+              break;
+            }
+          }
+          if(flag){
+            this.purchases.push(this.purchasSupplierPending[i].purchase);
+          }
+        }
+      }
+    );
+  }
+
+  getOffersForPurches(pur : Purchase){
+    let ret : PurchaseSupplier[] = [];
+    for(let i=0; i < this.purchasSupplierPending.length; i++){
+      if(this.purchasSupplierPending[i].purchase.id == pur.id){
+        ret.push(this.purchasSupplierPending[i]);
+      }
+    }
+    return ret;
+  }
+
+  acceptOffer(ps : PurchaseSupplier, p : Purchase){
+    let service = this.restaurantService;
+    let psp = this.purchasSupplierPending;
+    let remove = this.purchases;
+    swal({
+        title: "Are you sure?",
+        text: "Maybe some better offers will come.",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonClass: "btn-danger",
+        confirmButtonText: "Confirm",
+        closeOnConfirm: false
+      },
+      function(){
+          let ret : PurchaseSupplier[] = [];
+          for(let i=0; i < psp.length; i++){
+            if(psp[i].purchase.id == p.id){
+              if(psp[i] == ps){
+                psp[i].status = 'ACCEPTED';
+              } else{
+                psp[i].status = 'DECLINED';
+              }
+              ret.push(psp[i]);
+            }
+          }
+        service.acceptSupplierOffer(ret).subscribe(
+            (data) => {
+              if(data['_body'] == 'true') {
+                swal("Accepted!", "You successfully accepted the offer.", "success");
+                remove.splice(remove.indexOf(p), 1);
+              } else{
+                swal("Error!", "It seems that the supplier has removed or modified his offer.", "error");
+                location.reload();
+              }
+            }
+          );
+      });
+  }
+
   onCreateRestaurantConfiguration() {
 
     if (this.finishedConfiguration) {
@@ -396,11 +497,12 @@ export class RestaurantDetailComponent implements OnInit {
     this.home = false;
     this.menu = false;
     this.segments = false;
-    this.createRestaurantConfiguarion = true;
-    this.scheduleBool = false;
     this.addEmployee = false;
+    this.scheduleBool = false;
+    this.createRestaurantConfiguarion = true;
     this.addSupplier = false;
     this.addPurchase = false;
+    this.managePurchases = false;
 
     this.menu_li.nativeElement.classList.remove('active');
     this.home_li.nativeElement.classList.remove('active');
@@ -408,6 +510,34 @@ export class RestaurantDetailComponent implements OnInit {
     this.segments_li.nativeElement.classList.remove('active');
     this.schedule_li.nativeElement.classList.remove('active');
 
+  }
+
+  onSegmentsClick() {
+    this.addMenuItem = false;
+    this.home = false;
+    this.menu = false;
+    this.segments = true;
+    this.addEmployee = false;
+    this.scheduleBool = false;
+    this.createRestaurantConfiguarion = false;
+    this.addSupplier = false;
+    this.addPurchase = false;
+    this.managePurchases = false;
+
+    this.menu_li.nativeElement.classList.remove('active');
+    this.home_li.nativeElement.classList.remove('active');
+    this.settings_li.nativeElement.classList.remove('active');
+    this.segments_li.nativeElement.classList.add('active');
+    this.schedule_li.nativeElement.classList.remove('active');
+
+    this.restaurantService.getRestaurantSegments(this.restaurant).subscribe(
+      (data) => {
+        this.thisSegments = JSON.parse(data['_body']);
+        if (this.thisSegments.length > 0) {
+          this.finishedConfiguration = true;
+        }
+      }
+    );
   }
 
   selectElement(event) {
@@ -425,8 +555,6 @@ export class RestaurantDetailComponent implements OnInit {
 
     }
   }
-
-
   moveElement(evt) {
 
     if (this.mouseDown) {
@@ -642,32 +770,6 @@ export class RestaurantDetailComponent implements OnInit {
       this.addEmployeeSchedule = true;
 
     this.selectedShift = firstShift;
-  }
-
-  onSegmentsClick() {
-    this.addMenuItem = false;
-    this.home = false;
-    this.menu = false;
-    this.segments = true;
-    this.createRestaurantConfiguarion = false;
-    this.scheduleBool = false;
-    this.addEmployee = false;
-    this.addSupplier = false;
-
-    this.menu_li.nativeElement.classList.remove('active');
-    this.home_li.nativeElement.classList.remove('active');
-    this.settings_li.nativeElement.classList.remove('active');
-    this.segments_li.nativeElement.classList.add('active');
-    this.schedule_li.nativeElement.classList.remove('active');
-
-    this.restaurantService.getRestaurantSegments(this.restaurant).subscribe(
-      (data) => {
-        this.thisSegments = JSON.parse(data['_body']);
-        if (this.thisSegments.length > 0) {
-          this.finishedConfiguration = true;
-        }
-      }
-    );
   }
 
   onRemoveEmployeeSchedule(emp: Employee) {

@@ -38,33 +38,35 @@ export class UserProfileComponent implements OnInit {
   }
 
   getFriendRequests(){
-    if(this.friendRequests.length == 0){
-      this.httpService.getFriendRequests().subscribe(
-        data => {
-          this.friendRequests = JSON.parse(data['_body']);
-        }
-      );
-    }
+    this.httpService.getFriendRequests().subscribe(
+      data => {
+        this.friendRequests = JSON.parse(data['_body']);
+      }
+    );
   }
 
   getNotFriends(){
-    if(this.notFriends.length == 0){
-      this.httpService.getNotFriends().subscribe(
-        data => {
-          this.notFriends = JSON.parse(data['_body']);
-        }
-      );
-    }
+    this.httpService.getNotFriends().subscribe(
+      data => {
+        this.notFriends = JSON.parse(data['_body']);
+      }
+    );
   }
 
   getRequestsSent(){
-    if(this.requestsSent.length == 0){
-      this.httpService.getRequestsSent().subscribe(
-        data => {
-          this.requestsSent = JSON.parse(data['_body']);
-        }
-      );
-    }
+    this.httpService.getRequestsSent().subscribe(
+      data => {
+        this.requestsSent = JSON.parse(data['_body']);
+      }
+    );
+  }
+
+  getFriends(){
+    this.httpService.getFriends().subscribe(
+      data => {
+        this.friends = JSON.parse(data['_body']);
+      }
+    );
   }
 
   deleteFriend(user : User){
@@ -108,10 +110,15 @@ export class UserProfileComponent implements OnInit {
   acceptFriendRequest(user : User){
     console.log('accept');
     this.httpService.acceptRequest(user.email).subscribe(
-      () => {
-        this.friendRequests.splice(this.friendRequests.indexOf(user),1);
-        this.friends.push(user);
-        swal("Success!", "You and " + user.name + " " + user.surname + " are now friends!", "success");
+      (data) => {
+        if(data['_body'] == 'true') {
+          this.friendRequests.splice(this.friendRequests.indexOf(user), 1);
+          this.friends.push(user);
+          swal("Success!", "You and " + user.name + " " + user.surname + " are now friends!", "success");
+        } else{
+          swal("Error!", "user.name" + " " + user.surname + " has withdrawn his friend request!", "error");
+          this.friendRequests.splice(this.friendRequests.indexOf(user), 1);
+        }
       }
     );
   }

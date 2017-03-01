@@ -1,0 +1,108 @@
+<div class="container-fluid bg-3 text-center" style="margin-top: 100px;">
+  <table class="table table-hover table-inverse" id="storeTable">
+    <thead>
+    <tr>
+      <th>Restaurant</th>
+      <th>Date</th>
+      <th>Time</th>
+      <th>Friends</th>
+      <th>More</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let r of rezervations">
+      <td class="text-left">{{r.restaurant.name}}</td>
+      <td class="text-left">{{r.date | date}}</td>
+      <td class="text-left">{{r.time}}</td>
+      <td class="text-left"><button (click)="friends(r)" class="btn btn-primary">Show friends</button></td>
+      <td class="text-left"><button (click)="more(r)" class="btn btn-primary">More</button></td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+<div *ngIf="showDialog" class="modal fade show in danger" id="addMenuItemDialog" role="dialog">
+  <div class="modal-dialog" style="background:grey;">
+    <div class="modal-content">
+      <div class="modal-header" style="border:2px yellow;">
+        <button type="button" class="close" (click)="onCloseModalFriends()" data-dismiss="modal">&times;</button>
+        <div align="center"><h2 class="modal-title">Friends</h2></div>
+        <hr>
+      </div>
+      <div class="modal-body" style="overflow-y: scroll; height: 400px;">
+        <div align="center">No friends were at the dinner.</div>
+        <div class="list-group-item" *ngIf="selectedRezervation.rezervationInvites.length != 0">
+          <div class="thumbnail" *ngFor="let f of selectedRezervation.rezervationInvites">
+            <div class="row">
+              <div class="col-sm-4">
+                <img style="height:140px;width:140px;" class="group list-group-image"
+                     src="../../../images/user-default.png" alt=""/>
+              </div>
+              <div class="col-sm-8">
+                <div>
+                  <div class="panel panel-default">
+                    <div class="panel-heading">Name: {{f.user.name}}</div>
+                    <div class="panel-body">Surname: {{f.user.surname}}</div>
+                    <div class="panel-footer">Email: {{f.user.email}}</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <div align="center"><button (click)="onCloseModalFriends()" class="btn btn-primary">Ok</button></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="showDialogMore" class="modal fade show in danger" role="dialog">
+  <div class="modal-dialog" style="background:grey;">
+    <div class="modal-content">
+      <div class="modal-header" style="border:2px yellow;">
+        <button type="button" class="close" (click)="onCloseModalMore()" data-dismiss="modal">&times;</button>
+        <div align="center"><h2 class="modal-title">More</h2></div>
+        <hr>
+      </div>
+      <div class="modal-body" style="overflow-y: scroll; height: 400px;">
+        <div class="row">
+          <div align="center"> <h4> Rate order </h4> </div>
+          <div align="center" class="row" *ngIf="selectedRezervation.orderRate != 0">
+            <span style="font-size: 50px;"> You gave {{selectedRezervation.orderRate}} </span> <span class="glyphicon glyphicon-star stars"></span>
+          </div>
+          <div align="center">
+            <div class="rating-block" *ngIf="selectedRezervation.orderRate == 0">
+              <br>
+              <span id="starOne" (click)="onStarRate(1)" class="glyphicon glyphicon-star stars"></span>
+              <span id="starTwo" (click)="onStarRate(2)" class="glyphicon glyphicon-star stars"></span>
+              <span id="starThree" (click)="onStarRate(3)" class="glyphicon glyphicon-star stars"></span>
+              <span id="starFour" (click)="onStarRate(4)"  class="glyphicon glyphicon-star stars"></span>
+              <span id="starFive" (click)="onStarRate(5)" class="glyphicon glyphicon-star stars"></span>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div align="center"> <h4> Rate service </h4> </div>
+          <div align="center" class="row" *ngIf="selectedRezervation.serviceRate != 0">
+            <span style="font-size: 50px;">You gave {{selectedRezervation.serviceRate}}</span> <span class="glyphicon glyphicon-star stars"></span>
+          </div>
+          <div align="center">
+            <div class="rating-block" *ngIf="selectedRezervation.serviceRate == 0">
+              <br>
+              <span id="starOne2" (click)="onStarRate2(1)" class="glyphicon glyphicon-star stars"></span>
+              <span id="starTwo2" (click)="onStarRate2(2)" class="glyphicon glyphicon-star stars"></span>
+              <span id="starThree2" (click)="onStarRate2(3)" class="glyphicon glyphicon-star stars"></span>
+              <span id="starFour2" (click)="onStarRate2(4)"  class="glyphicon glyphicon-star stars"></span>
+              <span id="starFive2" (click)="onStarRate2(5)" class="glyphicon glyphicon-star stars"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <div align="center"><button (click)="rate()" class="btn btn-primary">Ok</button></div>
+      </div>
+    </div>
+  </div>
+</div>

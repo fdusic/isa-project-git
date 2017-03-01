@@ -33,14 +33,12 @@
             style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-cog"></span></a>
           <ul class="dropdown-menu forAnimate" role="menu">
             <li><a (click)="onAddMenuItem()">Add Menu Item</a></li>
-            <li><a (click)="onCreateRestaurantConfiguration()">Create Configuration</a></li>
             <li><a (click)="onAddEmployee()">Add employee</a></li>
             <li><a (click)="onAddSupplier()">Add supplier</a></li>
             <li><a (click)="onAddPurchase()">Add purchase</a></li>
-            <li class="divider"></li>
+            <li><a (click)="onManagePurchases()">Manage purchases</a></li>
+            <li><a (click)="onCreateRestaurantConfiguration()">Create Configuration</a></li>
             <li><a [routerLink]="['/home/changerestaurant',restaurant.id]">Change restaurant</a></li>
-            <li class="divider"></li>
-            <li><a href="#">One more separated link</a></li>
           </ul>
         </li>
         <li #schedule><a (click)="onSchedule()">Schedule<span class="glyphicon glyphicon-time pull-right"></span></a>
@@ -49,6 +47,62 @@
     </div>
   </div>
 </nav>
+
+<div class="container" *ngIf="managePurchases">
+
+  <div class="tabbable-panel">
+    <div class="tabbable-line">
+      <ul class="nav nav-tabs ">
+        <li class="active">
+          <a href="#tab_default_1" data-toggle="tab">
+            <span class="glyphicon glyphicon-dashboard" style="font-size: 40px"></span> </a>
+        </li>
+        <li>
+          <a href="#tab_default_2" data-toggle="tab">
+            <span class="glyphicon glyphicon-ok" style="font-size: 40px"></span> </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="tab-content">
+    <div class="tab-pane active" id="tab_default_1">
+      <div class="container-fluid" style="margin-left: 66px; margin-top: 66px;">
+        <div class="row" *ngFor="let p of purchases; let i = index"> <!-- for1 -->
+          <strong>Order {{i+1}}:</strong> &nbsp; &nbsp; {{p.text}}
+          <div class="container">
+            <div class="col-md-11">
+            <div class="panel-body">
+              <div class="panel-group">
+                <div *ngFor="let ps of getOffersForPurches(p)" class="panel panel-default">
+                  <div class="panel-heading">
+                    <div class="row">
+                      <div class="col-md-2 col-md-offset-3">
+                          <span><strong>Supplier:</strong> <span> {{ps.supplier.username}}</span>
+                          </span>
+                      </div>
+                      <div class="col-md-2">
+                        <span><strong>Price: </strong><span>{{ps.price}}$</span></span>
+                      </div>
+                      <div class="col-md2">
+                        <button class="btn btn-success" (click)="acceptOffer(ps, p)">Accept</button>
+                      </div>
+                    </div>
+                  </div>
+                </div> <!-- for2 -->
+              </div>
+            </div>
+          </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="tab-pane" id="tab_default_2">
+      tab2
+    </div>
+  </div>
+
+</div>
 
 <div class="container" *ngIf="addPurchase">
   <h1 align="center">Add purchase</h1>
@@ -781,7 +835,7 @@
         </div>
       </div>
       <div align="center" *ngIf="errMessage">
-        <span style="color: red"> The password don't match! </span>
+        <span style="color: red"> Passwords don't match! </span>
       </div>
       <div class="row">
         <div class="col-md-3 col-md-offset-3">

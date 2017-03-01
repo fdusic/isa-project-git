@@ -1,4 +1,4 @@
-import {Component, OnInit, OnDestroy} from '@angular/core';
+import {Component, OnInit} from "@angular/core";
 import {Employee} from "../../beans/employee";
 import {EmployeeService} from "../../services/employee.service";
 import {Router} from "@angular/router";
@@ -15,7 +15,7 @@ declare let swal: any;
   templateUrl: 'employee-profile.component.html',
   styleUrls: ['employee-profile.component.css']
 })
-export class EmployeeProfileComponent implements OnInit, OnDestroy {
+export class EmployeeProfileComponent implements OnInit{
 
   private employee: Employee;
   private orders: Order[] = [];
@@ -25,8 +25,6 @@ export class EmployeeProfileComponent implements OnInit, OnDestroy {
 
   private foodForShow: MenuItem[] = [];
   private drinksForShow: MenuItem[] = [];
-
-  private sub : Subscription;
 
   private calendar = false;
   private ordersTab = true;
@@ -46,7 +44,7 @@ export class EmployeeProfileComponent implements OnInit, OnDestroy {
         this.employee= JSON.parse(data["_body"]);
     });
     if(this.roleService.waiter){
-      this.sub = timer.subscribe(() => {
+      this.roleService.sub = timer.subscribe(() => {
         this.employeeService.getWaiterOrders().subscribe(
           (data) => {
             this.orders = JSON.parse(data['_body']);
@@ -54,7 +52,7 @@ export class EmployeeProfileComponent implements OnInit, OnDestroy {
         );
       });
     }if(this.roleService.chef){
-      this.sub = timer.subscribe(() => {
+      this.roleService.sub = timer.subscribe(() => {
         this.employeeService.getChefOrders().subscribe(
           (data) => {
             this.orders = JSON.parse(data['_body']);
@@ -63,7 +61,7 @@ export class EmployeeProfileComponent implements OnInit, OnDestroy {
       });
     }
     if(this.roleService.bartender){
-      this.sub = timer.subscribe(() => {
+      this.roleService.sub = timer.subscribe(() => {
         this.employeeService.getBartenderOrders().subscribe(
           (data) => {
             this.orders = JSON.parse(data['_body']);
@@ -164,11 +162,6 @@ export class EmployeeProfileComponent implements OnInit, OnDestroy {
   activateCalendar(){
     this.calendar = true;
     this.ordersTab = false;
-  }
-  ngOnDestroy(){
-    if(this.roleService.waiter || this.roleService.bartender || this.roleService.chef){
-      this.sub.unsubscribe();
-    }
   }
 
   canWaiterFinish(order: Order){

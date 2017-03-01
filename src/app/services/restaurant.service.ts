@@ -13,6 +13,7 @@ import {RezervationHelp} from "../beans/helps/rezervation-help";
 import {InviteHelp} from "../beans/helps/invite-help";
 import {Rezervation} from "../beans/rezervation";
 import {User} from "../beans/user";
+import {PurchaseSupplier} from "../beans/purchase-supplier";
 
 @Injectable()
 export class RestaurantService {
@@ -175,8 +176,6 @@ export class RestaurantService {
     return this.http.post(this.path + 'addPurchase/', JSON.stringify(purchase), { headers : h, withCredentials : true });
   }
 
-
-
   getAvailableTables(rezervationHelp : RezervationHelp){
     let h = new Headers();
     h.append('Content-type','application/json');
@@ -198,10 +197,24 @@ export class RestaurantService {
     return this.http.post(this.path + 'declineInvite', id, { withCredentials : true });
   }
 
-  acceptInvite(rezervation : Rezervation){
+  acceptInvite(rezervation : Rezervation) {
+    let h = new Headers();
+    h.append('Content-type', 'application/json');
+    return this.http.post(this.path + 'acceptInvite/', JSON.stringify(rezervation), {
+      headers: h,
+      withCredentials: true
+    });
+  }
+  getPurchaseSupplierRestaurant(restaurant : Restaurant){
     let h = new Headers();
     h.append('Content-type','application/json');
-    return this.http.post(this.path + 'acceptInvite/', JSON.stringify(rezervation), { headers : h, withCredentials : true });
+    return this.http.post(this.path + 'getPurchaseSupplierRestaurant/', JSON.stringify(restaurant), { headers : h, withCredentials : true });
+  }
+
+  acceptSupplierOffer(ps : PurchaseSupplier[]){
+    let h = new Headers();
+    h.append('Content-type','application/json');
+    return this.http.post(this.path + '/acceptSupplierOffer', JSON.stringify(ps), { headers : h, withCredentials : true });
   }
 
 }

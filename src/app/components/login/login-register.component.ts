@@ -74,13 +74,14 @@ export class LoginRegisterComponent implements OnInit {
   onSubmitLogin(user : User){
     this.httpService.login(user).subscribe(
       data => {
+        console.log(data['_body'] + ' - login-reg-com');
         if(data['_body'] == 'user'){
           this.roleService.user = true;
           this.roleService.supplier = false;
           this.roleService.waiter = false;
           this.roleService.chef = false;
           this.roleService.bartender = false;
-          this.router.navigateByUrl('/home');
+          this.roleService.admin = false;
           this.roleService.getFriendRequests();
         }else if(data['_body']=='manager'){
 
@@ -91,6 +92,7 @@ export class LoginRegisterComponent implements OnInit {
           this.roleService.waiter = true;
           this.roleService.chef = false;
           this.roleService.bartender = false;
+          this.roleService.admin = false;
           this.router.navigateByUrl('home/employee-profile');
         }else if(data['_body'] == 'chef'){
           this.roleService.user = false;
@@ -98,6 +100,7 @@ export class LoginRegisterComponent implements OnInit {
           this.roleService.supplier = false;
           this.roleService.chef = true;
           this.roleService.bartender = false;
+          this.roleService.admin = false;
           this.router.navigateByUrl('home/employee-profile');
         }else if(data['_body'] == 'bartender'){
           this.roleService.user = false;
@@ -105,6 +108,7 @@ export class LoginRegisterComponent implements OnInit {
           this.roleService.chef = false;
           this.roleService.supplier = false;
           this.roleService.bartender = true;
+          this.roleService.admin = false;
           this.router.navigateByUrl('home/employee-profile');
         }else if(data['_body'] == 'fwaiter'){
           this.roleService.user = false;
@@ -112,31 +116,52 @@ export class LoginRegisterComponent implements OnInit {
           this.roleService.waiter = true;
           this.roleService.chef = false;
           this.roleService.bartender = false;
-          this.router.navigateByUrl('home/set-password');
+          this.roleService.admin = false;
+          this.router.navigateByUrl('home/set-password/emp');
         }else if(data['_body'] == 'fbartender'){
           this.roleService.user = false;
           this.roleService.waiter = false;
           this.roleService.chef = false;
           this.roleService.bartender = true;
           this.roleService.supplier = false;
-          this.router.navigateByUrl('home/set-password');
+          this.roleService.admin = false;
+          this.router.navigateByUrl('home/set-password/emp');
         }else if(data['_body'] == 'fchef'){
           this.roleService.user = false;
           this.roleService.waiter = false;
           this.roleService.supplier = false;
           this.roleService.chef = true;
           this.roleService.bartender = false;
-          this.router.navigateByUrl('home/set-password');
+          this.roleService.admin = false;
+          this.router.navigateByUrl('home/set-password/emp');
         } else if(data['_body']=='check_email'){
           sweetAlert("Check your email!", "Please click on the link on your email to procced login.", "error");
         } else if(data['_body'] == 'supplier'){
-          this.router.navigateByUrl('home/supplier');
           this.roleService.user = false;
           this.roleService.supplier = true;
           this.roleService.waiter = false;
           this.roleService.chef = false;
           this.roleService.bartender = false;
-        } else {
+          this.roleService.admin = false;
+          this.router.navigateByUrl('home/supplier');
+        } else if(data['_body'] == 'fsupplier'){
+          this.roleService.user = false;
+          this.roleService.supplier = true;
+          this.roleService.waiter = false;
+          this.roleService.chef = false;
+          this.roleService.bartender = false;
+          this.roleService.admin = false;
+          this.router.navigateByUrl('home/set-password/supp');
+        } else if(data['_body'] == 'admin'){
+          this.roleService.user = false;
+          this.roleService.supplier = true;
+          this.roleService.waiter = false;
+          this.roleService.chef = false;
+          this.roleService.bartender = false;
+          this.roleService.admin = false;
+          this.router.navigateByUrl('home/admin');
+        }
+        else {
           document.getElementById('err_login').innerHTML = 'Incorrect email or password.';
         }
       }

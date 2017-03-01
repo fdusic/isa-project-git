@@ -7,7 +7,6 @@ export class RestaurantSegment{
   public restaurant:Restaurant;
   public tables:RestaurantTable[]=[];
 
-
   constructor(){}
 
 

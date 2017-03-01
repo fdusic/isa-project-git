@@ -19,7 +19,7 @@
     <div class="tabbable-panel">
       <div class="tabbable-line">
         <ul class="nav nav-tabs ">
-          <li class="active">
+          <li (click)="getFriends()" class="active">
             <a href="#tab_default_1" data-toggle="tab">
               <span class="glyphicon glyphicon-user" style="font-size: 40px"></span> </a>
           </li>
@@ -45,7 +45,7 @@
     <div class="tab-pane active" id="tab_default_1">
       <div class="container-fluid" style="margin-left: 28px">
         <ul class="nav nav-pills nav-stacked col-md-2">
-          <li class="active"><a href="#friendsDiv" data-toggle="pill">Friends</a></li>
+          <li (click)="getFriends()" class="active"><a href="#friendsDiv" data-toggle="pill">Friends</a></li>
           <li (click)="getFriendRequests()"><a href="#friendRequestsDiv" data-toggle="pill">Friend requests</a></li>
         </ul>
         <div class="tab-content col-md-10">
@@ -140,7 +140,7 @@
     <div class="tab-pane" id="tab_default_2">
       <div class="container-fluid" style="margin-left: 28px">
         <ul class="nav nav-pills nav-stacked col-md-2">
-          <li class="active"><a href="#notFriendsDiv" data-toggle="pill">New people</a></li>
+          <li class="active" (click)="getNotFriends()"><a href="#notFriendsDiv" data-toggle="pill">New people</a></li>
           <li (click)="getRequestsSent()"><a href="#notFriendRequestsDiv" data-toggle="pill">Sent requests</a></li>
         </ul>
         <div class="tab-content col-md-10">

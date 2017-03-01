@@ -38,6 +38,10 @@ import { AgmCoreModule } from 'angular2-google-maps/core';
 import { RezervationComponent } from './components/rezervation/rezervation.component';
 import { DateTimePickerModule } from 'ng2-date-time-picker';
 import { RezervationInviteComponent } from './components/rezervation-invite/rezervation-invite.component';
+import { AdminComponent } from './components/admin/admin.component';
+import {AdminService} from "./services/admin.service";
+import { RezervationsComponent } from './components/rezervations/rezervations.component';
+import {RezervationService} from "./services/rezervation.service";
 
 @NgModule({
   declarations: [
@@ -62,8 +66,9 @@ import { RezervationInviteComponent } from './components/rezervation-invite/reze
     ChangeOrderComponent,
     SetPasswordComponent,
     RezervationComponent,
-    RezervationInviteComponent
-
+    RezervationInviteComponent,
+    AdminComponent,
+    RezervationsComponent
   ],
   imports: [
     BrowserModule,
@@ -75,7 +80,7 @@ import { RezervationInviteComponent } from './components/rezervation-invite/reze
       apiKey: 'AIzaSyA7CjHO9NDrwajILB8gTeNn88_3K0FLdWM'
     })
   ],
-  providers: [LoginRegisterService,ManagerService,RestaurantService, RoleService, Guardian, SupplierService,EmployeeService],
+  providers: [LoginRegisterService,ManagerService,RestaurantService, RoleService, Guardian, SupplierService,EmployeeService, AdminService, RezervationService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
