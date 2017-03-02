@@ -5,7 +5,7 @@
   </div>
 </div>
 
-<nav class="navbar navbar-inverse sidebar" role="navigation" style="margin-top: -27px;position: fixed">
+<nav  class="navbar navbar-inverse sidebar" role="navigation" style="margin-top: -27px;position: fixed">
   <div class="container-fluid">
     <div class="navbar-header">
       <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-sidebar-navbar-collapse-1">
@@ -18,18 +18,18 @@
                                                                                              class="pull-right hidden-xs showopacity glyphicon glyphicon-leaf"></span></a>
     </div>
     <div class="collapse navbar-collapse" id="bs-sidebar-navbar-collapse-1">
-      <ul class="nav navbar-nav">
+      <ul class="nav navbar-nav" *ngIf="!roleService.user && isManager">
         <li #home_li class="active"><a (click)="onHomeClick()">Home<span style="font-size:16px;"
                                                                          class="pull-right hidden-xs showopacity glyphicon glyphicon-home"></span></a>
         </li>
         <li #menu_li><a (click)="onMenuClick()">Menu<span style="font-size:16px;"
                                                           class="pull-right hidden-xs showopacity glyphicon glyphicon-indent-left"></span></a>
         </li>
-        <li #segments_li><a (click)="onSegmentsClick()">Segments<span style="font-size:16px;"
+        <li #segments_li><a  (click)="onSegmentsClick()">Segments<span style="font-size:16px;"
                                                                       class="pull-right hidden-xs showopacity glyphicon glyphicon-globe"></span></a>
         </li>
         <li #settings_li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Settings <span class="caret"></span><span
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" >Settings <span class="caret"></span><span
             style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-cog"></span></a>
           <ul class="dropdown-menu forAnimate" role="menu">
             <li><a (click)="onAddMenuItem()">Add Menu Item</a></li>
@@ -42,6 +42,17 @@
           </ul>
         </li>
         <li #schedule><a (click)="onSchedule()">Schedule<span class="glyphicon glyphicon-time pull-right"></span></a>
+        </li>
+      </ul>
+      <ul class="nav navbar-nav" *ngIf="roleService.user || !isManager">
+        <li #home_li class="active"><a (click)="onHomeClick()">Home<span style="font-size:16px;"
+                                                                         class="pull-right hidden-xs showopacity glyphicon glyphicon-home"></span></a>
+        </li>
+        <li #menu_li><a (click)="onMenuClick()">Menu<span style="font-size:16px;"
+                                                          class="pull-right hidden-xs showopacity glyphicon glyphicon-indent-left"></span></a>
+        </li>
+        <li #segments_li><a  (click)="onSegmentsClick()">Segments<span style="font-size:16px;"
+                                                                       class="pull-right hidden-xs showopacity glyphicon glyphicon-globe"></span></a>
         </li>
       </ul>
     </div>
@@ -715,7 +726,7 @@
   <div class="row" *ngFor="let rs of thisSegments;let i = index">
     <hr>
     <h3 style="margin-left: 12px">Segment {{i+1}}</h3>
-    <a class="btn icon-btn btn-primary pull-right" (click)="assignSegmentForChange(rs)" data-toggle="modal"
+    <a *ngIf="isManager" class="btn icon-btn btn-primary pull-right" (click)="assignSegmentForChange(rs)" data-toggle="modal"
        data-target="#changeSegmentModal"><span
       class="glyphicon btn-glyphicon glyphicon-wrench img-circle text-primary"></span>Edit</a>
     <div class="col-md-8">
@@ -926,7 +937,7 @@
       <th class="text-left">Description</th>
       <th class="text-left">Price</th>
       <th class="text-left">Category</th>
-      <th class="text-left">Options</th>
+      <th class="text-left" *ngIf="!roleService.user">Options</th>
     </tr>
     </thead>
     <tbody class="table-hover">
@@ -936,7 +947,7 @@
       <td class="text-left">{{menuItem.price}}$</td>
       <td class="text-center"><img class="media-object" src="./images/food.png"
                                    style="width: 45px; height: 45px"></td>
-      <td class="text-center">
+      <td class="text-center" *ngIf="!roleService.user">
         <a (click)="assignMenuItemForChange(menuItem)" data-toggle="modal" data-target="#changeMenuItemModal"
            title="Edit" class="btn btn-primary"><i class="glyphicon glyphicon-list"></i></a>
         <a title="Delete" (click)="deleteMenuItem(menuItem)" class="btn btn-danger"><i
@@ -1205,4 +1216,59 @@
     <sebm-google-map-marker [latitude]="restaurant.lat" [longitude]="restaurant.lng"></sebm-google-map-marker>
   </sebm-google-map>
 
+  <br>
+  <br>
+  <div *ngIf="rezervations.length > 0">
+    <div style="display: block">
+      <canvas baseChart
+              [datasets]="barChartData"
+              [labels]="barChartLabels"
+              [options]="barChartOptions"
+              [legend]="barChartLegend"
+              [chartType]="barChartType"
+              (chartHover)="chartHovered($event)"
+              (chartClick)="chartClicked($event)">
+      </canvas>
+    </div>
+  </div>
+  <br><br>
+
+  <div class="row" *ngIf="waiters.length>0">
+    <div class="col-md-offset-4 col-md-6">
+      <div class="table-title">
+        <h3 style="color: goldenrod">Incomes per waiter</h3>
+      </div>
+      <table class="table-fill">
+        <thead>
+          <tr>
+            <th class="text-left">
+              Waiter
+            </th>
+            <th class="text-left">
+              Income
+            </th>
+            <th class="text-left">
+              Grade
+            </th>
+          </tr>
+        </thead>
+        <tbody class="table-hover">
+          <tr *ngFor="let w of waiters;let i = index">
+            <td class="text-left">
+
+              {{w?.name}}
+            </td>
+            <td class="text-left">
+              ${{numbers[i]}}
+            </td>
+            <td class="text-left">
+              {{w?.waiterGrade}}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <br><br>
 </div>

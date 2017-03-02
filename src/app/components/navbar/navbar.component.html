@@ -6,7 +6,7 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav navbar-left">
         <li *ngIf="roleService.user || roleService.admin || roleService.manager"><a [routerLink]="['/home/restaurants']">Restaurants</a></li>
-        <li *ngIf="roleService.user || roleService.admin || roleService.manager"><a [routerLink]="['/home/rezervationss']">Reservations</a></li>
+        <li *ngIf="roleService.user"><a [routerLink]="['/home/rezervationss']">Reservations</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li routerLinkActive="active" *ngIf="roleService.user"><a (click)="onProfile()">Profile</a></li>

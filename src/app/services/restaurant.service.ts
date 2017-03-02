@@ -217,8 +217,14 @@ export class RestaurantService {
     return this.http.post(this.path + '/acceptSupplierOffer', JSON.stringify(ps), { headers : h, withCredentials : true });
   }
 
-  isManager(id : number){
-    return this.http.post(this.path + '/isManager', id, {withCredentials : true});
+
+  isManager(id : number) {
+    return this.http.post(this.path + '/isManager', id.toString(), {withCredentials: true});
+  }
+  getAllRezervationsByRestaurant(restaurant:Restaurant){
+    let h = new Headers();
+    h.append('Content-type','application/json');
+    return this.http.post(this.path + 'getAllRezervationsByRestaurant/', JSON.stringify(restaurant), { headers : h, withCredentials : true });
   }
 
 }

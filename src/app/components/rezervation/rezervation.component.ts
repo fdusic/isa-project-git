@@ -13,6 +13,7 @@ import {RezervationOrder} from "../../beans/rezervation-order";
 import {Rezervation} from "../../beans/rezervation";
 import {Router} from "@angular/router";
 import {RezervationInvite} from "../../beans/rezervation-invite";
+import {TableVersions} from "../../beans/table-versions";
 
 
 declare let swal:any;
@@ -116,7 +117,7 @@ export class RezervationComponent implements OnInit {
 
   onNext(){
 
-   /* if(this.restaurantSelected == false){
+    if(this.restaurantSelected == false){
       swal("Sorry!", "You must select restaurant.", "error")
       return;
     }
@@ -133,7 +134,7 @@ export class RezervationComponent implements OnInit {
     if(this.restaurantWorks == false){
       swal("Sorry!", "Restaurant works untill 23:00h.", "error");
       return;
-    }*/
+    }
 
 
     let rh:RezervationHelp = new RezervationHelp();
@@ -145,6 +146,8 @@ export class RezervationComponent implements OnInit {
     this.restaurantService.getAvailableTables(rh).subscribe(
       (data) => {
           this.segments = JSON.parse(data['_body']);
+        //console.log(this.segments[0].tables[0].tableVersions);
+        //console.log(this.segments[0].tables[1].tableVersions);
         for(let s of this.segments){
           if(s.tables.length > 0){
             bool = true;
@@ -167,10 +170,10 @@ export class RezervationComponent implements OnInit {
   }
 
   toggleTimePicker(status: boolean): void  {
-    /*if(!this.selectedDate){
+    if(!this.selectedDate){
       swal("Sorry!", "Date is wrong or not selected.", "error")
       return;
-    }*/
+    }
 
     this.showTimePicker = status;
   }
@@ -380,13 +383,13 @@ export class RezervationComponent implements OnInit {
 
   onSaveRezervation(){
     let rezervation:Rezervation = new Rezervation();
-    console.log(this.date);
-    rezervation.date = "2017-03-01";
+    rezervation.date= this.date;
     rezervation.time = this.inputTime;
     rezervation.duration = this.durationTimeInput;
     rezervation.restaurant = this.selectedRestaurant;
     rezervation.serviceRate = 0;
     rezervation.orderRate = 0;
+
 
     for(let u of this.sentInvites){
       let ri:RezervationInvite = new RezervationInvite();
@@ -399,7 +402,17 @@ export class RezervationComponent implements OnInit {
       rezervation.rezervationOrders.push(this.rezervationOrder);
     }
     rezervation.tables = this.selectedTables;
-
+    for(let r of rezervation.tables){
+      console.log(r.tableVersions);
+      console.log(r.tableVersions == null);
+      if(r.tableVersions == null) {
+        let tv = new TableVersions();
+        r.tableVersions = [];
+        r.tableVersions.push(tv);
+        tv.date = rezervation.date;
+        tv.version = -1;
+      }
+    }
     this.restaurantService.saveRezervation(rezervation).subscribe(
       (data) => {
           if(data['_body']=='true'){

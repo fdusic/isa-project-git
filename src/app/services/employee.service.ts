@@ -77,6 +77,12 @@ export class EmployeeService {
     return this.http.get(this.path + 'getWaiterOrders', { withCredentials: true});
   }
 
+  getWaiterFinishedOrders(emp: Employee){
+    let h = new Headers();
+    h.append('Content-type','application/json');
+    return this.http.post(this.path + 'getFinishedOrders', JSON.stringify(emp), {headers: h,  withCredentials: true});
+  }
+
   getChefOrders(){
     return this.http.get(this.path + 'getChefOrders', { withCredentials: true});
   }

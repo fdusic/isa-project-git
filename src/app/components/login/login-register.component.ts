@@ -81,10 +81,18 @@ export class LoginRegisterComponent implements OnInit {
           this.roleService.waiter = false;
           this.roleService.chef = false;
           this.roleService.bartender = false;
+          this.roleService.manager = false;
           this.roleService.admin = false;
           this.roleService.getFriendRequests();
         }else if(data['_body']=='manager'){
-
+          this.roleService.user = true;
+          this.roleService.supplier = false;
+          this.roleService.waiter = false;
+          this.roleService.chef = false;
+          this.roleService.bartender = false;
+          this.roleService.admin = false;
+          this.roleService.manager = true;
+          this.router.navigateByUrl('home/restaurants');
         }else if (data['_body'] == 'waiter'){
           this.roleService.user = false;
           this.roleService.supplier = false;
@@ -92,6 +100,7 @@ export class LoginRegisterComponent implements OnInit {
           this.roleService.chef = false;
           this.roleService.bartender = false;
           this.roleService.admin = false;
+          this.roleService.manager = false;
           this.router.navigateByUrl('home/employee-profile');
         }else if(data['_body'] == 'chef'){
           this.roleService.user = false;
@@ -100,6 +109,7 @@ export class LoginRegisterComponent implements OnInit {
           this.roleService.chef = true;
           this.roleService.bartender = false;
           this.roleService.admin = false;
+          this.roleService.manager = false;
           this.router.navigateByUrl('home/employee-profile');
         }else if(data['_body'] == 'bartender'){
           this.roleService.user = false;
@@ -108,6 +118,7 @@ export class LoginRegisterComponent implements OnInit {
           this.roleService.supplier = false;
           this.roleService.bartender = true;
           this.roleService.admin = false;
+          this.roleService.manager = false;
           this.router.navigateByUrl('home/employee-profile');
         }else if(data['_body'] == 'fwaiter'){
           this.roleService.user = false;
@@ -116,6 +127,7 @@ export class LoginRegisterComponent implements OnInit {
           this.roleService.chef = false;
           this.roleService.bartender = false;
           this.roleService.admin = false;
+          this.roleService.manager = false;
           this.router.navigateByUrl('home/set-password/emp');
         }else if(data['_body'] == 'fbartender'){
           this.roleService.user = false;
@@ -123,6 +135,7 @@ export class LoginRegisterComponent implements OnInit {
           this.roleService.chef = false;
           this.roleService.bartender = true;
           this.roleService.supplier = false;
+          this.roleService.manager = false;
           this.roleService.admin = false;
           this.router.navigateByUrl('home/set-password/emp');
         }else if(data['_body'] == 'fchef'){
@@ -132,6 +145,7 @@ export class LoginRegisterComponent implements OnInit {
           this.roleService.chef = true;
           this.roleService.bartender = false;
           this.roleService.admin = false;
+          this.roleService.manager = false;
           this.router.navigateByUrl('home/set-password/emp');
         } else if(data['_body']=='check_email'){
           sweetAlert("Check your email!", "Please click on the link on your email to procced login.", "error");

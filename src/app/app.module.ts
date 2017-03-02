@@ -42,6 +42,7 @@ import { AdminComponent } from './components/admin/admin.component';
 import {AdminService} from "./services/admin.service";
 import { RezervationsComponent } from './components/rezervations/rezervations.component';
 import {RezervationService} from "./services/rezervation.service";
+import { ChartsModule } from 'ng2-charts';
 
 @NgModule({
   declarations: [
@@ -76,6 +77,7 @@ import {RezervationService} from "./services/rezervation.service";
     HttpModule,
     routing,
     DateTimePickerModule,
+    ChartsModule,
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyA7CjHO9NDrwajILB8gTeNn88_3K0FLdWM'
     })

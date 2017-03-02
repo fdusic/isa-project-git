@@ -15,6 +15,9 @@ import {Supplier} from "../../beans/supplier";
 import {Purchase} from "../../beans/purchase";
 import {PurchaseSupplier} from "../../beans/purchase-supplier";
 import {RoleService} from "../../services/role.service";
+import {Rezervation} from "../../beans/rezervation";
+import {Order} from "../../beans/order";
+import {EmployeeService} from "../../services/employee.service";
 declare let sweetAlert: any;
 declare let swal: any;
 
@@ -124,6 +127,7 @@ export class RestaurantDetailComponent implements OnInit {
   private workers: Employee[] = []
 
   private freeWorkers: Employee[] = [];
+  private waiters: Employee[] = [];
 
   private changeNameExists: boolean = false;
   private addSegmentsBool = false;
@@ -132,7 +136,11 @@ export class RestaurantDetailComponent implements OnInit {
   private purchasSupplierPending : PurchaseSupplier[] = [];
   private purchases : Purchase[] = [];
 
-  constructor(private activatedRoute: ActivatedRoute, private restaurantService: RestaurantService, private roleService : RoleService) {
+
+  private rezervations: Rezervation[] = [];
+  private numbers: number[] = [];
+  constructor(private activatedRoute: ActivatedRoute, private restaurantService: RestaurantService,  private roleService : RoleService, private employeeService: EmployeeService) {
+
   }
 
   ngOnInit() {
@@ -144,6 +152,25 @@ export class RestaurantDetailComponent implements OnInit {
         this.restaurantService.getWorkers(this.restaurant).subscribe(
           data => {
             this.workers = JSON.parse(data['_body']);
+            for(let w of this.workers){
+              if(w.role == "WAITER"){
+                this.waiters.push(w);
+                this.employeeService.getWaiterFinishedOrders(w).subscribe(
+                  (data) =>{
+                    let orders: Order[] = JSON.parse(data['_body']);
+                    let k = 0;
+                    for(let o of orders){
+                      for(let m of o.menuItems){
+                        k += m.price;
+                      }
+                    }
+                    this.numbers.push(k);
+                  }
+                );
+              }
+
+            }
+
           }
         );
         this.restaurantService.getRestaurantSegments(this.restaurant).subscribe(
@@ -163,6 +190,43 @@ export class RestaurantDetailComponent implements OnInit {
             }
           );
         }
+        this.restaurantService.getAllRezervationsByRestaurant(this.restaurant).subscribe(
+          (data) => {
+            this.rezervations = JSON.parse(data['_body']);
+            for(let r of this.rezervations){
+              let i:number = 0;
+              for(let s of this.barChartLabels){
+                if(s == r.date){
+                  i++;
+                }
+              }
+
+              if(i == 0){
+                this.barChartLabels.push(r.date);
+                let numOfPeople:number = 1;
+                for(let ri of r.rezervationInvites){
+                  if(ri.status == 1){
+                    numOfPeople+=1;
+                  }
+                }
+
+                this.barChartData[0].data.push(numOfPeople);
+              }else{
+                var index = this.barChartLabels.indexOf(r.date, 0);
+                let numOfPeople:number = 1;
+                for(let ri of r.rezervationInvites){
+                  if(ri.status == 1){
+                    numOfPeople+=1;
+                  }
+                }
+                this.barChartData[0].data[index]+=numOfPeople;
+              }
+
+
+
+            }
+          }
+        );
       }
     );
   }
@@ -458,6 +522,7 @@ export class RestaurantDetailComponent implements OnInit {
     }
     return ret;
   }
+
 
   acceptOffer(ps : PurchaseSupplier, p : Purchase){
     let service = this.restaurantService;
@@ -1088,6 +1153,32 @@ export class RestaurantDetailComponent implements OnInit {
     }
 
     return ret;
+  }
+
+  private manager:boolean = true;
+
+  public barChartOptions:any = {
+    scaleShowVerticalLines: false,
+    responsive: true
+  };
+  //public barChartLabels:string[] = ['2006', '2007', '2008', '2009', '2010', '2011', '2012'];
+  public barChartLabels:string[] = [];
+  public barChartType:string = 'bar';
+  public barChartLegend:boolean = true;
+
+  public barChartData:any[] = [
+    //{data: [65, 59, 80, 81, 56, 55, 40], label: 'Series A'},
+    {data: [], label: 'Attendance on a daily basis'}
+    //{data: [28, 48, 40, 19, 86, 27, 90], label: 'Series B'}
+  ];
+
+  // events
+  public chartClicked(e:any):void {
+
+  }
+
+  public chartHovered(e:any):void {
+
   }
 
 }

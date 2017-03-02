@@ -67,6 +67,7 @@ export class HomeComponent implements OnInit, OnDestroy {
           this.roleService.chef = false;
           this.roleService.bartender = false;
           this.roleService.admin = false;
+          this.roleService.manager = false;
         } else if(data['_body'] == 'admin'){
           this.roleService.user = false;
           this.roleService.supplier = true;
@@ -74,30 +75,32 @@ export class HomeComponent implements OnInit, OnDestroy {
           this.roleService.chef = false;
           this.roleService.bartender = false;
           this.roleService.admin = false;
+          this.roleService.manager = false;
+        }
+        if(this.roleService.user){
+          let timer = Observable.timer(2000,10000);
+          this.sub = timer.subscribe(() => {
+            this.httpService.getFriendRequests().subscribe(
+              data => {
+                let newFriendRequests = JSON.parse(data['_body']);
+                let difference = newFriendRequests.length - this.roleService.friendRequestCount;
+                if(difference > 0){
+                  swal({
+                    title: "You have " + difference + " new friend requests!",
+                    imageUrl: "images/user-default.png"
+                  });
+                  this.roleService.friendRequestCount = newFriendRequests.length;
+                } else if(difference < 0){
+                  this.roleService.friendRequestCount = newFriendRequests.length;
+                }
+              }
+            );
+          });
         }
       }
     );
 
-    if(this.roleService.user){
-      let timer = Observable.timer(2000,10000);
-      this.sub = timer.subscribe(() => {
-        this.httpService.getFriendRequests().subscribe(
-          data => {
-            let newFriendRequests = JSON.parse(data['_body']);
-            let difference = newFriendRequests.length - this.roleService.friendRequestCount;
-            if(difference > 0){
-              swal({
-                title: "You have " + difference + " new friend requests!",
-                imageUrl: "images/user-default.png"
-              });
-              this.roleService.friendRequestCount = newFriendRequests.length;
-            } else if(difference < 0){
-              this.roleService.friendRequestCount = newFriendRequests.length;
-            }
-          }
-        );
-      });
-    }
+
   }
 
   ngOnDestroy(){
