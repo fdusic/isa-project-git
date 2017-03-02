@@ -85,7 +85,6 @@ export class LoginRegisterComponent implements OnInit {
           this.roleService.getFriendRequests();
         }else if(data['_body']=='manager'){
 
-
         }else if (data['_body'] == 'waiter'){
           this.roleService.user = false;
           this.roleService.supplier = false;

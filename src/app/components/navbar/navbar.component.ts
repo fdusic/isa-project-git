@@ -10,7 +10,7 @@ import {RoleService} from "../../services/role.service";
 })
 export class NavbarComponent implements OnInit {
 
-  constructor(private httpService : LoginRegisterService, private router : Router, private roleService: RoleService) { }
+  constructor(private httpService : LoginRegisterService, private router : Router, private roleService : RoleService) { }
 
   ngOnInit() {
   }
@@ -26,6 +26,7 @@ export class NavbarComponent implements OnInit {
   }
 
   onProfile(){
+    console.log(this.roleService.user);
     if(this.roleService.user){
       this.router.navigateByUrl('/home');
     }else if(this.roleService.bartender || this.roleService.waiter || this.roleService.chef){

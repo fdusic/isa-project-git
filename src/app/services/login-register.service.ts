@@ -103,4 +103,8 @@ export class LoginRegisterService{
     return this.http.post(this.path + 'getUserByEmail', email, { withCredentials : true });
   }
 
+  getRole(){
+    return this.http.get(this.path + 'getRole', { withCredentials : true });
+  }
+
 }

@@ -16,9 +16,71 @@ export class HomeComponent implements OnInit, OnDestroy {
   constructor(private roleService : RoleService, private httpService : LoginRegisterService) { }
 
   ngOnInit() {
+
+    this.httpService.getRole().subscribe(
+      data => {
+        console.log(data['_body']);
+        if(data['_body'] == 'user'){
+          this.roleService.user = true;
+          this.roleService.supplier = false;
+          this.roleService.waiter = false;
+          this.roleService.chef = false;
+          this.roleService.bartender = false;
+          this.roleService.admin = false;
+          this.roleService.manager = false
+        }else if(data['_body']=='manager'){
+          this.roleService.user = false;
+          this.roleService.supplier = false;
+          this.roleService.waiter = false;
+          this.roleService.chef = false;
+          this.roleService.bartender = false;
+          this.roleService.admin = false;
+          this.roleService.manager = true;
+        }else if (data['_body'] == 'waiter'){
+          this.roleService.user = false;
+          this.roleService.supplier = false;
+          this.roleService.waiter = true;
+          this.roleService.chef = false;
+          this.roleService.bartender = false;
+          this.roleService.admin = false;
+          this.roleService.manager = false;
+        }else if(data['_body'] == 'chef'){
+          this.roleService.user = false;
+          this.roleService.waiter = false;
+          this.roleService.supplier = false;
+          this.roleService.chef = true;
+          this.roleService.bartender = false;
+          this.roleService.admin = false;
+          this.roleService.manager = false;
+        }else if(data['_body'] == 'bartender'){
+          this.roleService.user = false;
+          this.roleService.waiter = false;
+          this.roleService.chef = false;
+          this.roleService.supplier = false;
+          this.roleService.bartender = true;
+          this.roleService.admin = false;
+          this.roleService.manager = false;
+        }else if(data['_body'] == 'supplier'){
+          this.roleService.user = false;
+          this.roleService.supplier = true;
+          this.roleService.waiter = false;
+          this.roleService.chef = false;
+          this.roleService.bartender = false;
+          this.roleService.admin = false;
+        } else if(data['_body'] == 'admin'){
+          this.roleService.user = false;
+          this.roleService.supplier = true;
+          this.roleService.waiter = false;
+          this.roleService.chef = false;
+          this.roleService.bartender = false;
+          this.roleService.admin = false;
+        }
+      }
+    );
+
     if(this.roleService.user){
-      //let timer = Observable.timer(2000,10000);
-      //this.sub = timer.subscribe(() => {
+      let timer = Observable.timer(2000,10000);
+      this.sub = timer.subscribe(() => {
         this.httpService.getFriendRequests().subscribe(
           data => {
             let newFriendRequests = JSON.parse(data['_body']);
@@ -34,13 +96,8 @@ export class HomeComponent implements OnInit, OnDestroy {
             }
           }
         );
-      //});
+      });
     }
-  }
-
-  notify(data){
-    console.log(data);
-    console.log('aaaa');
   }
 
   ngOnDestroy(){

@@ -14,6 +14,7 @@ export class RoleService {
   public bartender: boolean = false;
   public admin : boolean = false;
   public sub : Subscription;
+  public manager : boolean = false;
 
   constructor(private httpService : LoginRegisterService, private router : Router) { }
 

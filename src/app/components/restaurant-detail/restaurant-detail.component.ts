@@ -14,6 +14,7 @@ import {UserGrade} from "../../beans/user-grade";
 import {Supplier} from "../../beans/supplier";
 import {Purchase} from "../../beans/purchase";
 import {PurchaseSupplier} from "../../beans/purchase-supplier";
+import {RoleService} from "../../services/role.service";
 declare let sweetAlert: any;
 declare let swal: any;
 
@@ -97,6 +98,8 @@ export class RestaurantDetailComponent implements OnInit {
   private foodMenu: MenuItem[] = [];
   private drinkMenu: MenuItem[] = [];
 
+  private isManager = false;
+
   private finishedConfiguration: boolean = false;
 
 
@@ -129,7 +132,7 @@ export class RestaurantDetailComponent implements OnInit {
   private purchasSupplierPending : PurchaseSupplier[] = [];
   private purchases : Purchase[] = [];
 
-  constructor(private activatedRoute: ActivatedRoute, private restaurantService: RestaurantService) {
+  constructor(private activatedRoute: ActivatedRoute, private restaurantService: RestaurantService, private roleService : RoleService) {
   }
 
   ngOnInit() {
@@ -151,6 +154,15 @@ export class RestaurantDetailComponent implements OnInit {
             }
           }
         );
+        if(!this.roleService.manager)
+          this.isManager = false;
+        else {
+          this.restaurantService.isManager(this.restaurant.manager.id).subscribe(
+            data => {
+              this.isManager = data['_body'] == 'true';
+            }
+          );
+        }
       }
     );
   }

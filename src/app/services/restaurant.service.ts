@@ -217,4 +217,8 @@ export class RestaurantService {
     return this.http.post(this.path + '/acceptSupplierOffer', JSON.stringify(ps), { headers : h, withCredentials : true });
   }
 
+  isManager(id : number){
+    return this.http.post(this.path + '/isManager', id, {withCredentials : true});
+  }
+
 }
